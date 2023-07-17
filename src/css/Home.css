@@ -1,0 +1,41 @@
+.Home {
+    margin-top: .5rem;
+    width: 80%;
+    min-height: calc(100vh - 20rem);
+    min-width: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Home h1 {
+    margin: 0.25rem;
+    color: indigo;
+    font-size: 3rem;
+    font-variant: small-caps;
+    text-shadow: .1rem .1rem darkturquoise;
+}
+
+.Home h2 {
+    margin: 1rem;
+    color:indigo;
+}
+
+.Home button {
+    margin: 1rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.25rem;
+    background-color: indigo;
+    border-style:none;
+    color: azure;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.Home button:hover {
+    color: aqua;
+}

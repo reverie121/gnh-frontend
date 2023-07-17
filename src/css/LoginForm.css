@@ -1,0 +1,54 @@
+.LoginForm {
+    background-color: indigo;
+    margin-top: .5rem;
+    width: 50%;
+    min-width: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0.25rem;
+    border-style:outset;
+}
+
+.LoginForm label {
+    margin-right: 0.5rem;
+    color: azure;
+    font-size: 1.1rem;
+}
+
+.LoginForm input {
+    margin-top: 0.4rem;
+    width: 75%;
+    min-width: 350px;
+    font-size: 1.1rem;
+    border-radius: 0.2rem;
+}
+
+.LoginForm .field {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.LoginForm button {
+    margin-top: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1.1rem;
+    background-color: darkturquoise;
+    color: indigo;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.LoginForm button:hover {
+    background-color: aqua;
+    color: indigo;
+}
