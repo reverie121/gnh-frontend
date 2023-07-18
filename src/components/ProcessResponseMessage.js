@@ -1,6 +1,6 @@
 import React from "react";
 
-import './css/ProcessResponseMessage.css';
+import '../css/ProcessResponseMessage.css';
 
 function ProcessResponseMessage( { processIs } ) {
     if (processIs === 'idle') return <span />;

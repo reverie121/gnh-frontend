@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import Nav from './Nav';
 import Routes from './Routes';
 
-import UserContext from './UserContext';
+import UserContext from './context/UserContext';
 
 import './css/App.css';
 

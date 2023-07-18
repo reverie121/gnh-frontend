@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { toLocal } from "./helpers/localStorageHelper";
-import GameNightHelperAPI from "./api/gnh-api";
+import { toLocal } from "../helpers/localStorageHelper";
+import GameNightHelperAPI from "../api/gnh-api";
 
-import './css/LoginForm.css';
+import '../css/LoginForm.css';
 
 function LoginForm() {
 

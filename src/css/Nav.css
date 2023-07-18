@@ -16,6 +16,7 @@
     color:white;
     margin: 0.5rem;
     text-decoration: none;
+    transition: 0.3s ease-in-out;
 }
 
 .Nav a.active {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-import UserContext from "./UserContext";
+import UserContext from "./context/UserContext";
 
 import './css/Home.css';
 
@@ -17,6 +17,7 @@ function Home() {
                 <Link to="/login"><button>Log In</button></Link>
                 <Link to="/signup"><button>Sign Up</button></Link>
             </div>
+            <h2>Or just dive right in...</h2>
         </div>
     )
 

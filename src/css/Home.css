@@ -33,6 +33,7 @@
     background-color: indigo;
     border-style:none;
     color: azure;
+    transition: 0.3s ease-in-out;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 

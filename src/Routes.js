@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
 
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
-import UserProfile from "./UserProfile";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
+import UserProfile from "./components/UserProfile";
 import Home from "./Home";
 
 function Routes() {

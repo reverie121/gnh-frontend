@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
-import bouncer from "./helpers/bouncer";
-import UserContext from "./UserContext";
+import bouncer from "../helpers/bouncer";
+import UserContext from "../context/UserContext";
 import EditUserForm from "./EditUserForm";
 
-import './css/UserProfile.css';
+import '../css/UserProfile.css';
 
 function UserProfile() {
     // Access Context for user and setUser.

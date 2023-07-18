@@ -1,10 +1,10 @@
 import React, {useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import GameNightHelperAPI from "./api/gnh-api";
+import GameNightHelperAPI from "../api/gnh-api";
 import ProcessResponseMessage from "./ProcessResponseMessage";
 
-import './css/EditUserForm.css';
+import '../css/EditUserForm.css';
 
 function editUserForm( { username, firstName, lastName, email, setUser } ) {
     const history = useHistory();

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import { clearLocal } from "./helpers/localStorageHelper";
-import UserContext from "./UserContext";
+import UserContext from "./context/UserContext";
 
 import './css/Nav.css';
 
