@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-import { clearLocal } from "./helpers/localStorageHelper";
+import { userClearLocal } from "./helpers/localStorageHelper";
 import UserContext from "./context/UserContext";
 
 import './css/Nav.css';
@@ -16,12 +16,12 @@ function Nav() {
     }
 
     function logout() {
-        clearLocal();
+        userClearLocal();
         setUser(null);
     }
 
     return(
-        <div className="Nav">
+        <div id="Nav">
             <NavLink to="../" isActive={() => pathname === "/"}>Game Night Helper</NavLink>
             <div>
                 {isLoggedIn() && <NavLink to="../profile">Profile</NavLink>}

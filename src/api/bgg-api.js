@@ -11,12 +11,13 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "https://boardgamegeek.com/xm
  */
 
 class GameNightBGGHelperAPI {
+
   static async request(endpoint, data = {}, method = "get") {
     console.debug("BGG API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
     try {
-      return (await axios({ url, method })).data;
+      return await axios({ url, method });
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
@@ -30,27 +31,23 @@ class GameNightBGGHelperAPI {
 
   static async getCollection(username) {
     let res = await this.request(`collection?username=${username}&excludesubtype=boardgameexpansion&own=1`);
-    if (res.statusCode === 202) {
+    if (res.status === 202) {
       setTimeout(() => {
+        console.debug('Response in queue. Repeating request after 1 second.');
         this.getCollection(username);
-      }, 1000)
-    console.log(res)
+      }, 20000)
+    } else {
+      console.debug('Collection data received.')
+      return res.data;
     }
-    console.log(res)
-    return res;
   }
 
     /** Get a game. */
 
     static async getGame(id) {
-      let res = await this.request(`thing?id=${id}`);
-      console.log(res)
-      if (!res) {
-        setTimeout(() => {
-          this.getGame(id);
-        }, 1000)
-      }
-      return res;
+      console.debug('Requesting detailed game/s data.');
+      let res = await this.request(`thing?id=${id}&stats=1`);
+      return res.data;
     }
   
 }

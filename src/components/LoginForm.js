@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { toLocal } from "../helpers/localStorageHelper";
+import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 
 import '../css/LoginForm.css';
@@ -22,7 +22,7 @@ function LoginForm() {
     const handleLogin = async () => {
         const loginCredentials = {username: formData.username, password: formData.password};
         let token = await GameNightHelperAPI.loginUser(loginCredentials);
-        toLocal(token, formData.username);
+        userToLocal(token, formData.username);
     }
 
     // Handles value changes (for inputs).

@@ -1,4 +1,4 @@
-.Nav {
+#Nav {
     background-color: indigo;
     width: 100vw;
     position: fixed;
@@ -10,26 +10,27 @@
     flex: row;
     align-items: center;
     justify-content:space-between;
+    z-index: 10;
 }
 
-.Nav a {
+#Nav a {
     color:white;
     margin: 0.5rem;
     text-decoration: none;
     transition: 0.3s ease-in-out;
 }
 
-.Nav a.active {
+#Nav a.active {
     color:aqua;
     font-weight: bold;
 }
   
-.Nav a.active:hover {
+#Nav a.active:hover {
     color:darkturquoise !important;
     font-weight: bold;
 }
 
-.Nav a:hover {
+#Nav a:hover {
     text-decoration: none;
     color: darkturquoise;
 }

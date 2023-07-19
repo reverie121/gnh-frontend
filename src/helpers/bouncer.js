@@ -1,12 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
-import { fromLocal } from "./localStorageHelper";
+import { userFromLocal } from "./localStorageHelper";
 import getUserData from "./getUserData";
 
 const bouncer = (user, setUser) => {
     // Get token and username from local storage.
-    const { token, username } = fromLocal()
+    const { token, username } = userFromLocal()
 
     // If required data is not in local storage, redirect to login page.
     if (!token || !username) {

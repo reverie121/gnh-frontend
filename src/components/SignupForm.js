@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { toLocal } from "../helpers/localStorageHelper";
+import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 import '../css/SignupForm.css';
 
@@ -26,7 +26,7 @@ function SignupForm() {
         // If successful, put username and auth token into localStorage.        
         try {
             let token = await GameNightHelperAPI.registerUser(userData);
-            toLocal(token, formData.username);
+            userToLocal(token, formData.username);
         }
         catch(err) {
             console.error(err);
