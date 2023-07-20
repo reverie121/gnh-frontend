@@ -56,10 +56,14 @@
       align-items: flex-start;
       justify-content: flex-start;
       position: fixed;
-      top: 36px;
+      top: 35px;
       right: -120px;
       width: 100px;
       height: 100vh;
+      border-style: outset;
+      border-top: 0rem;
+      border-right: 0rem;
+      border-top: 0rem;
       background: rebeccapurple;
       box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
       padding: 10px;

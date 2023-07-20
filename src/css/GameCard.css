@@ -51,25 +51,43 @@
     position:absolute; 
     top: 10px; 
     right: 10px; 
-    color: white;
     text-shadow: 1px 1px black;
     box-shadow: 2px 2px black;
 }
 
-.best {
+.best, .Best {
     background-color: green;
+    color: white;
+}
+
+.Recommended {
+    background-color:yellowgreen;
+    color: white;
 }
 
 .better {
     background-color:darkgoldenrod;
+    color: white;
 }
 
-.rest {
+.rest, .NotRecommended {
     background-color: darkred;
+    color: white;
 }
 
 .GameName {
     font-size:large;
+    display: flex;
+    align-items: baseline;
+}
+
+.YearPublished {
+    font-size: smaller;
+    margin-left: 5px;
+}
+
+.supplementaryData {
+    font-size: smaller;
 }
 
 .BGGLink {
@@ -83,9 +101,24 @@
 }
 
 .PlayerCount, .PlayingTime, .Age, .Weight {
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
+.playerCountBoxHolder {
+    display: flex;
+    flex-direction: row;
+}
+
+.playerCountBox {
+    height: 22px;
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1px;
+    margin-right: 1px;
+    border-radius: 2px;
+}
 
 .Thumbnail:hover {
     /* Start the shake animation and make the animation last for 1.5 seconds */

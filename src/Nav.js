@@ -38,7 +38,7 @@ function Nav() {
         <nav id="Nav">
             <NavLink to="../" isActive={() => pathname === "/"}>Game Night Helper</NavLink>
             <div id="UserNav" class={navClass}>
-                {isLoggedIn() && <NavLink to="../profile">Profile</NavLink>}
+                {isLoggedIn() && <NavLink to="../profile">User Profile</NavLink>}
                 {isLoggedIn() && <NavLink to="../" onClick={logout} isActive={() => pathname === "/logout"}>Log Out {user.username}</NavLink>}
                 {!isLoggedIn() && <NavLink to="../login">Log In</NavLink>}
                 {!isLoggedIn() && <NavLink to="../signup">Sign Up</NavLink>}
