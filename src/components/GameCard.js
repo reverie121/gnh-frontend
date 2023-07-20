@@ -18,7 +18,7 @@ function GameCard( {gameData} ) {
             let highestCount = 0;
             let rating = "";
             arr.map(d => {
-                if (d._attributes.numvotes > highestCount) {
+                if (Number(d._attributes.numvotes) > highestCount) {
                     highestCount = Number(d._attributes.numvotes);
                     rating = d._attributes.value.replace(" ", "");
                 } return ''

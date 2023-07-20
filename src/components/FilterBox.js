@@ -6,7 +6,7 @@ import FilterForm from "./FilterForm";
 import { gameListClearLocal } from "../helpers/localStorageHelper";
 
 function FilterBox() {
-    const { gameList, setGameList } = useContext(GameListContext);
+    const { setGameList } = useContext(GameListContext);
 
     function clearIt() {
         setGameList();
