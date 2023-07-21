@@ -2,15 +2,15 @@ import React from "react";
 
 import '../css/ProcessResponseMessage.css';
 
-function ProcessResponseMessage( { processIs } ) {
+function UpdateProcessResponseMessage( { processIs } ) {
     if (processIs === 'idle') return <span />;
     let message;
     if (processIs === 'pending') {
-        message = "Waiting for data..."
+        message = "Submitting changes..."
     } else if (processIs === 'success') {
-        message = "Operation Successful!"
+        message = "Updated successfully!"
     } else if (processIs === 'failure') {
-        message = "Operation Unsuccessful."
+        message = "Update unsuccessful."
     }
     return(
         <div className={`ProcessResponseMessage ${processIs}`}>
@@ -19,4 +19,4 @@ function ProcessResponseMessage( { processIs } ) {
     )
 }
 
-export default ProcessResponseMessage;
+export default UpdateProcessResponseMessage;

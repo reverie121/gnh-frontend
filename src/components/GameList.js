@@ -13,7 +13,7 @@ function GameList() {
     return(
         <div className="GameList">
             <FilterBox />
-            {gameList.map(g => <GameCard key={g._attributes.objectid} gameData={g}/>)}
+            {gameList.map(g => <GameCard key={g._attributes.id} gameData={g}/>)}
         </div>
     );
 };

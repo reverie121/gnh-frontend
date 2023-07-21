@@ -2,7 +2,7 @@ import React, {useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import GameNightHelperAPI from "../api/gnh-api";
-import ProcessResponseMessage from "./ProcessResponseMessage";
+import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
 
 import '../css/EditUserForm.css';
 
@@ -101,7 +101,7 @@ function editUserForm( { username, firstName, lastName, email, setUser } ) {
                     onChange={handleChange}
                 />
             </div>
-            <ProcessResponseMessage processIs={editProcess} />
+            <UpdateProcessResponseMessage processIs={editProcess} />
             <button onClick={handleSubmit}>Submit</button>
         </form>
     );

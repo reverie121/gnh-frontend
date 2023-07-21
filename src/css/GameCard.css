@@ -108,6 +108,7 @@
 .playerCountBoxHolder {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .playerCountBox {
@@ -118,6 +119,7 @@
     justify-content: center;
     margin-left: 1px;
     margin-right: 1px;
+    margin-top: 1px;
     border-radius: 2px;
 }
 

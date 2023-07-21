@@ -22,7 +22,7 @@ function GameDetails( {gameData} ) {
                     {name}
                 </div>
                 <div>
-                    {description.map(p => <p>{entities.decodeHTML(p)}</p>)}
+                    {description.map(p => <p key={gameData._attributes.id}>{entities.decodeHTML(p)}</p>)}
                 </div>
             </div>
         </div>

@@ -19,7 +19,6 @@ function Home() {
         if (localGameList) setGameList(localGameList);
     }, [])
 
-    // if (gameList) gameList.map(g => console.log(g))
     if (gameList) return (
         <GameList />
     )

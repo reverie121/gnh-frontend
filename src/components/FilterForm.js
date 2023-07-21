@@ -133,7 +133,7 @@ function FilterForm() {
             <div className="filters">
                 <div id="individualFiltersBox">
                     <div className="formField">
-                        <label for="gameRating">Min. Avg. Game Rating </label>
+                        <label htmlFor="gameRating">Min. Avg. Game Rating </label>
                         <input name="gameRating" id="gameRating" type="number" min={0} value={formData["gameRating"]} onChange={handleChange} />
                     </div>
                 </div>
@@ -141,7 +141,7 @@ function FilterForm() {
                 <div id="playerCountBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Player Count</h4>
                     <div className="formField">
-                            <label for="playerCount"># of Players </label>
+                            <label htmlFor="playerCount"># of Players </label>
                             <input name="playerCount" id="playerCount" type="number" min={1} value={formData["playerCount"]} onChange={handleChange} />
                     </div>
                     <div className="checkboxContainer">
@@ -167,11 +167,11 @@ function FilterForm() {
                 <div id="playTimeBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Play Time</h4>
                     <div className="formField">
-                        <label for="minPlayTime">Min. </label>
+                        <label htmlFor="minPlayTime">Min. </label>
                         <input name="minPlayTime" id="minPlayTime" type="number" min={0} value={formData["minPlayTime"]} onChange={handleChange} />
                     </div>
                     <div className="formField">
-                        <label for="maxPlayTime">Max. </label>
+                        <label htmlFor="maxPlayTime">Max. </label>
                         <input name="maxPlayTime" id="maxPlayTime" type="number" min={0} value={formData["maxPlayTime"]} onChange={handleChange} />
                     </div>
                 </div>
@@ -179,11 +179,11 @@ function FilterForm() {
                 <div id="weightBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Game Weight</h4>
                     <div className="formField">
-                        <label for="minWeight">Min. </label>
+                        <label htmlFor="minWeight">Min. </label>
                         <input name="minWeight" id="minWeight" type="number" min={0} max={5} value={formData["minWeight"]} onChange={handleChange} />
                     </div>
                     <div className="formField">
-                        <label for="maxWeight">Max. </label>
+                        <label htmlFor="maxWeight">Max. </label>
                         <input name="maxWeight" id="maxWeight" type="number" min={0} max={5} value={formData["maxWeight"]} onChange={handleChange} />
                     </div>
                 </div>
