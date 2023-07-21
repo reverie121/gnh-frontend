@@ -1,9 +1,6 @@
 import React, { useState, useContext } from "react";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-// import GameNightHelperAPI from "../api/gnh-api";
 import GameNightBGGHelperAPI from "../api/bgg-api";
-// import ProcessResponseMessage from "./ProcessResponseMessage";
 import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
@@ -21,6 +18,7 @@ function GetCollectionForm() {
 
     // Sets State for the form data.
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const [collectionCount, setCollectionCount] = useState(['1'])
 
     const handleQuery = async () => {
         let username = formData.username1;
@@ -37,6 +35,10 @@ function GetCollectionForm() {
         console.log(data2.items.item)
         setGameList(Object.values(data2.items.item));
         gameListToLocal(Object.values(data2.items.item));
+    }
+
+    const addCollectionInput = () => {
+        setCollectionCount([...collectionCount, `${collectionCount.length + 1}`]);
     }
 
     // Handles value changes (for inputs).
@@ -61,7 +63,9 @@ function GetCollectionForm() {
 
     return(
         <form className="GetCollectionForm">
-            <GetCollectionInput id="1" handleChange={(e) => handleChange(e)} />       
+            {collectionCount.map(n => 
+            <GetCollectionInput id={`${n}`} addCollectionInput={(id) => addCollectionInput(id)} handleChange={(e) => handleChange(e)} />
+            )}
             <button onClick={handleSubmit}>Get Games</button>
         </form>
     );

@@ -1,22 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import GameListContext from "../context/GameListContext";
 import FilterForm from "./FilterForm";
 
-import { gameListClearLocal } from "../helpers/localStorageHelper";
+import CollectionRequestContainer from "./CollectionRequestContainer"
 
 function FilterBox() {
-    const { setGameList } = useContext(GameListContext);
-
-    function clearIt() {
-        setGameList();
-        gameListClearLocal();
-    }
 
     return(
         <div>
             <FilterForm />
-            <button onClick={clearIt}>Clear Game List</button>
+            <CollectionRequestContainer />
         </div>
     );
 };

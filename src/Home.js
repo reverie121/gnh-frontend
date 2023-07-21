@@ -4,7 +4,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import UserContext from "./context/UserContext";
 import GameListContext from "./context/GameListContext";
 import GameList from "./components/GameList";
-import GetCollectionForm from "./components/GetCollectionForm";
+import CollectionRequestContainer from "./components/CollectionRequestContainer"
 import { gameListFromLocal } from "./helpers/localStorageHelper";
 
 import './css/Home.css';
@@ -33,7 +33,7 @@ function Home() {
                 <Link to="/signup"><button>Sign Up</button></Link>
             </div>
             <h2>Or dive right in...</h2>
-            <GetCollectionForm />
+            <CollectionRequestContainer />
         </div>
     )
 
@@ -41,7 +41,7 @@ function Home() {
         <div className="Home">
             <h1>Game Night Helper</h1>
             <h2>Time to choose a game? I can help.</h2>
-            <GetCollectionForm />
+            <CollectionRequestContainer />
         </div>
     )
 }

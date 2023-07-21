@@ -54,7 +54,6 @@ function GameCard( {gameData} ) {
 
                 <div className="LeftBox">
                     <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />
-
                 </div>
                 <div className="RightBox">
                     <div className="GameName">

@@ -4,7 +4,7 @@ import '../css/GameCard.css';
 
 const entities = require("entities");
 
-function GameInfo( {gameData} ) {
+function GameDetails( {gameData} ) {
     console.log(gameData)
 
     const name = Array.isArray(gameData.name) ? gameData.name[0]._attributes.value : gameData.name._attributes.value;
@@ -29,4 +29,4 @@ function GameInfo( {gameData} ) {
     );
 };
 
-export default GameInfo;
+export default GameDetails;

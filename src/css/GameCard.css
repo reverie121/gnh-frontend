@@ -23,6 +23,7 @@
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
+    padding-right: 0px;
 }
 
 .Thumbnail {
@@ -36,14 +37,14 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding: 10px;
+    padding-right: 55px
 }
 
 .Rating {
     align-self: flex-end;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
     height: 40px;
     width: 40px;
     font-size: large;
@@ -83,7 +84,7 @@
 
 .YearPublished {
     font-size: smaller;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 
 .supplementaryData {
