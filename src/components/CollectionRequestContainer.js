@@ -11,14 +11,14 @@ import '../css/CollectionRequestForm.css';
 function CollectionRequestForm() {
     const { gameList, setGameList } = useContext(GameListContext);
 
-    function clearIt() {
+    function clearGameList() {
         setGameList();
         gameListClearLocal();
     }
 
     return(
         <div id="CollectionRequestContainer">
-            {gameList && <button onClick={clearIt}>Clear Game List</button>}
+            {gameList && <button onClick={clearGameList}>Clear Game List</button>}
             {!gameList &&
                 <GetCollectionForm />
             }

@@ -16,7 +16,7 @@ function UserProfile() {
 
     return(
         <div className="UserProfile">
-            <EditUserForm username={user.username} firstName={user.firstName} lastName={user.lastName} email={user.email} setUser={(user) => setUser(user)}/>
+            <EditUserForm username={user.username} bggUsername={user.bggUsername} firstName={user.firstName} lastName={user.lastName} email={user.email} setUser={(user) => setUser(user)}/>
         </div>
     )
 };

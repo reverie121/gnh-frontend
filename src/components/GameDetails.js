@@ -5,7 +5,6 @@ import '../css/GameCard.css';
 const entities = require("entities");
 
 function GameDetails( {gameData} ) {
-    console.log(gameData)
 
     const name = Array.isArray(gameData.name) ? gameData.name[0]._attributes.value : gameData.name._attributes.value;
 

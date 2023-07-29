@@ -11,6 +11,7 @@ function SignupForm() {
     const INITIAL_STATE = {
         username: "",
         password: "",
+        bggUsername: "", 
         firstName: "",
         lastName: "",
         email: ""
@@ -22,7 +23,7 @@ function SignupForm() {
     // Makes request to backend to regiser a new user.
     const registerNewUser = async () => {
         // Create userData object for post request to backend.
-        const userData = {username: formData.username, password: formData.password, firstName: formData.firstName, lastName: formData.lastName, email: formData.email};
+        const userData = {username: formData.username, password: formData.password, bggUsername: formData.bggUsername, firstName: formData.firstName, lastName: formData.lastName, email: formData.email};
         // If successful, put username and auth token into localStorage.        
         try {
             let token = await GameNightHelperAPI.registerUser(userData);
@@ -77,6 +78,17 @@ function SignupForm() {
                     onChange={handleChange}
                 />
             </div>
+            <div className="field">
+                <label htmlFor="bggUsername"></label>
+                <input
+                    id="bggUsername"
+                    type="text"
+                    name="bggUsername"
+                    placeholder="BGG Username"
+                    value={formData["bggUsername"]}
+                    onChange={handleChange}
+                />
+            </div>            
             <div className="field">
                 <label htmlFor="firstName"></label>
                 <input

@@ -42,14 +42,22 @@ class GameNightBGGHelperAPI {
     }
   }
 
-    /** Get a game. */
+  /** Get plays data for a user. */
 
-    static async getGame(id) {
-      console.debug('Requesting detailed game/s data.');
-      let res = await this.request(`thing?id=${id}&stats=1`);
-      return res.data;
-    }
-  
+  static async getPlays(username) {
+    console.debug(`Requesting plays data for user ${username}`);
+    let res = await this.request(`plays?username=${username}`);
+    return res.data;
+  }
+
+  /** Get data for one or more games. */
+
+  static async getGameData(id) {
+    console.debug('Requesting detailed game/s data.');
+    let res = await this.request(`thing?id=${id}&stats=1`);
+    return res.data;
+  }
+
 }
 
 export default GameNightBGGHelperAPI;

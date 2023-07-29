@@ -6,11 +6,12 @@ import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
 
 import '../css/EditUserForm.css';
 
-function editUserForm( { username, firstName, lastName, email, setUser } ) {
+function editUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
     const history = useHistory();
 
     const INITIAL_STATE = {
         username: username,
+        bggUsername: bggUsername !== null ? bggUsername : "", 
         firstName: firstName,
         lastName: lastName,
         email: email
@@ -23,7 +24,7 @@ function editUserForm( { username, firstName, lastName, email, setUser } ) {
     // Makes request to backend to edit user data.
     const editUserData = async () => {
         // Create userData object for patch request to backend.
-        const userData = {username: formData.username, firstName: formData.firstName, lastName: formData.lastName, email: formData.email};
+        const userData = {username: formData.username, bggUsername: formData.bggUsername, firstName: formData.firstName, lastName: formData.lastName, email: formData.email};
         // If successful, update form values and indicate success for process message.
         try {
             let res = await GameNightHelperAPI.editUser(userData);
@@ -70,6 +71,16 @@ function editUserForm( { username, firstName, lastName, email, setUser } ) {
                 value={formData["username"]}
                 onChange={handleChange}
             />
+            </div>
+            <div className="field">
+                <label htmlFor="bggUsername">BGG Username</label>
+                <input
+                    id="bggUsername"
+                    type="text"
+                    name="bggUsername"
+                    value={formData["bggUsername"]}
+                    onChange={handleChange}
+                />
             </div>
             <div className="field">
                 <label htmlFor="firstName">First Name</label>

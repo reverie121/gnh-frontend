@@ -40,7 +40,7 @@ function GetCollectionForm() {
             // Convert id set into a comma-separated string for request.
             const idList = [...idSet].join(",");
             // Make request for game details for all unique games in collection.
-            const res2 = await GameNightBGGHelperAPI.getGame(idList);
+            const res2 = await GameNightBGGHelperAPI.getGameData(idList);
             const data2 = JSON.parse(
                 convert.xml2json(res2, { compact: true, spaces: 2 })
             );
@@ -53,8 +53,6 @@ function GetCollectionForm() {
             console.error(err);
             setEditProcess('failure');
         }
-
-
     }
 
     // Add another username input for additional collection request.
