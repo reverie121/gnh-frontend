@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import GameListContext from "../context/GameListContext";
 
 import { gameListFromLocal } from "../helpers/localStorageHelper";
+import { computePlayerAge } from "../helpers/gameData";
 
 import '../css/FilterForm.css';
 
@@ -10,18 +11,21 @@ function FilterForm() {
     const { setGameList } = useContext(GameListContext);
 
     const INITIAL_STATE = {
+        gameTitle: "",
         gameRating: "",
+        playTime: "",
         playerCount: "",
-        minPlayTime: "",
-        maxPlayTime: "",
         minWeight: "",
-        maxWeight: ""
+        maxWeight: "",
+        minAge: ""
     }
 
     const INITIAL_CHECKBOX_STATE = {
         playerCountOfficial: false,
         playerCountBest: true,
-        playerCountRecommended: true
+        playerCountRecommended: true,
+        publisherMinAge: true,
+        communityMinAge: false
     }
 
     // Sets State for the form data and process message.
@@ -48,8 +52,24 @@ function FilterForm() {
     const filterGames = () => {
         // Initialize list from local storage for filtering.
         let listToFilter = gameListFromLocal();
+        // Filter by title, as required.
+        if (formData.gameTitle) {
+            listToFilter = listToFilter.filter(g => 
+                Array.isArray(g.name) ? 
+                g.name[0]._attributes.value.toLowerCase().includes(formData.gameTitle.toLowerCase())
+                : 
+                g.name._attributes.value.toLowerCase().includes(formData.gameTitle.toLowerCase())
+            );
+        };
         // Filter by minimum rating, as required.
         if (formData.gameRating) listToFilter = listToFilter.filter(g => Number(g.statistics.ratings.average._attributes.value).toFixed(1) >= formData.gameRating);
+        // Filter by play time, as required.
+        if (formData.playTime) listToFilter = listToFilter.filter(
+                g => 
+                Number(g.minplaytime._attributes.value) <= formData.playTime 
+                && 
+                Number(g.maxplaytime._attributes.value) >= formData.playTime
+            );          
         // Filter by player count, as required.
         if (formData.playerCount) {
             // Filter logic for official player count.
@@ -103,14 +123,18 @@ function FilterForm() {
                 )                
             }
         }
-        // Filter by minimum play time, as required.
-        if (formData.minPlayTime) listToFilter = listToFilter.filter(g => Number(g.minplaytime._attributes.value) >= formData.minPlayTime);  
-        // Filter by maximum play time, as required.
-        if (formData.maxPlayTime) listToFilter = listToFilter.filter(g => Number(g.maxplaytime._attributes.value) <= formData.maxPlayTime);           
         // Filter by minimum weight, as required.
         if (formData.minWeight) listToFilter = listToFilter.filter(g => g.statistics.ratings.averageweight._attributes.value >= formData.minWeight);  
         // Filter by maximum weight, as required.
         if (formData.maxWeight) listToFilter = listToFilter.filter(g => g.statistics.ratings.averageweight._attributes.value <= formData.maxWeight);           
+        // Filter by minimum age, as required.
+        if (formData.minAge) {
+            // Filter logic for official minimum age.
+            if (checkboxes.publisherMinAge === true) listToFilter = listToFilter.filter(g => g.minage._attributes.value !== "0" && Number(g.minage._attributes.value) <= formData.minAge);     
+            // Filter logic for community voted minimum age.
+            if (checkboxes.communityMinAge === true) listToFilter = listToFilter.filter(g => g.poll[1]._attributes.totalvotes !== "0" && Number(computePlayerAge(g)) <= formData.minAge);
+        }
+
         // Return filtered list.
         return listToFilter;
     }
@@ -132,9 +156,17 @@ function FilterForm() {
         <form className="FilterForm">
             <div className="filters">
                 <div id="individualFiltersBox">
+                <div className="formField">
+                        <label htmlFor="gameTitle">Title </label>
+                        <input name="gameTitle" id="gameTitle" type="text" value={formData["gameTitle"]} onChange={handleChange} />
+                    </div>
                     <div className="formField">
-                        <label htmlFor="gameRating">Min. Avg. Game Rating </label>
+                        <label htmlFor="gameRating">Min. (Avg.) Rating </label>
                         <input name="gameRating" id="gameRating" type="number" min={0} value={formData["gameRating"]} onChange={handleChange} />
+                    </div>
+                    <div className="formField">
+                        <label htmlFor="playTime">Play Time (Minutes) </label>
+                        <input name="playTime" id="playTime" type="number" min={0} value={formData["playTime"]} onChange={handleChange} />
                     </div>
                 </div>
 
@@ -163,19 +195,6 @@ function FilterForm() {
                             </div>
                     </div>
                 </div>
-
-                <div id="playTimeBox">
-                    <h4><i className="fa-solid fa-question tooltip" /> Play Time</h4>
-                    <div className="formField">
-                        <label htmlFor="minPlayTime">Min. </label>
-                        <input name="minPlayTime" id="minPlayTime" type="number" min={0} value={formData["minPlayTime"]} onChange={handleChange} />
-                    </div>
-                    <div className="formField">
-                        <label htmlFor="maxPlayTime">Max. </label>
-                        <input name="maxPlayTime" id="maxPlayTime" type="number" min={0} value={formData["maxPlayTime"]} onChange={handleChange} />
-                    </div>
-                </div>
-
                 <div id="weightBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Game Weight</h4>
                     <div className="formField">
@@ -186,6 +205,26 @@ function FilterForm() {
                         <label htmlFor="maxWeight">Max. </label>
                         <input name="maxWeight" id="maxWeight" type="number" min={0} max={5} value={formData["maxWeight"]} onChange={handleChange} />
                     </div>
+                </div>
+                <div id="ageBox">
+                    <h4><i className="fa-solid fa-question tooltip" /> Min. Age</h4>
+                    <div className="formField">
+                        <label htmlFor="minAge"></label>
+                        <input name="minAge" id="minAge" type="number" min={1} value={formData["minAge"]} onChange={handleChange} />
+                    </div>
+                    <div className="checkboxContainer">
+                            <label htmlFor="publisherMinAge">Publisher</label>
+                            <div className="chekboxSubContainer">
+                                <input type="checkbox" name="publisherMinAge" id="publisherMinAge" value="publisherMinAge" checked={checkboxes['publisherMinAge']} onChange={handleCheckbox} />
+                            </div>
+                    </div>
+                    <div className="checkboxContainer">
+                            <label htmlFor="communityMinAge">Community</label>
+                            <div className="chekboxSubContainer">
+                                <input type="checkbox" name="communityMinAge" id="communityMinAge" value="communityMinAge" checked={checkboxes['communityMinAge']} onChange={handleCheckbox} />  
+                            </div>
+                    </div>
+
                 </div>
             </div>
             <div id="buttonContainer">

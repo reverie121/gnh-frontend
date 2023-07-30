@@ -11,7 +11,7 @@
     justify-content: flex-start;
 }
 
-#individualFiltersBox, #playerCountBox, #playTimeBox, #weightBox {
+#individualFiltersBox, #playerCountBox, #weightBox, #ageBox {
     padding: 5px;
     display: flex;
     flex-direction: column;

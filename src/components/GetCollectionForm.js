@@ -33,7 +33,7 @@ function GetCollectionForm() {
             const data = JSON.parse(
                 convert.xml2json(res, { compact: true, spaces: 2 })
             );
-            // Get a set (no duplicates) of IDs from collection.
+            // Get a set (exclude duplicates) of IDs from collection.
             const idSet = new Set(
                 Object.values(data.items.item).map(g => g._attributes.objectid)
             );
