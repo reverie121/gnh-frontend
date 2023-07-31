@@ -20,8 +20,8 @@ function gameListToLocal(gamelist) {
 
 function gameListFromLocal() {
     if (localStorage.getItem("gamelist") !== undefined) {
-        const gamelist = localStorage.getItem("gamelist");
-        return JSON.parse(gamelist);
+        const gamelistData = localStorage.getItem("gamelist");
+        return JSON.parse(gamelistData);
     };
 }
 
@@ -29,4 +29,19 @@ function gameListClearLocal() {
     localStorage.removeItem("gamelist");
 }
 
-export { userToLocal, userFromLocal, userClearLocal, gameListToLocal, gameListFromLocal, gameListClearLocal };
+function bggUserToLocal(bggUser) {
+    localStorage.setItem("bgguser", JSON.stringify(bggUser));
+}
+
+function bggUserFromLocal() {
+    if (localStorage.getItem("bgguser") !== undefined) {
+        const bgguserData = localStorage.getItem("bgguser");
+        return JSON.parse(bgguserData);
+    };
+}
+
+function bggUserClearLocal() {
+    localStorage.removeItem("bgguser");
+}
+
+export { userToLocal, userFromLocal, userClearLocal, gameListToLocal, gameListFromLocal, gameListClearLocal, bggUserToLocal, bggUserFromLocal, bggUserClearLocal };

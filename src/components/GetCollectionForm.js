@@ -1,12 +1,10 @@
 import React, { useState, useContext } from "react";
 
-import GameNightBGGHelperAPI from "../api/bgg-api";
 import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
 import ProcessResponseMessage from "./ProcessResponseMessage";
-
-const convert = require("xml-js");
+import getBGGGameData from "../helpers/getBGGGameData";
 
 function GetCollectionForm() {
 
@@ -27,24 +25,7 @@ function GetCollectionForm() {
     // Return detailed game data from a collection request.
     const handleQuery = async () => {
         try {
-            let username = formData.username1;
-            // Make request for collection data.
-            const res = await GameNightBGGHelperAPI.getCollection(username);
-            const data = JSON.parse(
-                convert.xml2json(res, { compact: true, spaces: 2 })
-            );
-            // Get a set (exclude duplicates) of IDs from collection.
-            const idSet = new Set(
-                Object.values(data.items.item).map(g => g._attributes.objectid)
-            );
-            // Convert id set into a comma-separated string for request.
-            const idList = [...idSet].join(",");
-            // Make request for game details for all unique games in collection.
-            const res2 = await GameNightBGGHelperAPI.getGameData(idList);
-            const data2 = JSON.parse(
-                convert.xml2json(res2, { compact: true, spaces: 2 })
-            );
-            const gameData = data2.items.item
+            const gameData = await getBGGGameData(formData.username1);
             // Update state.
             setGameList(Object.values(gameData));
             gameListToLocal(Object.values(gameData));

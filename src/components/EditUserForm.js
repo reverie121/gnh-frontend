@@ -61,7 +61,7 @@ function editUserForm( { username, bggUsername, firstName, lastName, email, setU
 
     return(
         <form>
-            <h2>Profile</h2>
+            <h2>User Details</h2>
             <div className="field">
             <label htmlFor="username">Username</label>
             <input disabled

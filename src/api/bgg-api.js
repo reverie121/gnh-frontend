@@ -42,10 +42,48 @@ class GameNightBGGHelperAPI {
     }
   }
 
+  /** Get a wishlist. */
+
+  static async getWishlist(username) {
+    let res = await this.request(`collection?username=${username}&excludesubtype=boardgameexpansion&wishlist=1`);
+    if (res.status === 202) {
+      setTimeout(() => {
+        console.debug('Response in queue. Repeating request after 1 second.');
+        this.getCollection(username);
+      }, 20000)
+    } else {
+      console.debug('Wishlist data received.')
+      return res.data;
+    }
+  }  
+
+  /** Get a want-to-play list. */
+
+  static async getWantToPlayList(username) {
+    let res = await this.request(`collection?username=${username}&excludesubtype=boardgameexpansion&wanttoplay=1`);
+    if (res.status === 202) {
+      setTimeout(() => {
+        console.debug('Response in queue. Repeating request after 1 second.');
+        this.getCollection(username);
+      }, 20000)
+    } else {
+      console.debug('Wishlist data received.')
+      return res.data;
+    }
+  }  
+
+  /** Get a user. */
+
+  static async getUser(username) {
+    console.debug(`Requesting user data for BGG user ${username}`);
+    let res = await this.request(`user?name=${username}&buddies=1&guilds=1&hot=1&top=1&domain=boardgame`);
+    return res.data;
+  }
+
   /** Get plays data for a user. */
 
   static async getPlays(username) {
-    console.debug(`Requesting plays data for user ${username}`);
+    console.debug(`Requesting plays data for BGG user ${username}`);
     let res = await this.request(`plays?username=${username}`);
     return res.data;
   }

@@ -1,4 +1,4 @@
-.UserProfile form {
+.EditUser form {
     background-color: indigo;
     width: 500px;
     margin-top: 0.5rem;
@@ -9,34 +9,34 @@
     border-style:outset;
 }
 
-.UserProfile h2 {
+.EditUser h2 {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     color: white;
 }
 
-.UserProfile label {
+.EditUser label {
     margin-top: 0.4rem;
     color: white;
     font-size: 1.1rem;
     font-weight: bold;
 }
 
-.UserProfile input {
+.EditUser input {
     margin-top: 0.4rem;
     width: 390px;
     font-size: 1.1rem;
     border-radius: 0.2rem;
 }
 
-.UserProfile .field {
+.EditUser .field {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-.UserProfile button {
+.EditUser button {
     margin-top: 0.5rem;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
@@ -49,7 +49,7 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.UserProfile button:hover {
+.EditUser button:hover {
     background-color: aqua;
     color: indigo;
 }

@@ -7,7 +7,7 @@ import '../css/GameCard.css';
 /* Component for displaying game summary cards in a game list. */
 
 function GameCard( {gameData} ) {
-    console.log(gameData)
+    // console.log(gameData)
 
     // Get game name or, if multiple, get first name from array of names.
     const name = Array.isArray(gameData.name) ? gameData.name[0]._attributes.value : gameData.name._attributes.value;
@@ -51,7 +51,7 @@ function GameCard( {gameData} ) {
                         {name} <span className="YearPublished">({gameData.yearpublished._attributes.value})</span>
                     </div>
                     <div>
-                        <a href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} className="BGGLink">View@BGG</a>
+                        <a href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} target="_blank" rel="noopener noreferrer" className="BGGLink">View@BGG</a>
                     </div>
                     <div className="PlayerCount">
                         Player Count: {playerCount}

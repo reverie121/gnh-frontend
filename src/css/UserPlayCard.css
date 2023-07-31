@@ -1,0 +1,46 @@
+.UserPlayCard {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    margin: 0.3rem;
+    border: solid;
+    border-color: rebeccapurple;
+    box-shadow: 1px 1px indigo;
+    border-radius: 3px;
+    border-width: 2px;;
+    position: relative;
+}
+
+.TitleBar {
+    background-color: indigo;
+    color: aqua;
+    text-shadow: 1px 1px black;
+    padding-left: 5px;
+}
+
+.BoxContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.GameTitle {
+    color: indigo;
+}
+
+.LeftBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    padding-right: 0px;
+}
+
+.RightBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    padding-right: 55px;
+}

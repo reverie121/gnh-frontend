@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserProfile from "./components/UserProfile";
+import EditUser from "./components/EditUser";
 import Home from "./Home";
 
 function Routes() {
@@ -17,6 +18,9 @@ function Routes() {
             </Route>
             <Route exact path="/profile">
                 <UserProfile />
+            </Route>            
+            <Route exact path="/edituser">
+                <EditUser />
             </Route>
             <Route exact path="/">
                 <Home />
