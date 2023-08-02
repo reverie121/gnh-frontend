@@ -4,6 +4,7 @@ import bouncer from "../helpers/bouncer";
 import getBGGUserData from "../helpers/getBGGUserData";
 import UserContext from "../context/UserContext";
 import GameListContext from "../context/GameListContext";
+import { gameListToLocal } from "../helpers/localStorageHelper";
 
 import GameList from "./GameList";
 import UserPlaysList from "./UserPlaysList";
@@ -31,6 +32,7 @@ function UserProfile() {
     useEffect(() => {
         if (bggUser && bggUser.userGames) {
             const collectionGameList = bggUser.userGames.filter(g => bggUser.userCollectionIDs.includes(g._attributes.id))
+            gameListToLocal(collectionGameList);
             setGameList(collectionGameList);
         }
     }, [bggUser]);
@@ -38,8 +40,6 @@ function UserProfile() {
     // Call the bouncer.
     let b = bouncer(user, setUser);
     if (b) return b;
-
-    console.log(bggUser)
 
     return(
         <div className="UserProfile">

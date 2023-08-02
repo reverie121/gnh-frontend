@@ -2,6 +2,7 @@ import { xml2json } from "xml-js";
 
 import GameNightBGGHelperAPI from "../api/bgg-api";
 import getBGGGameData from "./getBGGGameData";
+import parseLinkData from "./bggUserDataParser";
 import { bggUserToLocal } from "./localStorageHelper";
 
 const getBGGUserData = async (bggUsername) => {
@@ -36,7 +37,6 @@ const getBGGUserData = async (bggUsername) => {
     const userPlays = JSON.parse(xml2json(userPlaysData, { compact: true, spaces: 2 }));
     let userPlayIDs = [];
     if (userPlays.plays._attributes.total !== "0") {
-        console.log(`it's an array!!!`)
         Object.values(userPlays.plays.play.map(p => userPlayIDs.push(p.item._attributes.objectid)));
     }
 
@@ -51,8 +51,15 @@ const getBGGUserData = async (bggUsername) => {
         userPlays
     };
 
-    bggUserToLocal(bggUser);
+    // if (userGames && userCollectionIDs) {
+    //     const userCollectionGameList = userGames.filter(g => userCollectionIDs.includes(g._attributes.id));
+    //     const userCollectionDemographics = parseLinkData(userCollectionGameList);
+    //     console.log(userCollectionDemographics)
+    //     bggUser['userCollectionDemographics'] = userCollectionDemographics;
+    // }
 
+    bggUserToLocal(bggUser);
+    
     return(bggUser);
 };
 

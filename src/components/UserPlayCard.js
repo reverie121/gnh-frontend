@@ -14,7 +14,7 @@ function UserPlayCard( { play } ) {
             <div className="TitleBar"><h4>{play._attributes.date}</h4></div>
             <div className="BoxContainer">
                 <div className="LeftBox">
-                    <img src={src} alt={play.item._attributes.name} />
+                    <img className="Thumbnail" src={src} alt={play.item._attributes.name} />
                 </div>
                 <div className="RightBox">
                     <div className="GameTitle"><h4>{play.item._attributes.name}</h4></div>

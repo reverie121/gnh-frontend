@@ -10,7 +10,7 @@ import '../css/GameList.css';
 
 function GameList() {
     const { gameList } = useContext(GameListContext);
-    console.log(gameList)
+
     return(
         <div className="GameList">
             <FilterBox />
