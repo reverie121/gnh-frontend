@@ -9,10 +9,10 @@ const getGameData = async (gameIDArray) => {
     const idList = [...idSet].join(",");
     // Make request for game details for all unique games in collection.
     const res2 = await GameNightBGGHelperAPI.getGameData(idList);
-    const data2 = JSON.parse(
+    const data = JSON.parse(
         convert.xml2json(res2, { compact: true, spaces: 2 })
     );
-    const gameData = data2.items.item
+    const gameData = data.items.item
 
     return gameData;
 }

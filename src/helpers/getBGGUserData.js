@@ -2,7 +2,7 @@ import { xml2json } from "xml-js";
 
 import GameNightBGGHelperAPI from "../api/bgg-api";
 import getBGGGameData from "./getBGGGameData";
-import parseLinkData from "./bggUserDataParser";
+// import parseLinkData from "./bggUserDataParser";
 import { bggUserToLocal } from "./localStorageHelper";
 
 const getBGGUserData = async (bggUsername) => {

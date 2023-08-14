@@ -2,16 +2,19 @@ import React from "react";
 
 import FilterForm from "./FilterForm";
 
+import SortingForm from "./SortingForm";
+
 import CollectionRequestContainer from "./CollectionRequestContainer"
 
-function FilterBox() {
+function CollectionInputsBox() {
 
     return(
         <div>
             <FilterForm />
+            <SortingForm />
             <CollectionRequestContainer />
         </div>
     );
 };
 
-export default FilterBox;
+export default CollectionInputsBox;

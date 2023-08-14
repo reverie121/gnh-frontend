@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import GameListContext from "../context/GameListContext";
 
-import FilterBox from "./FilterBox";
+import CollectionInputsBox from "./CollectionInputsBox";
 
 import GameCard from "./GameCard";
 
@@ -13,7 +13,7 @@ function GameList() {
 
     return(
         <div className="GameList">
-            <FilterBox />
+            <CollectionInputsBox />
             {gameList.map(g => <GameCard key={g._attributes.id} gameData={g}/>)}
         </div>
     );
