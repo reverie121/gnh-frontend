@@ -1,3 +1,7 @@
+// Takes as input a gameList.
+// Outputs arrays of values, their IDs, and the number of times they appear in the collection for game categories, mechanics, and families.
+// Not currently in use.
+
 const parseLinkData = (gameList) => {
     let categories = [];
     let mechanics = [];

@@ -80,14 +80,14 @@ input::-webkit-inner-spin-button {
     justify-content: center;
 }
 
-#buttonContainer {
+.buttonContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-#buttonContainer button {
+.buttonContainer button {
     margin: 5px;
     border-radius: 0.25rem;
     font-size: 1.1rem;
@@ -97,7 +97,7 @@ input::-webkit-inner-spin-button {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-#buttonContainer button:hover {
+.buttonContainer button:hover {
     background-color: aqua;
     color: indigo;
 }

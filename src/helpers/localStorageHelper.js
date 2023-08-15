@@ -1,3 +1,6 @@
+// Helper for all localStorage interactions.
+
+// USER
 function userToLocal(t, u) {
     localStorage.setItem("token", t);
     localStorage.setItem("username", u);
@@ -14,6 +17,7 @@ function userClearLocal() {
     localStorage.removeItem("username");
 }
 
+// GAMELIST
 function gameListToLocal(gamelist) {
     localStorage.setItem("gamelist", JSON.stringify(gamelist));
 }
@@ -29,6 +33,7 @@ function gameListClearLocal() {
     localStorage.removeItem("gamelist");
 }
 
+// BGG USER
 function bggUserToLocal(bggUser) {
     localStorage.setItem("bgguser", JSON.stringify(bggUser));
 }

@@ -2,21 +2,24 @@ import GameNightBGGHelperAPI from "../api/bgg-api";
 
 const convert = require("xml-js");
 
+// Makes an API get request to BGG API for data for multiple games. Takes an array of game IDs as input.
 const getGameData = async (gameIDArray) => {
     // Get a set (exclude duplicates) of IDs from collection.
     const idSet = new Set(gameIDArray);
     // Convert id set into a comma-separated string for request.
     const idList = [...idSet].join(",");
     // Make request for game details for all unique games in collection.
-    const res2 = await GameNightBGGHelperAPI.getGameData(idList);
+    const res = await GameNightBGGHelperAPI.getGameData(idList);
     const data = JSON.parse(
-        convert.xml2json(res2, { compact: true, spaces: 2 })
+        convert.xml2json(res, { compact: true, spaces: 2 })
     );
     const gameData = data.items.item
 
     return gameData;
 }
 
+// Makes multiple get requests to BGG API to get game data for a collection or user. Collection requests provide limited game data, so a followup game request is required using IDs from the collection/s.
+// Process: One or more collection requests => make list of game IDs => request for data for all games from list.
 const getBGGGameData = async (bggUsername, mode="collection", playsIDs) => {
 
     let gameIDArray = [];
@@ -30,6 +33,7 @@ const getBGGGameData = async (bggUsername, mode="collection", playsIDs) => {
         }
     }
     
+    // User requests get game data for the user's collection as well as other potential lists of games relevant to that user.
     if (mode === "user") {
         const [ collectionRes, WishlistRes, WantToPlayRes ] = await Promise.all([
             GameNightBGGHelperAPI.getCollection(bggUsername), 
@@ -40,12 +44,14 @@ const getBGGGameData = async (bggUsername, mode="collection", playsIDs) => {
         getIDArrayFromCollection(WishlistRes);
         getIDArrayFromCollection(WantToPlayRes);
         gameIDArray.push(...playsIDs);                   
-    } else {
-        // Make request for collection data.
+    }
+    // If not a user request, make simple request for collection data.
+    else {
         const res = await GameNightBGGHelperAPI.getCollection(bggUsername);
         getIDArrayFromCollection(res);
     }
 
+    // User array of game IDs is used to request detailed game information from BGG.
     const gameData = await getGameData(gameIDArray);
 
     return(gameData);

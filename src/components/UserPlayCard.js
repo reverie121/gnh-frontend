@@ -1,3 +1,5 @@
+// Displays data for a BGG user's Logged Play.
+
 import React from "react";
 
 import { bggUserFromLocal } from "../helpers/localStorageHelper";

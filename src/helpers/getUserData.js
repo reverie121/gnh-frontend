@@ -1,3 +1,5 @@
+// Gets site (not BGG) user data via get request.
+
 import GameNightHelperAPI from "../api/gnh-api";
 
 const getUserData = async (username, setUser) => {

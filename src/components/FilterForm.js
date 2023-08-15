@@ -227,7 +227,7 @@ function FilterForm() {
 
                 </div>
             </div>
-            <div id="buttonContainer">
+            <div className="buttonContainer">
                 <button onClick={handleFilter}>Filter Games</button>
                 <button onClick={bringTheLuck}>I'm Feeling Lucky!</button>
             </div>

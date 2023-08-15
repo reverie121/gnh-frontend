@@ -1,3 +1,5 @@
+// Displays BGG data for a game.
+
 import React from "react";
 
 import { computePlayerCount, computePlayerAge } from "../helpers/gameData";

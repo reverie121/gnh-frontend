@@ -1,3 +1,5 @@
+// Displays a list of GameCards from gameList with user input form.
+
 import React, { useContext } from "react";
 
 import GameListContext from "../context/GameListContext";

@@ -1,3 +1,5 @@
+// Not currently implemented. This component will be used for game details popups when an image in a GameCard is clicked.
+
 import React from "react";
 
 import '../css/GameCard.css';
