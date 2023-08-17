@@ -146,11 +146,12 @@ function SortingForm() {
         setGameList(results);
     }
 
-    const handleClearSort = (e) => {
-        e.preventDefault();
-        setSelections(INITIAL_SELECTION_STATE);
-        setRadios(INITIAL_RADIO_STATE);
-    }
+    // Not currently used.
+    // const handleClearSort = (e) => {
+    //     e.preventDefault();
+    //     setSelections(INITIAL_SELECTION_STATE);
+    //     setRadios(INITIAL_RADIO_STATE);
+    // }
 
     return(
         <form className="SortingForm">

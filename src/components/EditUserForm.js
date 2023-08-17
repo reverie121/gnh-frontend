@@ -6,7 +6,7 @@ import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
 
 import '../css/EditUserForm.css';
 
-function editUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
+function EditUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
     const history = useHistory();
 
     const INITIAL_STATE = {
@@ -118,4 +118,4 @@ function editUserForm( { username, bggUsername, firstName, lastName, email, setU
     );
 };
 
-export default editUserForm
+export default EditUserForm
