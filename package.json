@@ -12,7 +12,6 @@
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.1",
     "react-scripts": "^4.0.0",
-    "react-select": "^5.7.4",
     "xml-js": "^1.6.11"
   },
   "scripts": {

@@ -17,7 +17,7 @@ function Home() {
     useEffect(() => {
         const localGameList = gameListFromLocal();
         if (localGameList) setGameList(localGameList);
-    }, [])
+    }, [setGameList])
 
     if (gameList) return (
         <GameList />

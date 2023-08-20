@@ -35,7 +35,7 @@ function UserProfile() {
             gameListToLocal(collectionGameList);
             setGameList(collectionGameList);
         }
-    }, [bggUser]);
+    }, [bggUser, setGameList]);
 
     // Call the bouncer.
     let b = bouncer(user, setUser);

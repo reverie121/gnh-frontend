@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import Select from "react-select";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
 
@@ -21,45 +21,39 @@ function SortingForm() {
     }
 
     const primarySelectOptions = [
-        { sortID: "primary", value: "rating", label: "Rating" },
-        { sortID: "primary", value: "title", label: "Title" },
-        { sortID: "primary", value: "weight", label: "Weight" }
+        { name: "primary", value: "rating", label: "Rating" },
+        { name: "primary", value: "title", label: "Title" },
+        { name: "primary", value: "weight", label: "Weight" }
     ]
 
     const secondarySelectOptions = [
-        { sortID: "secondary", value: "rating", label: "Rating" },
-        { sortID: "secondary", value: "title", label: "Title" },
-        { sortID: "secondary", value: "weight", label: "Weight" }
+        { name: "secondary", value: "rating", label: "Rating" },
+        { name: "secondary", value: "title", label: "Title" },
+        { name: "secondary", value: "weight", label: "Weight" }
     ]
 
     const tertiarySelectOptions = [
-        { sortID: "tertiary", value: "rating", label: "Rating" },
-        { sortID: "tertiary", value: "title", label: "Title" },
-        { sortID: "tertiary", value: "weight", label: "Weight" }
+        { name: "tertiary", value: "rating", label: "Rating" },
+        { name: "tertiary", value: "title", label: "Title" },
+        { name: "tertiary", value: "weight", label: "Weight" }
     ]
 
     // Sets State for the form data and process message.
     const [selections, setSelections] = useState(INITIAL_SELECTION_STATE);
     const [radios, setRadios] = useState(INITIAL_RADIO_STATE);
 
-    // Sets styling for Select components.
-    const selectStyles = {
-        control: (styles) => ({...styles, minWidth: "100px"})
-    }
-
     // Handles value changes (for inputs).
-    const handleSelect = (option) => {
-        const { sortID, value } = option;
+    const handleSelect = (e) => {
+        const { name, value } = e.target;
         setSelections(selections => ({
             ...selections,
-            [sortID]: value
+            [name]: value
         }))
     }
 
     // Handles value changes for radio inputs.
     const handleRadio = (e) => {
         const { name, value } = e.target
-        console.log(name, value)
         setRadios(radios => ({
             ...radios, 
             [name]: value
@@ -157,8 +151,21 @@ function SortingForm() {
         <form className="SortingForm">
             <div id="sortingBoxContainer">
                 <div className="sortingBox">
-                    <Select inputID="primarySort" options={primarySelectOptions} onChange={handleSelect} styles={selectStyles} />
-                    <div  className="sortingDirectionBox" onChange={handleRadio}>
+                    <InputLabel id="primary-sort-label">Primary Sort</InputLabel>
+                    <Select 
+                        fullWidth 
+                        labelId="primary-sort-label"
+                        id="primarySort" 
+                        name="primary"
+                        label="Primary Sort"
+                        onChange={handleSelect} 
+                        value={selections.primary}
+                    >
+                        {primarySelectOptions.map(o => 
+                            <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                        )}
+                    </Select>
+                    <div className="sortingDirectionBox" onChange={handleRadio}>
                         <div>
                             <input type="radio" value="primaryAscending" name="primarySortDirection" />
                             <label htmlFor="primaryAscending">Ascending</label>
@@ -170,7 +177,20 @@ function SortingForm() {
                     </div>                    
                 </div>
                 <div className="sortingBox">
-                    <Select options={secondarySelectOptions} onChange={handleSelect} styles={selectStyles} />
+                <InputLabel id="secondary-sort-label">Secondary Sort</InputLabel>
+                    <Select 
+                        fullWidth 
+                        labelId="secondary-sort-label"
+                        id="secondarySort" 
+                        name="secondary"
+                        label="Secondary Sort"
+                        onChange={handleSelect} 
+                        value={selections.secondary}
+                    >
+                        {secondarySelectOptions.map(o => 
+                            <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                        )}
+                    </Select>
                     <div  className="sortingDirectionBox" onChange={handleRadio}>
                         <div>
                             <input type="radio" value="secondaryAscending" name="secondarySortDirection" />
@@ -183,7 +203,20 @@ function SortingForm() {
                     </div>                               
                 </div>
                 <div className="sortingBox">
-                    <Select options={tertiarySelectOptions} onChange={handleSelect} styles={selectStyles} />
+                    <InputLabel id="tertiary-sort-label">Tertiary Sort</InputLabel>
+                    <Select 
+                        fullWidth 
+                        labelId="tertiary-sort-label"
+                        name="tertiary"
+                        id="tertiarySort" 
+                        label="Tertiary Sort"
+                        onChange={handleSelect} 
+                        value={selections.tertiary}
+                    >
+                        {tertiarySelectOptions.map(o => 
+                            <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                        )}
+                    </Select>
                     <div  className="sortingDirectionBox" onChange={handleRadio}>
                         <div>
                             <input type="radio" value="tertiaryAscending" name="tertiarySortDirection" />
