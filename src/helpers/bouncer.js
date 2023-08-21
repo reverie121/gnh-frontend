@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Navigate } from "react-router-dom";
 
 import { userFromLocal } from "./localStorageHelper";
 import getUserData from "./getUserData";
@@ -11,7 +11,7 @@ const bouncer = (user, setUser) => {
     // If required data is not in local storage, redirect to login page.
     if (!token || !username) {
         console.debug('Token and/or username not present in local storage. Redirecting to login page.')
-        return <Redirect to='/login' />;
+        return <Navigate to='/login' />;
     }
 
     // If user data is not present in state get user data from backend.

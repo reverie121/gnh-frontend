@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink } from "react-router-dom";
 
 import { userClearLocal } from "./helpers/localStorageHelper";
 import UserContext from "./context/UserContext";
@@ -9,7 +9,6 @@ import './css/Nav.css';
 function Nav() {
 
     const { user, setUser } = useContext(UserContext)
-    const { pathname } = useLocation();
 
     const [hamburger, setHamburger] = useState("fa-solid fa-bars");
     const [navClass, setNavClass] = useState("");
@@ -36,11 +35,11 @@ function Nav() {
 
     return(
         <nav id="Nav">
-            <NavLink to="../" isActive={() => pathname === "/"}>Game Night Helper</NavLink>
+            <NavLink to="../">Game Night Helper</NavLink>
             <div id="UserNav" className={navClass}>
                 {isLoggedIn() && <NavLink to="../profile">User Profile</NavLink>}
                 {isLoggedIn() && <NavLink to="../edituser">Edit User</NavLink>}
-                {isLoggedIn() && <NavLink to="../" onClick={logout} isActive={() => pathname === "/logout"}>Log Out {user.username}</NavLink>}
+                {isLoggedIn() && <NavLink to="../" onClick={logout}>Log Out {user.username}</NavLink>}
                 {!isLoggedIn() && <NavLink to="../login">Log In</NavLink>}
                 {!isLoggedIn() && <NavLink to="../signup">Sign Up</NavLink>}
             </div>

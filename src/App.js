@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 
 import Nav from './Nav';
-import Routes from './Routes';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './Routes';
 
 import UserContext from './context/UserContext';
 import GameListContext from './context/GameListContext';
@@ -16,16 +17,19 @@ function App() {
     const [gameList, setGameList] = useState();
 
     return (
-        <div className="App">
-            <UserContext.Provider value={{ user, setUser }}>
-                <Nav />
-                <div className="PageContent">
-                    <GameListContext.Provider value={{ gameList, setGameList }}>
-                        <Routes />
-                    </GameListContext.Provider>
-                </div>
-            </UserContext.Provider>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <UserContext.Provider value={{ user, setUser }}>
+                    <Nav />
+                    <div className="PageContent">
+                        <GameListContext.Provider value={{ gameList, setGameList }}>
+                            <AppRoutes />
+                        </GameListContext.Provider>
+                    </div>
+                </UserContext.Provider>
+            </div>
+        </BrowserRouter>
+
     );
 }
 

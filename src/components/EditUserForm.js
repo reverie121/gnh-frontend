@@ -1,5 +1,5 @@
 import React, {useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 
 import GameNightHelperAPI from "../api/gnh-api";
 import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
@@ -7,7 +7,7 @@ import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
 import '../css/EditUserForm.css';
 
 function EditUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const INITIAL_STATE = {
         username: username,
@@ -56,7 +56,7 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
         // Edits user data and updates form state. ***
         editUserData();
         // Redirect to user profile.
-        history.push("./profile");
+        navigate("/profile");
     }        
 
     return(
