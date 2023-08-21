@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { InputLabel, Select, MenuItem } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
 

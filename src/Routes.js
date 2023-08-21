@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Routes, Route } from "react-router-dom";
 
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
@@ -7,29 +7,17 @@ import UserProfile from "./components/UserProfile";
 import EditUser from "./components/EditUser";
 import Home from "./Home";
 
-function Routes() {
+function AppRoutes() {
     return(
-        <Switch>
-            <Route exact path="/login">
-                <LoginForm />
-            </Route>
-            <Route exact path="/signup">
-                <SignupForm />
-            </Route>
-            <Route exact path="/profile">
-                <UserProfile />
-            </Route>            
-            <Route exact path="/edituser">
-                <EditUser />
-            </Route>
-            <Route exact path="/">
-                <Home />
-            </Route>
-            <Route>
-              <p>Hmmm. I can't seem to find what you want.</p>
-            </Route>
-        </Switch>
+        <Routes>
+            <Route exact path="/login" element={<LoginForm />}/>
+            <Route exact path="/signup" element={<SignupForm />}/>
+            <Route exact path="/profile" element={<UserProfile />}/>        
+            <Route exact path="/edituser" element={<EditUser />}/>
+            <Route exact path="/" element={<Home />} />
+            <Route element={<p>Hmmm. I can't seem to find what you want.</p>} />
+        </Routes>
     )
 }
 
-export default Routes;
+export default AppRoutes;

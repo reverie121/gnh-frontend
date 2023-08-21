@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 import '../css/SignupForm.css';
 
 function SignupForm() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const INITIAL_STATE = {
         username: "",
         password: "",
@@ -51,7 +51,7 @@ function SignupForm() {
         // Clear form.
         setFormData(INITIAL_STATE);
         // Redirect to user profile.
-        history.push("./profile");
+        navigate("/profile")
     }        
 
     return(
