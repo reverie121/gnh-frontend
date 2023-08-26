@@ -87,7 +87,7 @@ input::-webkit-inner-spin-button {
     justify-content: center;
 }
 
-.buttonContainer button {
+/* .buttonContainer button {
     margin: 5px;
     border-radius: 0.25rem;
     font-size: 1.1rem;
@@ -100,4 +100,4 @@ input::-webkit-inner-spin-button {
 .buttonContainer button:hover {
     background-color: aqua;
     color: indigo;
-}
+} */

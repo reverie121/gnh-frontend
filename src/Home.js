@@ -7,6 +7,8 @@ import GameList from "./components/GameList";
 import CollectionRequestContainer from "./components/CollectionRequestContainer"
 import { gameListFromLocal } from "./helpers/localStorageHelper";
 
+import ThemedButton from "./components/themed-components/ThemedButton";
+
 import './css/Home.css';
 
 function Home() {
@@ -28,8 +30,12 @@ function Home() {
             <h1>Game Night Helper</h1>
             <h2>Time to choose a game? I can help.</h2>
             <div>
-                <Link to="/login"><button>Log In</button></Link>
-                <Link to="/signup"><button>Sign Up</button></Link>
+                <Link to="/login">
+                    <ThemedButton text="Log In" />
+                </Link>
+                <Link to="/signup">
+                    <ThemedButton text="Sign Up" />
+                </Link>
             </div>
             <h2>Or dive right in...</h2>
             <CollectionRequestContainer />

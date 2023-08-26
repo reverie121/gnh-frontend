@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
+import { Box } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
 
 import { gameListFromLocal } from "../helpers/localStorageHelper";
 import { computePlayerAge } from "../helpers/gameData";
+
+import ThemedButton from "./themed-components/ThemedButton";
 
 import '../css/FilterForm.css';
 
@@ -154,83 +157,83 @@ function FilterForm() {
 
     return(
         <form className="FilterForm">
-            <div className="filters">
-                <div id="individualFiltersBox">
-                <div className="formField">
+            <Box className="filters">
+                <Box id="individualFiltersBox">
+                <Box className="formField">
                         <label htmlFor="gameTitle">Title </label>
                         <input name="gameTitle" id="gameTitle" type="text" value={formData["gameTitle"]} onChange={handleChange} />
-                    </div>
-                    <div className="formField">
+                    </Box>
+                    <Box className="formField">
                         <label htmlFor="gameRating">Min. (Avg.) Rating </label>
                         <input name="gameRating" id="gameRating" type="number" min={0} value={formData["gameRating"]} onChange={handleChange} />
-                    </div>
-                    <div className="formField">
+                    </Box>
+                    <Box className="formField">
                         <label htmlFor="playTime">Play Time (Minutes) </label>
                         <input name="playTime" id="playTime" type="number" min={0} value={formData["playTime"]} onChange={handleChange} />
-                    </div>
-                </div>
+                    </Box>
+                </Box>
 
-                <div id="playerCountBox">
+                <Box id="playerCountBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Player Count</h4>
-                    <div className="formField">
+                    <Box className="formField">
                             <label htmlFor="playerCount"># of Players </label>
                             <input name="playerCount" id="playerCount" type="number" min={1} value={formData["playerCount"]} onChange={handleChange} />
-                    </div>
-                    <div className="checkboxContainer">
+                    </Box>
+                    <Box className="checkboxContainer">
                             <label htmlFor="playerCountOfficial">Publisher</label>
-                            <div className="chekboxSubContainer">
+                            <Box className="chekboxSubContainer">
                                 <input type="checkbox" name="playerCountOfficial" id="playerCountOfficial" value="playerCountOfficial" checked={checkboxes['playerCountOfficial']} onChange={handleCheckbox} />
-                            </div>
-                    </div>
-                    <div className="checkboxContainer">
+                            </Box>
+                    </Box>
+                    <Box className="checkboxContainer">
                             <label htmlFor="playerCountBest">Best</label>
-                            <div className="chekboxSubContainer Best">
+                            <Box className="chekboxSubContainer Best">
                                 <input type="checkbox" name="playerCountBest" id="playerCountBest" value="playerCountBest" checked={checkboxes['playerCountBest']} onChange={handleCheckbox} />  
-                            </div>
-                    </div>
-                    <div className="checkboxContainer">
+                            </Box>
+                    </Box>
+                    <Box className="checkboxContainer">
                             <label htmlFor="playerCountRecommended">Recommended</label>
-                            <div className="chekboxSubContainer Recommended">
+                            <Box className="chekboxSubContainer Recommended">
                                 <input type="checkbox" name="playerCountRecommended" id="playerCountRecommended" value="playerCountRecommended" checked={checkboxes['playerCountRecommended']} onChange={handleCheckbox} />
-                            </div>
-                    </div>
-                </div>
-                <div id="weightBox">
+                            </Box>
+                    </Box>
+                </Box>
+                <Box id="weightBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Game Weight</h4>
-                    <div className="formField">
+                    <Box className="formField">
                         <label htmlFor="minWeight">Min. </label>
                         <input name="minWeight" id="minWeight" type="number" min={0} max={5} value={formData["minWeight"]} onChange={handleChange} />
-                    </div>
-                    <div className="formField">
+                    </Box>
+                    <Box className="formField">
                         <label htmlFor="maxWeight">Max. </label>
                         <input name="maxWeight" id="maxWeight" type="number" min={0} max={5} value={formData["maxWeight"]} onChange={handleChange} />
-                    </div>
-                </div>
-                <div id="ageBox">
+                    </Box>
+                </Box>
+                <Box id="ageBox">
                     <h4><i className="fa-solid fa-question tooltip" /> Min. Age</h4>
-                    <div className="formField">
+                    <Box className="formField">
                         <label htmlFor="minAge"></label>
                         <input name="minAge" id="minAge" type="number" min={1} value={formData["minAge"]} onChange={handleChange} />
-                    </div>
-                    <div className="checkboxContainer">
+                    </Box>
+                    <Box className="checkboxContainer">
                             <label htmlFor="publisherMinAge">Publisher</label>
-                            <div className="chekboxSubContainer">
+                            <Box className="chekboxSubContainer">
                                 <input type="checkbox" name="publisherMinAge" id="publisherMinAge" value="publisherMinAge" checked={checkboxes['publisherMinAge']} onChange={handleCheckbox} />
-                            </div>
-                    </div>
-                    <div className="checkboxContainer">
+                            </Box>
+                    </Box>
+                    <Box className="checkboxContainer">
                             <label htmlFor="communityMinAge">Community</label>
-                            <div className="chekboxSubContainer">
+                            <Box className="chekboxSubContainer">
                                 <input type="checkbox" name="communityMinAge" id="communityMinAge" value="communityMinAge" checked={checkboxes['communityMinAge']} onChange={handleCheckbox} />  
-                            </div>
-                    </div>
+                            </Box>
+                    </Box>
 
-                </div>
-            </div>
-            <div className="buttonContainer">
-                <button onClick={handleFilter}>Filter Games</button>
-                <button onClick={bringTheLuck}>I'm Feeling Lucky!</button>
-            </div>
+                </Box>
+            </Box>
+            <Box className="buttonContainer">
+                <ThemedButton onClick={handleFilter} text="Filter Games" />
+                <ThemedButton onClick={bringTheLuck} text="Randomize" />
+            </Box>
         </form>
     );
 };

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 
+import ThemedButton from "./themed-components/ThemedButton";
+
 import '../css/LoginForm.css';
 
 function LoginForm() {
@@ -66,8 +68,8 @@ function LoginForm() {
                     value={formData["password"]}
                     onChange={handleChange}
                 />
-            </div>                                         
-            <button onClick={handleSubmit}>Submit</button>
+            </div>         
+            <ThemedButton onClick={handleSubmit} text="Submit" />
         </form>
     );
 };

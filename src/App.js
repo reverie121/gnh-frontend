@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { Box } from "@mui/material";
 
 import Nav from './Nav';
 import { BrowserRouter } from 'react-router-dom';
@@ -16,18 +18,51 @@ function App() {
 
     const [gameList, setGameList] = useState();
 
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: "#4B0082",
+                light: "#663399",
+                dark: "#1F0954",
+                contrastText: '#fff'
+            },
+            secondary: {
+                main: "#48D1CC",
+                light: "#00FFFF",
+                dark: "#00CED1",
+                contrastText: '#1F0954'
+            }
+        }, 
+        components: {
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        backgroundColor: "secondary.main",
+                        color: "primary.contrastText",
+                        "&:hover": {
+                            backgroundColor: "secondary.light",
+                            color: "secondary.contrastText",
+                        }                            
+                    }
+                }
+            }
+        }
+    })
+
     return (
         <BrowserRouter>
-            <div className="App">
-                <UserContext.Provider value={{ user, setUser }}>
-                    <Nav />
-                    <div className="PageContent">
-                        <GameListContext.Provider value={{ gameList, setGameList }}>
-                            <AppRoutes />
-                        </GameListContext.Provider>
-                    </div>
-                </UserContext.Provider>
-            </div>
+            <ThemeProvider theme={theme}>
+                <Box className="App">
+                    <UserContext.Provider value={{ user, setUser }}>
+                        <Nav />
+                        <Box className="PageContent">
+                            <GameListContext.Provider value={{ gameList, setGameList }}>
+                                <AppRoutes />
+                            </GameListContext.Provider>
+                        </Box>
+                    </UserContext.Provider>
+                </Box>
+            </ThemeProvider>
         </BrowserRouter>
 
     );

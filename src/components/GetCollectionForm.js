@@ -5,6 +5,7 @@ import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
 import ProcessResponseMessage from "./ProcessResponseMessage";
 import GameNightHelperAPI from "../api/gnh-api";
+import ThemedButton from "./themed-components/ThemedButton";
 
 function GetCollectionForm() {
 
@@ -68,7 +69,7 @@ function GetCollectionForm() {
             <GetCollectionInput id={n} key={n} addCollectionInput={(id) => addCollectionInput(id)} handleChange={(e) => handleChange(e)} />
             )}
             <ProcessResponseMessage processIs={editProcess} />
-            <button onClick={handleSubmit}>Get Games</button>
+            <ThemedButton onClick={handleSubmit} text="Get Games" />
         </form>
     );
 };
