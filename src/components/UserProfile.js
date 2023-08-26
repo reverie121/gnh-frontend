@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import bouncer from "../helpers/bouncer";
-import getBGGUserData from "../helpers/getBGGUserData";
 import UserContext from "../context/UserContext";
 import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
+import GameNightHelperAPI from "../api/gnh-api";
 
 import GameList from "./GameList";
 import UserPlaysList from "./UserPlaysList";
@@ -22,7 +22,7 @@ function UserProfile() {
     useEffect(() => {
         async function getBGGData() {
             if (user && user.bggUsername) {
-                const bggUserData = await getBGGUserData(user.bggUsername);
+                const bggUserData = await GameNightHelperAPI.getBGGUser(user.bggUsername);
                 setBGGUser(bggUserData);
             }
         }
@@ -63,42 +63,42 @@ function UserProfile() {
                     <div className="detailsChunk">BGG Username: <a href={`https://boardgamegeek.com/user/${user.bggUsername}`} target="_blank" rel="noopener noreferrer">{user.bggUsername}</a>
                     </div>
                     {/* If BGG User data has friends... */}
-                    {bggUser.userDetails.user.buddies._attributes.total !== "0" 
+                    {bggUser.userDetails.buddies._attributes.total !== "0" 
                         && 
                     <div className="detailsChunk">Buddies: 
                         {/* Case for multiple friends */}
-                        {Array.isArray(bggUser.userDetails.user.buddies.buddy)
+                        {Array.isArray(bggUser.userDetails.buddies.buddy)
                         && 
-                        bggUser.userDetails.user.buddies.buddy.map((b, i) => 
+                        bggUser.userDetails.buddies.buddy.map((b, i) => 
                             <span key={b._attributes.name}> <a href={`https://boardgamegeek.com/user/${b._attributes.name}`} target="_blank" rel="noopener noreferrer">
-                                {b._attributes.name}{i+1 < bggUser.userDetails.user.buddies.buddy.length && ","}
+                                {b._attributes.name}{i+1 < bggUser.userDetails.buddies.buddy.length && ","}
                             </a></span>
                         )}
                         {/* Case for a single friend */}
-                        {!Array.isArray(bggUser.userDetails.user.buddies.buddy)
+                        {!Array.isArray(bggUser.userDetails.buddies.buddy)
                         && 
-                        <span> <a href={`https://boardgamegeek.com/user/${bggUser.userDetails.user.buddies.buddy._attributes.name}`} target="_blank" rel="noopener noreferrer">
-                            {bggUser.userDetails.user.buddies.buddy._attributes.name}
+                        <span> <a href={`https://boardgamegeek.com/user/${bggUser.userDetails.buddies.buddy._attributes.name}`} target="_blank" rel="noopener noreferrer">
+                            {bggUser.userDetails.buddies.buddy._attributes.name}
                         </a></span>
                         }                        
                     </div>}
                     {/* If BGG User data has guilds... */}                    
-                    {bggUser.userDetails.user.guilds._attributes.total !== "0" 
+                    {bggUser.userDetails.guilds._attributes.total !== "0" 
                     && 
                     <div className="detailsChunk">Guilds: 
                         {/* Case for multiple guilds */}
-                        {Array.isArray(bggUser.userDetails.user.guilds.guild)
+                        {Array.isArray(bggUser.userDetails.guilds.guild)
                         && 
-                        bggUser.userDetails.user.guilds.guild.map((g, i) => 
+                        bggUser.userDetails.guilds.guild.map((g, i) => 
                             <span key={g._attributes.name}> <a href={`https://boardgamegeek.com/guild/${g._attributes.id}`} target="_blank" rel="noopener noreferrer">
-                                {g._attributes.name}{i+1 < bggUser.userDetails.user.guilds.guild.length && ","}
+                                {g._attributes.name}{i+1 < bggUser.userDetails.guilds.guild.length && ","}
                             </a></span>
                         )}
                         {/* Case for a single guild */}     
-                        {!Array.isArray(bggUser.userDetails.user.guilds.guild)
+                        {!Array.isArray(bggUser.userDetails.guilds.guild)
                         && 
-                        <span> <a href={`https://boardgamegeek.com/guild/${bggUser.userDetails.user.guilds.guild._attributes.id}`} target="_blank" rel="noopener noreferrer">
-                                {bggUser.userDetails.user.guilds.guild._attributes.name}
+                        <span> <a href={`https://boardgamegeek.com/guild/${bggUser.userDetails.guilds.guild._attributes.id}`} target="_blank" rel="noopener noreferrer">
+                                {bggUser.userDetails.guilds.guild._attributes.name}
                         </a></span>
                         }                   
                     </div>}
@@ -113,9 +113,9 @@ function UserProfile() {
             }
             {bggUser 
             && 
-            bggUser.userPlays.plays._attributes.total !== "0"
+            bggUser.userPlays._attributes.total !== "0"
             && 
-            bggUser.userPlays && <UserPlaysList plays={bggUser.userPlays.plays.play}/>
+            bggUser.userPlays && <UserPlaysList plays={bggUser.userPlays.play}/>
             }         
         </div>
     )

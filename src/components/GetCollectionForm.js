@@ -4,7 +4,7 @@ import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
 import ProcessResponseMessage from "./ProcessResponseMessage";
-import getBGGGameData from "../helpers/getBGGGameData";
+import GameNightHelperAPI from "../api/gnh-api";
 
 function GetCollectionForm() {
 
@@ -25,7 +25,7 @@ function GetCollectionForm() {
     // Return detailed game data from a collection request.
     const handleQuery = async () => {
         try {
-            const gameData = await getBGGGameData(formData.username1);
+            const gameData = await GameNightHelperAPI.getBGGCollection(formData.username1);
             // Update state.
             setGameList(Object.values(gameData));
             gameListToLocal(Object.values(gameData));
