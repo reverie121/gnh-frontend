@@ -66,6 +66,22 @@ class GameNightHelperAPI {
     return res.user;
   }  
   
+  // BGG Data API Routes
+
+  /** Get a simple BGG collection by BGG username. */
+
+  static async getBGGCollection(bggUsername) {
+    let res = await this.request(`bgg/collection/${bggUsername}`);
+    return res.collection;
+  }
+
+  /** Get user data by BGG username. */
+
+  static async getBGGUser(bggUsername) {
+    let res = await this.request(`bgg/user/${bggUsername}`);
+    return res.userData;
+  }
+
 }
 
 export default GameNightHelperAPI;
