@@ -1,6 +1,5 @@
 .Home {
     margin-top: .5rem;
-    width: 80%;
     min-height: calc(100vh - 20rem);
     min-width: 550px;
     display: flex;

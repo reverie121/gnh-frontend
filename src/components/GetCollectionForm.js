@@ -64,7 +64,7 @@ function GetCollectionForm() {
     }        
 
     return(
-        <form className="GetCollectionForm">
+        <form>
             {collectionCount.map(n => 
             <GetCollectionInput id={n} key={n} addCollectionInput={(id) => addCollectionInput(id)} handleChange={(e) => handleChange(e)} />
             )}

@@ -1,43 +1,6 @@
-.GameCard {
-    width: 600px;
-    display: flex;
-    flex-direction: row;
-    margin: 0.3rem;
-    min-height: 200px;
-    border: solid;
-    border-color: rebeccapurple;
-    box-shadow: 1px 1px indigo;
-    border-radius: 3px;
-    border-width: 2px;
-    position: relative;
-}
-
-.BoxContainer {
-    display: flex;
-    flex-direction: row;
-}
-
-.LeftBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 10px;
-    padding-right: 0px;
-}
-
 .Thumbnail {
     border-radius: 3px;
     box-shadow: 2px 2px darkgray;
-}
-
-.RightBox {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10px;
-    padding-right: 55px
 }
 
 .Rating {
@@ -101,15 +64,11 @@
     color:darkturquoise;
 }
 
-.PlayerCount, .PlayingTime, .Age, .Weight {
-    margin-top: 8px;
-}
-
-.playerCountBoxHolder {
+/* .playerCountBoxHolder {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
+} */
 
 .playerCountBox {
     height: 22px;

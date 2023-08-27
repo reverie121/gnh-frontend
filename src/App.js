@@ -55,6 +55,7 @@ function App() {
                 <Box className="App">
                     <UserContext.Provider value={{ user, setUser }}>
                         <Nav />
+                        {/* The PageContent class is setting the width of all content below the nav. */}
                         <Box className="PageContent">
                             <GameListContext.Provider value={{ gameList, setGameList }}>
                                 <AppRoutes />

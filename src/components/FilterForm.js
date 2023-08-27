@@ -148,7 +148,7 @@ function FilterForm() {
         setGameList(results);
     }
 
-    const bringTheLuck = (e) => {
+    const getRandomGame = (e) => {
         e.preventDefault();
         const results = filterGames();
         const randomGame = results[Math.floor(Math.random() * results.length)];
@@ -232,7 +232,7 @@ function FilterForm() {
             </Box>
             <Box className="buttonContainer">
                 <ThemedButton onClick={handleFilter} text="Filter Games" />
-                <ThemedButton onClick={bringTheLuck} text="Randomize" />
+                <ThemedButton onClick={getRandomGame} text="Randomize" />
             </Box>
         </form>
     );
