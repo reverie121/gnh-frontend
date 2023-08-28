@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { Box, Card, CardContent, Stack } from "@mui/material";
+
 import { computePlayerCount, computePlayerAge } from "../helpers/gameData";
 
 import '../css/GameCard.css';
@@ -9,7 +11,7 @@ import '../css/GameCard.css';
 /* Component for displaying game summary cards in a game list. */
 
 function GameCard( {gameData} ) {
-    // console.log(gameData)
+    console.log(gameData)
 
     // Get game name or, if multiple, get first name from array of names.
     const name = Array.isArray(gameData.name) ? gameData.name[0]._attributes.value : gameData.name._attributes.value;
@@ -42,65 +44,79 @@ function GameCard( {gameData} ) {
     }
 
     return(
-        <div className="GameCard">
-            <div className="BoxContainer">
-
-                <div className="LeftBox">
-                    <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />
-                </div>
-                <div className="RightBox">
-                    <div className="GameName">
-                        {name} <span className="YearPublished">({gameData.yearpublished._attributes.value})</span>
-                    </div>
+        <Card 
+            sx={{
+                m: 1, 
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",
+                position: "relative"
+            }}
+            raised="true"
+        >
+            <CardContent sx={{width: "100%"}}>
+                <Stack direction="row">
                     <div>
-                        <a href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} target="_blank" rel="noopener noreferrer" className="BGGLink">View@BGG</a>
+                        <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />
                     </div>
-                    <div className="PlayerCount">
-                        Player Count: {playerCount}
-                        {/* If game has user votes for suggested player counts, display player count boxes. */}
-                        {Number(gameData.poll[0]._attributes.totalvotes) > 0 &&
-                            <div className="playerCountBoxHolder">
-                                {playerCountRatings.map((r, indx) => 
-                                        <div key={indx+1} className={`playerCountBox ${r}`}>
-                                            {(Number(indx) + 1) === playerCountRatings.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        }
-                        <div className="supplementaryData">
-                            {gameData.poll[0]._attributes.totalvotes} votes
+                    <Stack ml={1} pr="40px">
+                        <div>
+                            {name} 
+                            <span className="YearPublished">({gameData.yearpublished._attributes.value})</span>
                         </div>
-                    </div>
-                    <div className="PlayingTime">
-                        Playing Time: {playingTime} minutes
-                    </div>                
-                    <div className="Age">
-                        Age: {gameData.minage._attributes.value}+
-                        {/* If game has user votes for suggested minimum age, display community suggested age */}                            
-                        {Number(gameData.poll[1]._attributes.totalvotes) > 0 && 
-                            <div className="supplementaryData">
-                                Community: {communityPlayerAge}+ ({gameData.poll[1]._attributes.totalvotes} votes)
-                            </div>
-                        }
-                    </div>
-                    {/* If game has user votes for game weight, display game weight. */}                    
-                    {Number(gameData.statistics.ratings.numweights._attributes.value) > 0 && 
-                        <div className="Weight">
-                            Weight: {Number(gameData.statistics.ratings.averageweight._attributes.value).toFixed(2)}
-                            <div className="supplementaryData">
-                                {gameData.statistics.ratings.numweights._attributes.value} votes
-                            </div>
+                        <div>
+                            <a href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} target="_blank" rel="noopener noreferrer" className="BGGLink">View@BGG</a>
                         </div>
-                    }
+                        <Box mt={1}>
+                            Player Count: {playerCount}
+                            {/* If game has user votes for suggested player counts, display player count boxes. */}
+                            {Number(gameData.poll[0]._attributes.totalvotes) > 0 &&
+                                // Container for player count rating boxes.
+                                <Stack direction="row">
+                                    {playerCountRatings.map((r, indx) => {
+                                        // limit player count boxes to 10
+                                        if (indx < 10) {
+                                            return <div key={indx+1} className={`playerCountBox ${r}`}>
+                                                {(Number(indx) + 1) === playerCountRatings.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
+                                            </div>
+                                        } else return <div></div>
+                                        })
+                                    }
+                                </Stack>
+                            }
+                            <div className="supplementaryData">
+                                {gameData.poll[0]._attributes.totalvotes} votes
+                            </div>
+                        </Box>
+                        <Box mt={1}>
+                            Playing Time: {playingTime} minutes
+                        </Box>                
+                        <Box mt={1}>
+                            Age: {gameData.minage._attributes.value}+
+                            {/* If game has user votes for suggested minimum age, display community suggested age */}                            
+                            {Number(gameData.poll[1]._attributes.totalvotes) > 0 && 
+                                <div className="supplementaryData">
+                                    Community: {communityPlayerAge}+ ({gameData.poll[1]._attributes.totalvotes} votes)
+                                </div>
+                            }
+                        </Box>
+                        {/* If game has user votes for game weight, display game weight. */}                    
+                        {Number(gameData.statistics.ratings.numweights._attributes.value) > 0 && 
+                            <Box mt={1}>
+                                Weight: {Number(gameData.statistics.ratings.averageweight._attributes.value).toFixed(2)}
+                                <div className="supplementaryData">
+                                    {gameData.statistics.ratings.numweights._attributes.value} votes
+                                </div>
+                            </Box>
+                        }
+                    </Stack>
+                </Stack>
+                <div className={`Rating ${ratingClass}`}>
+                    {rating}
                 </div>
-
-            </div>
-
-            <div className={`Rating ${ratingClass}`}>
-                {rating}
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     );
 };
 

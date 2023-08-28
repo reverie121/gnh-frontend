@@ -1,11 +1,12 @@
 .App {
     overflow: auto;
     min-height: 100vh;
-    /* background-image: url('/img/background.jpg'); */
+    /* background-image: url('/img/background.jpg');
     background-size: 200% auto;
-    background-attachment: fixed;
+    background-attachment: fixed; */
 }
 
+/* This css is currently setting the width of the page content, I believe to the maximum width of the contents within. */
 .PageContent {
     padding-top: 2.5rem;
     display: flex;

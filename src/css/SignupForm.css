@@ -29,7 +29,7 @@
     justify-content: flex-end;
 }
 
-.SignupForm button {
+/* .SignupForm button {
     margin-top: 0.5rem;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
@@ -46,4 +46,4 @@
 .SignupForm button:hover {
     background-color: rebeccapurple;
     color: white;
-}
+} */

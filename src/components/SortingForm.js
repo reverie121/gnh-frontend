@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
-import { InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, InputLabel, MenuItem, Select } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
+
+import ThemedButton from "./themed-components/ThemedButton";
 
 import '../css/SortingForm.css';
 
@@ -149,8 +151,8 @@ function SortingForm() {
 
     return(
         <form className="SortingForm">
-            <div id="sortingBoxContainer">
-                <div className="sortingBox">
+            <Box id="sortingBoxContainer">
+                <Box className="sortingBox">
                     <InputLabel id="primary-sort-label">Primary Sort</InputLabel>
                     <Select 
                         fullWidth 
@@ -165,18 +167,18 @@ function SortingForm() {
                             <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
                         )}
                     </Select>
-                    <div className="sortingDirectionBox" onChange={handleRadio}>
-                        <div>
+                    <Box className="sortingDirectionBox" onChange={handleRadio}>
+                        <Box>
                             <input type="radio" value="primaryAscending" name="primarySortDirection" />
                             <label htmlFor="primaryAscending">Ascending</label>
-                        </div>
-                        <div>
+                        </Box>
+                        <Box>
                             <input type="radio" value="primaryDescending" name="primarySortDirection" />
                             <label htmlFor="primaryDescending">Descending</label>
-                        </div>
-                    </div>                    
-                </div>
-                <div className="sortingBox">
+                        </Box>
+                    </Box>                    
+                </Box>
+                <Box className="sortingBox">
                 <InputLabel id="secondary-sort-label">Secondary Sort</InputLabel>
                     <Select 
                         fullWidth 
@@ -191,18 +193,18 @@ function SortingForm() {
                             <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
                         )}
                     </Select>
-                    <div  className="sortingDirectionBox" onChange={handleRadio}>
-                        <div>
+                    <Box  className="sortingDirectionBox" onChange={handleRadio}>
+                        <Box>
                             <input type="radio" value="secondaryAscending" name="secondarySortDirection" />
                             <label htmlFor="secondaryAscending">Ascending</label>
-                        </div>
-                        <div>
+                        </Box>
+                        <Box>
                             <input type="radio" value="secondaryDescending" name="secondarySortDirection" />
                             <label htmlFor="secondaryDescending">Descending</label>
-                        </div>
-                    </div>                               
-                </div>
-                <div className="sortingBox">
+                        </Box>
+                    </Box>                               
+                </Box>
+                <Box className="sortingBox">
                     <InputLabel id="tertiary-sort-label">Tertiary Sort</InputLabel>
                     <Select 
                         fullWidth 
@@ -217,22 +219,21 @@ function SortingForm() {
                             <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
                         )}
                     </Select>
-                    <div  className="sortingDirectionBox" onChange={handleRadio}>
-                        <div>
+                    <Box  className="sortingDirectionBox" onChange={handleRadio}>
+                        <Box>
                             <input type="radio" value="tertiaryAscending" name="tertiarySortDirection" />
                             <label htmlFor="tertiaryAscending">Ascending</label>
-                        </div>
-                        <div>
+                        </Box>
+                        <Box>
                             <input type="radio" value="tertiaryDescending" name="tertiarySortDirection" />
                             <label htmlFor="tertiaryDescending">Descending</label>
-                        </div>
-                    </div>                                
-                </div>   
-            </div>
-            <div className="buttonContainer">
-                <button onClick={handleSort}>Sort Games</button>
-                {/* <button onClick={handleClearSort}>Clear Sorting</button> */}
-            </div>
+                        </Box>
+                    </Box>                                
+                </Box>   
+            </Box>
+            <Box className="buttonContainer">
+                <ThemedButton onClick={handleSort} text="Sort Games" />
+            </Box>
         </form>
     );
 };

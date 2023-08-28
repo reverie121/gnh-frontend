@@ -1,16 +1,16 @@
 import React from "react";
-
-import '../css/GetCollectionInput.css';
+import { Stack } from "@mui/material";
 
 function GetCollectionInput( { id, addCollectionInput, handleChange } ) {
-    
-    function handleClick(e) {
-        e.preventDefault();
-        addCollectionInput();
-    }
+
+    // Handler for button for adding additional input fields. NOT CURRENTLY IN USE.
+    // function handleClick(e) {
+    //     e.preventDefault();
+    //     addCollectionInput();
+    // }
 
     return(
-        <div className="getCollectionInput">
+        <Stack>
             <label htmlFor={`username${id}`} />
             <input name={`username${id}`} 
                 id={`username${id}`} 
@@ -18,8 +18,7 @@ function GetCollectionInput( { id, addCollectionInput, handleChange } ) {
                 placeholder="BGG Username"
                 onChange={handleChange} 
             />
-            {id !== "1" && <button className="addCollectionInputButton" onClick={handleClick}>+</button>}
-        </div>
+        </Stack>
     );
 };
 

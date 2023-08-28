@@ -35,7 +35,7 @@
     justify-content: flex-end;
 }
 
-.LoginForm button {
+/* .LoginForm button {
     margin-top: 0.5rem;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
@@ -52,4 +52,4 @@
 .LoginForm button:hover {
     background-color: aqua;
     color: indigo;
-}
+} */

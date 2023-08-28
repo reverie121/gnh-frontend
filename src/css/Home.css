@@ -1,6 +1,5 @@
 .Home {
     margin-top: .5rem;
-    width: 80%;
     min-height: calc(100vh - 20rem);
     min-width: 550px;
     display: flex;
@@ -22,7 +21,7 @@
     color:indigo;
 }
 
-.Home button {
+/* .Home button {
     margin: 1rem;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
@@ -39,4 +38,4 @@
 
 .Home button:hover {
     color: aqua;
-}
+} */
