@@ -16,7 +16,7 @@ function UserProfile() {
     // Access Context for user and setUser.
     const { user, setUser } = useContext(UserContext);
     const { gameList, setGameList } = useContext(GameListContext);
-
+    
     const [ bggUser, setBGGUser ] = useState();
 
     useEffect(() => {
@@ -115,7 +115,7 @@ function UserProfile() {
             && 
             bggUser.userPlays._attributes.total !== "0"
             && 
-            bggUser.userPlays && <UserPlaysList plays={bggUser.userPlays.play}/>
+            bggUser.userPlays && <UserPlaysList bggUser={bggUser}/>
             }         
         </div>
     )

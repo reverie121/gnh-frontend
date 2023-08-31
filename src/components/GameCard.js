@@ -4,14 +4,12 @@ import React from "react";
 
 import { Box, Card, CardContent, Stack } from "@mui/material";
 
-import { computePlayerCount, computePlayerAge } from "../helpers/gameData";
-
 import '../css/GameCard.css';
 
 /* Component for displaying game summary cards in a game list. */
 
 function GameCard( {gameData} ) {
-    console.log(gameData)
+    // console.log(gameData)
 
     // Get game name or, if multiple, get first name from array of names.
     const name = Array.isArray(gameData.name) ? gameData.name[0]._attributes.value : gameData.name._attributes.value;
@@ -24,14 +22,6 @@ function GameCard( {gameData} ) {
 
     // If min and max playing time (minutes) are the same, set value to that number. Otherwise set value to range.
     const playingTime = gameData.minplaytime._attributes.value === gameData.maxplaytime._attributes.value ? `${gameData.minplaytime._attributes.value}` : `${gameData.minplaytime._attributes.value}-${gameData.maxplaytime._attributes.value}`;
-
-    // If game has votes for player count, compute player count votes.
-    let playerCountRatings;
-    if (Number(gameData.poll[0]._attributes.totalvotes) > 0) playerCountRatings = computePlayerCount(gameData);
-
-    // If game has votes for suggested age, compute suggested age.
-    let communityPlayerAge;
-    if (Number(gameData.poll[1]._attributes.totalvotes) > 0) communityPlayerAge = computePlayerAge(gameData);
 
     // ratingClass will be used to apply the appropriate background color to the rating box.
     let ratingClass;
@@ -53,12 +43,12 @@ function GameCard( {gameData} ) {
                 borderWidth: "2px",
                 position: "relative"
             }}
-            raised="true"
+            raised={true}
         >
             <CardContent sx={{width: "100%"}}>
                 <Stack direction="row">
                     <div>
-                        <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />
+                        {gameData.thumbnail && <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />}
                     </div>
                     <Stack ml={1} pr="40px">
                         <div>
@@ -74,13 +64,11 @@ function GameCard( {gameData} ) {
                             {Number(gameData.poll[0]._attributes.totalvotes) > 0 &&
                                 // Container for player count rating boxes.
                                 <Stack direction="row">
-                                    {playerCountRatings.map((r, indx) => {
+                                    {gameData.poll[0].resultSummary.slice(0,10).map((r, indx) => {
                                         // limit player count boxes to 10
-                                        if (indx < 10) {
-                                            return <div key={indx+1} className={`playerCountBox ${r}`}>
-                                                {(Number(indx) + 1) === playerCountRatings.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
-                                            </div>
-                                        } else return <div></div>
+                                        return <div key={indx+1} className={`playerCountBox ${r}`}>
+                                            {(Number(indx) + 1) === gameData.poll[0].resultSummary.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
+                                        </div>
                                         })
                                     }
                                 </Stack>
@@ -97,7 +85,7 @@ function GameCard( {gameData} ) {
                             {/* If game has user votes for suggested minimum age, display community suggested age */}                            
                             {Number(gameData.poll[1]._attributes.totalvotes) > 0 && 
                                 <div className="supplementaryData">
-                                    Community: {communityPlayerAge}+ ({gameData.poll[1]._attributes.totalvotes} votes)
+                                    Community: {gameData.poll[1].resultSummary}+ ({gameData.poll[1]._attributes.totalvotes} votes)
                                 </div>
                             }
                         </Box>

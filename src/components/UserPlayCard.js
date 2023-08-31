@@ -2,14 +2,11 @@
 
 import React from "react";
 
-import { bggUserFromLocal } from "../helpers/localStorageHelper";
-
 import '../css/UserPlayCard.css';
 
-function UserPlayCard( { play } ) {
-    const bggUser = bggUserFromLocal();
+function UserPlayCard( { play, thumbnail } ) {
 
-    const src = bggUser.userGames.filter(g => play.item._attributes.objectid === g._attributes.id)[0].thumbnail._text;
+    const src = thumbnail === undefined || thumbnail === "no image available" ? "/img/no_thumbnail.jpg" : thumbnail;
 
     return(
         <div className="UserPlayCard">
