@@ -1,23 +1,24 @@
-.FilterForm {
+/* .FilterForm {
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: flex-start;
-}
+} */
 
-.filters {
+/* .filters {
     display: flex;
+    flex-direction: row;
     align-items:flex-start;
     justify-content: flex-start;
-}
+} */
 
-#individualFiltersBox, #playerCountBox, #weightBox, #ageBox {
+/* #individualFiltersBox, #playerCountBox, #weightBox, #ageBox {
     padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
-}
+} */
 
 h4 {
     margin-top: 5px;
@@ -28,14 +29,14 @@ h4 {
     justify-content: flex-start;
 }
 
-input[type=number] {
+/* input[type=number] {
     width: 50px;
     text-align: center;
 }
 
 input:checked {
     accent-color: rgba(0,125,0,0.9);
-}
+} */
 
 /* Below is to remove arrows from number inputs. */
 
@@ -57,8 +58,8 @@ input::-webkit-inner-spin-button {
 
 .checkboxContainer {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .chekboxSubContainer {
@@ -67,7 +68,7 @@ input::-webkit-inner-spin-button {
     margin-top: 1px;
 }
 
-.tooltip {
+/* .tooltip {
     font-size: 12px;
     color: grey;
     height: 15px;
@@ -78,7 +79,7 @@ input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .buttonContainer {
     display: flex;

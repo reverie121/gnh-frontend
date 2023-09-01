@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { Container } from "@mui/material";
+
 import UserPlayCard from "./UserPlayCard";
 
 function UserPlaysList( { bggUser } ) {
@@ -9,10 +11,9 @@ function UserPlaysList( { bggUser } ) {
     const plays = bggUser.userPlays.play;
 
     return(
-        <div className="UserPlaysList">
-            <h2>Logged Plays</h2>
+        <Container className="UserPlaysList">
             {plays.map(p => <UserPlayCard play={p} key={p._attributes.id} thumbnail={bggUser.userPlays.thumbnailURLs[p.item._attributes.objectid]} />)}
-        </div>
+        </Container>
     );
 };
 

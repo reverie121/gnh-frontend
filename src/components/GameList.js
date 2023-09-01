@@ -2,6 +2,8 @@
 
 import React, { useContext } from "react";
 
+import { Box } from "@mui/material";
+
 import GameListContext from "../context/GameListContext";
 
 import CollectionInputsBox from "./CollectionInputsBox";
@@ -12,10 +14,25 @@ function GameList() {
     const { gameList } = useContext(GameListContext);
 
     return(
-        <div>
+        <Box sx={{
+            display: "flex",
+            flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "column",
+                lg: "row",
+                xl: "row"
+            }
+        }}>
             <CollectionInputsBox />
-            {gameList.map(g => <GameCard key={g._attributes.id} gameData={g}/>)}
-        </div>
+            <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%"
+            }}>
+                {gameList.map(g => <GameCard key={g._attributes.id} gameData={g}/>)}
+            </Box>
+        </Box>
     );
 };
 

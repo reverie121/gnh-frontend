@@ -46,7 +46,12 @@ function App() {
                     }
                 }
             }
-        }
+        },
+        typography: {
+            fontFamily: [
+                'Trebuchet MS', 'Gill Sans', 'Gill Sans MT', 'Calibri'
+            ].join(',')
+        }        
     })
 
     return (
