@@ -29,14 +29,14 @@ h4 {
     justify-content: flex-start;
 }
 
-/* input[type=number] {
+input[type=number] {
     width: 50px;
     text-align: center;
 }
 
 input:checked {
     accent-color: rgba(0,125,0,0.9);
-} */
+}
 
 /* Below is to remove arrows from number inputs. */
 

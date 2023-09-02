@@ -41,7 +41,8 @@ function GameCard( {gameData} ) {
                 borderColor: "primary.main",
                 borderRadius: "3px", 
                 borderWidth: "2px",
-                position: "relative"
+                position: "relative",
+                maxWidth: "90vw"
             }}
             raised={true}
         >

@@ -23,6 +23,8 @@ function UserData( { user, bggUser } ) {
             </Container>
         </div>
 
+        <hr />
+
         {bggUser &&
         <Box sx={styles}>
             <Container sx={styles}>BGG Username: <a href={`https://boardgamegeek.com/user/${user.bggUsername}`} target="_blank" rel="noopener noreferrer">{user.bggUsername}</a>

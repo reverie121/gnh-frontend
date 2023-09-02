@@ -6,12 +6,12 @@
     margin-top: 5px;
 }
 
-#sortingBoxContainer {
+/* #sortingBoxContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .sortingBox {
     margin-left: 10px;
