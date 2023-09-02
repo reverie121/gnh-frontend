@@ -28,22 +28,3 @@
     align-items: center;
     justify-content: flex-end;
 }
-
-/* .SignupForm button {
-    margin-top: 0.5rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 1.1rem;
-    background-color: indigo;
-    color: azure;
-    transition: 0.3s ease-in-out;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.SignupForm button:hover {
-    background-color: rebeccapurple;
-    color: white;
-} */

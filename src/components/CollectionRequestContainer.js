@@ -10,8 +10,6 @@ import GetCollectionForm from "./GetCollectionForm";
 
 import ThemedButton from "./themed-components/ThemedButton";
 
-import '../css/CollectionRequestForm.css';
-
 function CollectionRequestForm() {
     const { gameList, setGameList } = useContext(GameListContext);
 
@@ -21,7 +19,12 @@ function CollectionRequestForm() {
     }
 
     return(
-        <Box id="CollectionRequestContainer">
+        <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start"
+        }}>
             {gameList && 
                 <ThemedButton onClick={clearGameList} text="Clear Game List" />
             }

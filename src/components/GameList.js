@@ -28,8 +28,22 @@ function GameList() {
             <Box sx={{
             display: "flex",
             flexDirection: "column",
-            width: "100%"
+            width: "100%",
             }}>
+                {gameList.length > 1 && 
+                <Box sx={{
+                    m: 1, 
+                    p: 1, 
+                    textAlign: "center", 
+                    color: "primary.main", 
+                    borderStyle: "solid", 
+                    borderWidth: "2px",
+                    borderRadius: "3px", 
+                    borderColor: "primary.main"
+                }}>
+                    • Showing {gameList.length} Games •
+                </Box>
+                }
                 {gameList.map(g => <GameCard key={g._attributes.id} gameData={g}/>)}
             </Box>
         </Box>

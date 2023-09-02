@@ -1,6 +1,9 @@
 import React, { useState, useContext } from "react";
 
-import { Box, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
+import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
+import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import GameListContext from "../context/GameListContext";
 
@@ -34,13 +37,10 @@ function FilterForm() {
     }
 
     const INITIAL_SELECTION_STATE = {
-        primary: "",
-        secondary: ""
-    }
-
-    const INITIAL_RADIO_STATE = {
-        primarySortDirection: "",
-        secondarySortDirection: ""
+        primary: "", 
+        primaryDirection: "ascending", 
+        secondary: "", 
+        secondaryDirection: "ascending"
     }
 
     const primarySelectOptions = [
@@ -59,7 +59,6 @@ function FilterForm() {
     const [formData, setFormData] = useState(INITIAL_STATE);
     const [checkboxes, setCheckboxes] = useState(INITIAL_CHECKBOX_STATE);
     const [selections, setSelections] = useState(INITIAL_SELECTION_STATE);
-    const [radios, setRadios] = useState(INITIAL_RADIO_STATE);
 
     // Handles value changes (for inputs).
     const handleChange = (e) => {
@@ -70,6 +69,7 @@ function FilterForm() {
         }))
     }
 
+    // Handles checkbox checks/unchecks.
     const handleCheckbox = (e) => {
         const { name, checked } = e.target;
         setCheckboxes(checkboxes => ({
@@ -87,19 +87,18 @@ function FilterForm() {
         }))
     }
 
-    // Handles value changes for radio inputs.
-    const handleRadio = (e) => {
-        const { name, value } = e.target
-        setRadios(radios => ({
-            ...radios, 
-            [name]: value
+    // Handles direction button clicks for sorting.
+    const handleDirectionButton = (order, direction) => {
+        setSelections(selections => ({
+            ...selections,
+            [`${order}Direction`]: direction
         }))
     }
 
     const handleFilter = (e) => {
         e.preventDefault();
         let results = filterGames(formData, checkboxes);
-        results = sortGames(results, selections, radios);
+        results = sortGames(results, selections);
         setGameList(results);
     }
 
@@ -154,126 +153,187 @@ function FilterForm() {
                         <TextField sx={inputStyles} variant="outlined" label="Min. Rating" name="gameRating" value={formData["gameRating"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1, max: 9 }}} />
                         <TextField sx={inputStyles} variant="outlined" label="Play Time (Minutes)" name="playTime" value={formData["playTime"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 5, step: 5 }}} />
                     </Box>
+
                     {/* Player Count Filter */}
                     <Box sx={filterGroupingStyles}>
-                        <h4>Player Count</h4>
-                        <div className="formField">
-                            <TextField sx={inputStyles} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1 }}} />
+                        <h4>
+                            <Tooltip arrow title="Filter player count by publisher specification and/or player poll results.">
+                                <HelpOutlineIcon />
+                            </Tooltip>
+                            Player Count
+                        </h4>
+                        <div>
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1 }}} />
                         </div>
-                        <div className="checkboxContainer">
-                                <div className="chekboxSubContainer">
-                                    <input type="checkbox" name="playerCountOfficial" id="playerCountOfficial" value="playerCountOfficial" checked={checkboxes['playerCountOfficial']} onChange={handleCheckbox} />
-                                </div>
-                                <label htmlFor="playerCountOfficial">&nbsp;Publisher</label>
+                        {formData.playerCount && 
+                        <div>
+                            <div className="checkboxContainer">
+                                    <div className="chekboxSubContainer">
+                                        <input type="checkbox" name="playerCountOfficial" id="playerCountOfficial" value="playerCountOfficial" checked={checkboxes['playerCountOfficial']} onChange={handleCheckbox} />
+                                    </div>
+                                    <label htmlFor="playerCountOfficial">&nbsp;Publisher</label>
+                            </div>
+                            <div className="checkboxContainer">
+                                    <div className="chekboxSubContainer Best">
+                                        <input type="checkbox" name="playerCountBest" id="playerCountBest" value="playerCountBest" checked={checkboxes['playerCountBest']} onChange={handleCheckbox} />  
+                                    </div>
+                                    <label htmlFor="playerCountBest">&nbsp;Best</label>
+                            </div>
+                            <div className="checkboxContainer">
+                                    <div className="chekboxSubContainer Recommended">
+                                        <input type="checkbox" name="playerCountRecommended" id="playerCountRecommended" value="playerCountRecommended" checked={checkboxes['playerCountRecommended']} onChange={handleCheckbox} />
+                                    </div>
+                                    <label htmlFor="playerCountRecommended">&nbsp;Recommended</label>
+                            </div>                            
                         </div>
-                        <div className="checkboxContainer">
-                                <div className="chekboxSubContainer Best">
-                                    <input type="checkbox" name="playerCountBest" id="playerCountBest" value="playerCountBest" checked={checkboxes['playerCountBest']} onChange={handleCheckbox} />  
-                                </div>
-                                <label htmlFor="playerCountBest">&nbsp;Best</label>
-                        </div>
-                        <div className="checkboxContainer">
-                                <div className="chekboxSubContainer Recommended">
-                                    <input type="checkbox" name="playerCountRecommended" id="playerCountRecommended" value="playerCountRecommended" checked={checkboxes['playerCountRecommended']} onChange={handleCheckbox} />
-                                </div>
-                                <label htmlFor="playerCountRecommended">&nbsp;Recommended</label>
-                        </div>
+                        }
                     </Box>
+
                     {/* Game Weight Filter */}
                     <Box sx={filterGroupingStyles}>
-                        <h4>Game Weight</h4>
+                        <h4>
+                            <Tooltip arrow title={
+                                <>
+                                <div>Game Weight is determined by player poll results.</div>
+                                <div>1: Light</div>
+                                <div>2: Medium Light</div>
+                                <div>3: Medium</div>
+                                <div>4: Medium Heavy</div>
+                                <div>5: Heavy</div>
+                                </>
+                            }>
+                                <HelpOutlineIcon />
+                            </Tooltip>                        
+                            Game Weight
+                        </h4>
                         <Box sx={{display: "flex", justifyContent: "space-evenly"}}>
-                            <div className="formField">
+                            <div>
                                 <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
                             </div>
-                            <div className="formField">
+                            <div>
                                 <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
                             </div>
                         </Box>
                     </Box>
+
                     {/* Age Filter */}
                     <Box sx={filterGroupingStyles}>
-                        <h4>Min. Age</h4>
-                        <div className="formField">
-                            <TextField sx={inputStyles} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0 }}} />
+                        <h4>
+                            <Tooltip arrow title="Filter min. age by publisher specification and/or player poll results.">
+                                    <HelpOutlineIcon />
+                            </Tooltip>                        
+                            Min. Age
+                        </h4>
+                        <div>
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0 }}} />
                         </div>
-                        <div className="checkboxContainer">
-                                <div className="chekboxSubContainer">
-                                    <input type="checkbox" name="publisherMinAge" id="publisherMinAge" value="publisherMinAge" checked={checkboxes['publisherMinAge']} onChange={handleCheckbox} />
-                                </div>
-                                <label htmlFor="publisherMinAge">&nbsp;Publisher</label>
+                        {formData.minAge && 
+                        <div>
+                            <div className="checkboxContainer">
+                                    <div className="chekboxSubContainer">
+                                        <input type="checkbox" name="publisherMinAge" id="publisherMinAge" value="publisherMinAge" checked={checkboxes['publisherMinAge']} onChange={handleCheckbox} />
+                                    </div>
+                                    <label htmlFor="publisherMinAge">&nbsp;Publisher</label>
+                            </div>
+                            <div className="checkboxContainer">
+                                    <div className="chekboxSubContainer">
+                                        <input type="checkbox" name="communityMinAge" id="communityMinAge" value="communityMinAge" checked={checkboxes['communityMinAge']} onChange={handleCheckbox} />  
+                                    </div>
+                                    <label htmlFor="communityMinAge">&nbsp;Community</label>
+                            </div>                            
                         </div>
-                        <div className="checkboxContainer">
-                                <div className="chekboxSubContainer">
-                                    <input type="checkbox" name="communityMinAge" id="communityMinAge" value="communityMinAge" checked={checkboxes['communityMinAge']} onChange={handleCheckbox} />  
-                                </div>
-                                <label htmlFor="communityMinAge">&nbsp;Community</label>
-                        </div>
+                        }
                     </Box>
                 </Box>
 
-                <Box sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <h4>Sort By</h4>
-                </Box>
-                <div>
-                    <Box className="sortingBox">
-                        <Select 
-                            fullWidth 
-                            name="primary"
-                            label="Primary Sort"
-                            onChange={handleSelect} 
-                            value={selections.primary}
-                        >
-                            {primarySelectOptions.map(o => 
-                                <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
-                            )}
-                        </Select>
-                        <Box className="sortingDirectionBox" onChange={handleRadio}>
-                            <Box>
-                                <input type="radio" value="primaryAscending" name="primarySortDirection" />
-                                <label htmlFor="primaryAscending">Ascending</label>
-                            </Box>
-                            <Box>
-                                <input type="radio" value="primaryDescending" name="primarySortDirection" />
-                                <label htmlFor="primaryDescending">Descending</label>
-                            </Box>
-                        </Box>                    
-                    </Box>
-                </div>
+                {/* Sorting Header */}
+                <Box sx={{
+                    backgroundColor: "primary.main",
+                    color: "primary.contrastText",
+                    textAlign: "center"
+                }}>
+                    <Typography>Sorting</Typography>
+                </Box>        
 
-                <Box sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <h4>Then By</h4>
-                </Box>
-                <div>
-                    <Box className="sortingBox">
-                        <Select 
-                            fullWidth 
-                            name="secondary"
-                            label="Secondary Sort"
-                            onChange={handleSelect} 
-                            value={selections.secondary}
-                        >
-                            {secondarySelectOptions.map(o => 
-                                <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
-                            )}
-                        </Select>
-                        <Box  className="sortingDirectionBox" onChange={handleRadio}>
-                            <Box>
-                                <input type="radio" value="secondaryAscending" name="secondarySortDirection" />
-                                <label htmlFor="secondaryAscending">Ascending</label>
-                            </Box>
-                            <Box>
-                                <input type="radio" value="secondaryDescending" name="secondarySortDirection" />
-                                <label htmlFor="secondaryDescending">Descending</label>
-                            </Box>
-                        </Box>   
+                {/* Primary Sort */}
+                <Box sx={{mt: 1}}>
+                    <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                        <FormControl fullWidth>
+                            <InputLabel id="primarySort">Sort By</InputLabel>
+                            <Select
+                                name="primary"
+                                labelId="primarySort"
+                                id="primarySort"
+                                value={selections.primary}
+                                label="Sort By"
+                                onChange={handleSelect}
+                                >
+                                {primarySelectOptions.map(o => 
+                                    <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
+                        {selections.primaryDirection === "ascending" && 
+                        <IconButton color="primary" onClick={() => handleDirectionButton("primary", "descending")}>
+                            <NorthRoundedIcon />
+                        </IconButton>
+                        }
+                        {selections.primaryDirection === "descending" && 
+                        <IconButton color="primary" onClick={() => handleDirectionButton("primary", "ascending")}>
+                            <SouthRoundedIcon />
+                        </IconButton>
+                        }             
                     </Box>
-                </div>
+                </Box>
 
-                <div className="buttonContainer">
+                {/* Secondary Sort */}
+                {selections.primary && 
+                <Box sx={{mt: 1}}>
+                    <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                        <FormControl fullWidth>
+                            <InputLabel id="secondarySort">Then By</InputLabel>
+                            <Select
+                                name="secondary"
+                                labelId="secondarySort"
+                                id="secondarySort"
+                                value={selections.secondary}
+                                label="Then By"
+                                onChange={handleSelect}
+                                >
+                                {secondarySelectOptions.map(o => 
+                                    <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
+                        {selections.secondaryDirection === "ascending" && 
+                        <IconButton color="primary" onClick={() => handleDirectionButton("secondary", "descending")}>
+                            <NorthRoundedIcon />
+                        </IconButton>
+                        }
+                        {selections.secondaryDirection === "descending" && 
+                        <IconButton color="primary" onClick={() => handleDirectionButton("secondary", "ascending")}>
+                            <SouthRoundedIcon />
+                        </IconButton>
+                        }
+                    </Box>
+                </Box>
+                }
+
+                {/* (Empty) Buttons Header */}
+                <Box sx={{
+                    backgroundColor: "primary.main",
+                    color: "primary.contrastText",
+                    textAlign: "center",
+                    mt: 1
+                }}>
+                    <Typography>&nbsp;</Typography>
+                </Box>   
+
+                {/* Buttons for returning a game list or a random game. */}
+                <Box sx={{mt: 1, display: "flex", flexDirection: "row", alignContent: "space-evenly", justifyContent: "center"}}>
                     <ThemedButton onClick={handleFilter} text="Get&nbsp;Games" />
                     <ThemedButton onClick={getRandomGame} text="Randomize" />
-                </div>
+                </Box>
 
             </form>
         </Paper>

@@ -1,8 +1,7 @@
 // Displays BGG data for a game.
 
 import React from "react";
-
-import { Box, Card, CardContent, Stack } from "@mui/material";
+import { Box, Card, CardContent, Stack, Tooltip } from "@mui/material";
 
 import '../css/GameCard.css';
 
@@ -67,9 +66,17 @@ function GameCard( {gameData} ) {
                                 <Stack direction="row">
                                     {gameData.poll[0].resultSummary.slice(0,10).map((r, indx) => {
                                         // limit player count boxes to 10
-                                        return <div key={indx+1} className={`playerCountBox ${r}`}>
-                                            {(Number(indx) + 1) === gameData.poll[0].resultSummary.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
-                                        </div>
+                                        return <Tooltip key={indx+1} arrow title={
+                                            <>
+                                            <div>Best: {gameData.poll[0].results[indx].result[0]._attributes.numvotes} vote{gameData.poll[0].results[indx].result[0]._attributes.numvotes !== "1" && 's'}</div>
+                                            <div>Recommended: {gameData.poll[0].results[indx].result[1]._attributes.numvotes} vote{gameData.poll[0].results[indx].result[1]._attributes.numvotes !== "1" && 's'}</div>
+                                            <div>Not Recommended: {gameData.poll[0].results[indx].result[2]._attributes.numvotes} vote{gameData.poll[0].results[indx].result[2]._attributes.numvotes !== "1" && 's'}</div>                    
+                                            </>
+                                        }>
+                                            <div className={`playerCountBox ${r}`}>
+                                                {(Number(indx) + 1) === gameData.poll[0].resultSummary.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
+                                            </div>
+                                        </Tooltip> 
                                         })
                                     }
                                 </Stack>

@@ -1,12 +1,12 @@
-const sortGames = (gameList, selections, radios) => {
+const sortGames = (gameList, selections) => {
 
     // Get gameList from state to use for sorting.
     let listToSort = gameList;
 
     // Collect sort parameters from state starting with the last set of parameters and ending with the first set. Sorting should be done, in this way, in reverse order.
     let parameters = []
-    if (selections.secondary && radios.secondarySortDirection) parameters.push({selection: selections.secondary, direction: radios.secondarySortDirection});
-    if (selections.primary && radios.primarySortDirection) parameters.push({selection: selections.primary, direction: radios.primarySortDirection});
+    if (selections.secondary) parameters.push({selection: selections.secondary, direction: selections.secondaryDirection});
+    if (selections.primary) parameters.push({selection: selections.primary, direction: selections.primaryDirection});
 
     // If there are no valid (includes both parameter and direction) sort parameters, return original list.
     if (parameters.length < 1) return listToSort;
@@ -38,13 +38,13 @@ const sortGames = (gameList, selections, radios) => {
 
             // If values are numbers...
             if (typeof(aValue) === "number" && typeof(bValue) === "number") {
-                if (currentParams.direction.includes('Ascending')) return aValue-bValue;
+                if (currentParams.direction.includes('ascending')) return aValue-bValue;
                 return bValue-aValue
             }
 
             // If values are strings...
             else if (typeof(aValue) === "string" && typeof(bValue) === "string"){
-                if (currentParams.direction.includes('Ascending')) return aValue.localeCompare(bValue)
+                if (currentParams.direction.includes('ascending')) return aValue.localeCompare(bValue)
                 return bValue.localeCompare(aValue)    
             }
 

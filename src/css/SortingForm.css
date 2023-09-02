@@ -6,18 +6,6 @@
     margin-top: 5px;
 }
 
-/* #sortingBoxContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-} */
-
-.sortingBox {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 .sortingDirectionBox {
     display: flex;
     flex-direction: column;
