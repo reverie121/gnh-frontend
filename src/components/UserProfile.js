@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Box, Tabs, Tab } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
@@ -6,10 +7,9 @@ import GameListContext from "../context/GameListContext";
 import { gameListToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 
+import UserData from "./UserData";
 import GameList from "./GameList";
 import UserPlaysList from "./UserPlaysList";
-
-import '../css/UserProfile.css';
 
 function UserProfile() {
 
@@ -18,6 +18,11 @@ function UserProfile() {
     const { gameList, setGameList } = useContext(GameListContext);
     
     const [ bggUser, setBGGUser ] = useState();
+    const [ currentTab, setCurrentTab ] = useState(1);
+
+    const handleTabChange = (e, newValue) => {
+        setCurrentTab(newValue);
+    };
 
     useEffect(() => {
         async function getBGGData() {
@@ -41,82 +46,70 @@ function UserProfile() {
     let b = bouncer(user, setUser);
     if (b) return b;
 
+    const tabStyles = {
+        pl: 1,
+        mt: 1, 
+        "& button": {
+            borderStyle: "solid",
+            borderTopLeftRadius: "6px",
+            borderTopRightRadius: "6px",
+            borderColor: "main.primary",
+            borderWidth: "2px",
+            borderBottom: "0px"
+        }
+    }
+
+    const tabIndicatorStyles = {
+        height: "0px"
+    }
+
     return(
-        <div className="UserProfile">
-            <div className="detailsBox">
-                <div className="userDetails">
-                    <div className="detailsRow">
-                        <div className="detailsLabel">Username:</div>
-                        <div className="detailsData">{user.username}</div>
-                    </div>
-                    <div className="detailsRow">
-                        <div className="detailsLabel">Name:</div>
-                        <div className="detailsData">{user.firstName} {user.lastName}</div>
-                    </div>
-                    <div className="detailsRow">
-                        <div className="detailsLabel">Email:</div>
-                        <div className="detailsData">{user.email}</div>
-                    </div>
-                </div>
-                {bggUser &&
-                <div className="bggDetails">
-                    <div className="detailsChunk">BGG Username: <a href={`https://boardgamegeek.com/user/${user.bggUsername}`} target="_blank" rel="noopener noreferrer">{user.bggUsername}</a>
-                    </div>
-                    {/* If BGG User data has friends... */}
-                    {bggUser.userDetails.buddies._attributes.total !== "0" 
-                        && 
-                    <div className="detailsChunk">Buddies: 
-                        {/* Case for multiple friends */}
-                        {Array.isArray(bggUser.userDetails.buddies.buddy)
-                        && 
-                        bggUser.userDetails.buddies.buddy.map((b, i) => 
-                            <span key={b._attributes.name}> <a href={`https://boardgamegeek.com/user/${b._attributes.name}`} target="_blank" rel="noopener noreferrer">
-                                {b._attributes.name}{i+1 < bggUser.userDetails.buddies.buddy.length && ","}
-                            </a></span>
-                        )}
-                        {/* Case for a single friend */}
-                        {!Array.isArray(bggUser.userDetails.buddies.buddy)
-                        && 
-                        <span> <a href={`https://boardgamegeek.com/user/${bggUser.userDetails.buddies.buddy._attributes.name}`} target="_blank" rel="noopener noreferrer">
-                            {bggUser.userDetails.buddies.buddy._attributes.name}
-                        </a></span>
-                        }                        
-                    </div>}
-                    {/* If BGG User data has guilds... */}                    
-                    {bggUser.userDetails.guilds._attributes.total !== "0" 
-                    && 
-                    <div className="detailsChunk">Guilds: 
-                        {/* Case for multiple guilds */}
-                        {Array.isArray(bggUser.userDetails.guilds.guild)
-                        && 
-                        bggUser.userDetails.guilds.guild.map((g, i) => 
-                            <span key={g._attributes.name}> <a href={`https://boardgamegeek.com/guild/${g._attributes.id}`} target="_blank" rel="noopener noreferrer">
-                                {g._attributes.name}{i+1 < bggUser.userDetails.guilds.guild.length && ","}
-                            </a></span>
-                        )}
-                        {/* Case for a single guild */}     
-                        {!Array.isArray(bggUser.userDetails.guilds.guild)
-                        && 
-                        <span> <a href={`https://boardgamegeek.com/guild/${bggUser.userDetails.guilds.guild._attributes.id}`} target="_blank" rel="noopener noreferrer">
-                                {bggUser.userDetails.guilds.guild._attributes.name}
-                        </a></span>
-                        }                   
-                    </div>}
+        <div>
+            <Tabs TabIndicatorProps={{sx: tabIndicatorStyles}} sx={tabStyles} value={currentTab} onChange={handleTabChange}>
+                <Tab label="User Data" />
+                <Tab label="Collection" />
+                <Tab label="Logged Plays" />
+            </Tabs>
+
+            <Box sx={{
+                borderStyle: "solid", 
+                borderColor: "primary.main", 
+                borderRadius: "6px",
+                padding: 1, 
+                width: {
+                    xs: "94vw", // 0
+                    sm: "90vw", // 600
+                    md: "90vw", // 900
+                    lg: "80vw", // 1200
+                    xl: "80vw"  // 1536
+                }
+            }}>
+                {/* USER DATA TAB */}
+                { currentTab === 0 && 
+                <div className="section">
+                    <UserData user={user} bggUser={bggUser} />
                 </div>
                 }
-            </div>
-            {gameList && bggUser && bggUser.userCollectionIDs && 
-            <div className="userCollection">
-                <h2>Game Collection</h2>
-                <GameList />
-            </div>
-            }
-            {bggUser 
-            && 
-            bggUser.userPlays._attributes.total !== "0"
-            && 
-            bggUser.userPlays && <UserPlaysList bggUser={bggUser}/>
-            }         
+
+                {/* GAME COLLECTION TAB */}
+                { currentTab === 1 && 
+                <div className="section">
+                    {gameList && bggUser && bggUser.userCollectionIDs && 
+                    <GameList />
+                    }
+                </div>
+                }
+
+                {/* LOGGED PLAYS TAB */}
+                { currentTab === 2 && 
+                <div className="section">
+                    {bggUser && bggUser.userPlays._attributes.total !== "0" &&  bggUser.userPlays && 
+                    <UserPlaysList bggUser={bggUser}/>
+                    }     
+                </div>
+                }
+
+            </Box>
         </div>
     )
 };
