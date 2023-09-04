@@ -41,11 +41,18 @@ function GameCard( {gameData} ) {
                 borderRadius: "3px", 
                 borderWidth: "2px",
                 position: "relative",
-                maxWidth: "90vw"
+                maxWidth: "90vw",
+                minWidth: {
+                    xs: "300px", // 0 - 559 px
+                    sm: "400px", // 600 - 889 px
+                    md: "500px", // 900 - 1199 px
+                    lg: "700px", // 1200 - 1535 px
+                    xl: "800px" // 1536+ px
+                }
             }}
             raised={true}
         >
-            <CardContent sx={{width: "100%"}}>
+            <CardContent>
                 <Stack direction="row">
                     <div>
                         {gameData.thumbnail && <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />}
