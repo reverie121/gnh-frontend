@@ -1,10 +1,10 @@
 import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, FormControl, TextField, Typography } from "@mui/material";
 
+import ThemedButton from "./themed-components/ThemedButton";
 import GameNightHelperAPI from "../api/gnh-api";
 import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
-
-import '../css/EditUserForm.css';
 
 function EditUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
     const navigate = useNavigate();
@@ -59,62 +59,53 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
         navigate("/profile");
     }        
 
+    const inputStyles = {mt: 2};
+
     return(
-        <form>
-            <h2>User Details</h2>
-            <div className="field">
-            <label htmlFor="username">Username</label>
-            <input disabled
-                id="username"
-                type="text"
-                name="username"
-                value={formData["username"]}
-                onChange={handleChange}
-            />
-            </div>
-            <div className="field">
-                <label htmlFor="bggUsername">BGG Username</label>
-                <input
-                    id="bggUsername"
-                    type="text"
-                    name="bggUsername"
-                    value={formData["bggUsername"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                    id="firstName"
-                    type="text"
-                    name="firstName"
-                    value={formData["firstName"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    value={formData["lastName"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="email">email</label>
-                <input
-                    id="email"
-                    type="text"
-                    name="email"
-                    value={formData["email"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <UpdateProcessResponseMessage processIs={editProcess} />
-            <button onClick={handleSubmit}>Submit</button>
-        </form>
+        <FormControl>
+            <Box sx={{
+                display: "flex", 
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center", 
+                width: {
+                    xs: "80vw", 
+                    sm: "70vw", 
+                    md: "50vw", 
+                    lg: "40vw", 
+                    xl: "30vw"
+                }, 
+                maxWidth: "500px", 
+                m: 2, 
+                pt: 1,
+                pb: 1, 
+                pl: 2, 
+                pr: 2,  
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",   
+            }}>
+
+                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Edit User Data</Typography>
+
+                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
+
+                <UpdateProcessResponseMessage processIs={editProcess} />
+                <Box sx={{mt: 1}}>
+                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                </Box>
+
+            </Box>
+        </FormControl>
     );
 };
 

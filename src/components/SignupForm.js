@@ -1,12 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, FormControl, TextField, Typography } from "@mui/material";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
-
 import ThemedButton from "./themed-components/ThemedButton";
-import '../css/SignupForm.css';
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -56,76 +55,55 @@ function SignupForm() {
         navigate("/profile")
     }        
 
+    const inputStyles = {mt: 2};
+
     return(
-        <form className="SignupForm">
-            <div className="field">
-                <label htmlFor="username"></label>
-                <input
-                    id="username"
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={formData["username"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="password"></label>
-                <input
-                    id="password"
-                    type="text"
-                    name="password"
-                    placeholder="Password"
-                    value={formData["password"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="bggUsername"></label>
-                <input
-                    id="bggUsername"
-                    type="text"
-                    name="bggUsername"
-                    placeholder="BGG Username"
-                    value={formData["bggUsername"]}
-                    onChange={handleChange}
-                />
-            </div>            
-            <div className="field">
-                <label htmlFor="firstName"></label>
-                <input
-                    id="firstName"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    value={formData["firstName"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="lastName"></label>
-                <input
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={formData["lastName"]}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="field">
-                <label htmlFor="email"></label>
-                <input
-                    id="email"
-                    type="text"
-                    name="email"
-                    placeholder="email"
-                    value={formData["email"]}
-                    onChange={handleChange}
-                />
-            </div>                                                
-            <ThemedButton onClick={handleSubmit} text="Submit" />
-        </form>
+
+        <FormControl>
+            <Box sx={{
+                display: "flex", 
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center", 
+                width: {
+                    xs: "80vw", 
+                    sm: "70vw", 
+                    md: "50vw", 
+                    lg: "40vw", 
+                    xl: "30vw"
+                }, 
+                maxWidth: "500px", 
+                m: 2, 
+                pt: 1,
+                pb: 1, 
+                pl: 2, 
+                pr: 2,  
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",   
+            }}>
+
+                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Make A New Game Night Helper Account</Typography>
+
+                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
+
+                <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
+
+                <Box sx={{mt: 1}}>
+                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                </Box>
+
+            </Box>
+        </FormControl>
     );
 };
 

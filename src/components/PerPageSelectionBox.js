@@ -44,7 +44,8 @@ function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage 
                     onChange={handleSelect}
                     sx={{
                         width: "150px", 
-                        color: "primary.main"
+                        color: "secondary.dark",
+                        fontWeight: "bold"
                     }}
                 >                    
                     <MenuItem value={10}>10</MenuItem>
