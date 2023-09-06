@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, FormControl, TextField, Typography } from "@mui/material";
+import { Box, FormControl, Stack, TextField, Typography } from "@mui/material";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
@@ -48,41 +48,43 @@ function LoginForm() {
     const inputStyles = {mt: 2};
 
     return(
-        <FormControl>
-            <Box sx={{
-                display: "flex", 
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center", 
-                width: {
-                    xs: "80vw", 
-                    sm: "70vw", 
-                    md: "50vw", 
-                    lg: "40vw", 
-                    xl: "30vw"
-                }, 
-                maxWidth: "500px", 
-                m: 2, 
-                pt: 1,
-                pb: 1, 
-                pl: 2, 
-                pr: 2,  
-                border: "solid", 
-                borderColor: "primary.main",
-                borderRadius: "3px", 
-                borderWidth: "2px",   
-            }}>
-                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Log In</Typography>
+        <Stack sx={{alignItems: "center"}}>
+            <FormControl>
+                <Box sx={{
+                    display: "flex", 
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center", 
+                    width: {
+                        xs: "80vw", 
+                        sm: "70vw", 
+                        md: "50vw", 
+                        lg: "40vw", 
+                        xl: "30vw"
+                    }, 
+                    maxWidth: "500px", 
+                    m: 2, 
+                    pt: 1,
+                    pb: 1, 
+                    pl: 2, 
+                    pr: 2,  
+                    border: "solid", 
+                    borderColor: "primary.main",
+                    borderRadius: "3px", 
+                    borderWidth: "2px",   
+                }}>
+                    <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Log In</Typography>
 
-                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
 
-                <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} type="password" />
 
-                <Box sx={{mt: 1}}>
-                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                    <Box sx={{mt: 1}}>
+                        <ThemedButton onClick={handleSubmit} text="Submit" />
+                    </Box>
                 </Box>
-            </Box>
-        </FormControl>
+            </FormControl>        
+        </Stack>
     );
 };
 

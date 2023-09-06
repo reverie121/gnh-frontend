@@ -76,13 +76,6 @@ function UserProfile() {
                 borderColor: "primary.main", 
                 borderRadius: "6px",
                 padding: 1, 
-                width: {
-                    xs: "94vw", // 0
-                    sm: "90vw", // 600
-                    md: "90vw", // 900
-                    lg: "80vw", // 1200
-                    xl: "80vw"  // 1536
-                }
             }}>
                 {/* USER DATA TAB */}
                 { currentTab === 0 && 

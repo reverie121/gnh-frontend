@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { FormControl } from "@mui/material";
 
 import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
@@ -64,13 +65,13 @@ function GetCollectionForm() {
     }        
 
     return(
-        <form>
+        <FormControl>
             {collectionCount.map(n => 
             <GetCollectionInput id={n} key={n} addCollectionInput={(id) => addCollectionInput(id)} handleChange={(e) => handleChange(e)} />
             )}
             <ProcessResponseMessage processIs={editProcess} />
             <ThemedButton onClick={handleSubmit} text="Get Games" />
-        </form>
+        </FormControl>
     );
 };
 

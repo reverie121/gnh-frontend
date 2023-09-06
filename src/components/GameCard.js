@@ -53,7 +53,13 @@ function GameCard( {gameData} ) {
             raised={true}
         >
             <CardContent>
-                <Stack direction="row">
+                <Stack direction={{
+                    xs: "column",
+                    sm: "row",
+                    md: "row",
+                    lg: "row",
+                    xl: "row"
+                }}>
                     <div>
                         {gameData.thumbnail && <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />}
                     </div>

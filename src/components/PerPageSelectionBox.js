@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
 
 function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage }) {
 
@@ -10,7 +10,7 @@ function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage 
     }
 
     return(
-        <Box sx={{
+        <Paper elevation={5} sx={{
             m: 1, 
             display: "flex", 
             flexDirection: "column", 
@@ -55,7 +55,7 @@ function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage 
                     <MenuItem value={gameList.length}>All</MenuItem>
                 </Select>    
             </FormControl>      
-        </Box>
+        </Paper>
     )
 }
 

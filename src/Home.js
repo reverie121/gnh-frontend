@@ -40,7 +40,7 @@ function Home() {
                 fontSize: "3rem",
                 textShadow: ".075rem .075rem darkturquoise",            
             }}>Game Night Helper</Typography>
-            <Typography variant="h4" color="primary" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
+            <Typography variant="h5" color="primary" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
             <div>
                 <Link to="/login">
                     <ThemedButton text="Log In" />

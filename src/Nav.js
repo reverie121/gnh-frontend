@@ -60,12 +60,12 @@ function Nav() {
                     display: { xs: 'none', md: 'flex' },
                     fontFamily: 'monospace',
                     fontWeight: 700,
-                    letterSpacing: '.3rem',
+                    // letterSpacing: '.3rem',
                     color: 'inherit',
                     textDecoration: 'none',
                     }}
                 >
-                    GNH
+                    Game Night Helper
                 </Typography>
 
                 {/* Hamburger menu for xs and sm screens. */}
@@ -137,7 +137,7 @@ function Nav() {
                         sx={{ my: 2, color: 'white', display: 'block' }}
                         key={page.text}
                     >
-                        <Link component={RouterLink} to={page.path} color="primary.contrastText">{page.text}</Link>
+                        <Link fontSize="medium" underline="hover" component={RouterLink} to={page.path} color="primary.contrastText">{page.text}</Link>
                     </Button>
                     ))}
                 </Box>
@@ -184,7 +184,6 @@ function Nav() {
 
                     </Menu>
                 </Box>
-
             </Toolbar>
         </Container>
     </AppBar>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
@@ -14,14 +14,9 @@ function EditUser() {
     if (b) return b;
 
     return(
-        <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
+        <Stack sx={{alignItems: "center"}}>
             <EditUserForm username={user.username} bggUsername={user.bggUsername} firstName={user.firstName} lastName={user.lastName} email={user.email} setUser={(user) => setUser(user)}/>
-        </Box>
+        </Stack>
     )
 };
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { ThemeProvider } from '@mui/material';
-import { Box, CssBaseline } from "@mui/material";
+import { Box,Container, CssBaseline } from "@mui/material";
 
 import Nav from './Nav';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,7 +10,6 @@ import UserContext from './context/UserContext';
 import GameListContext from './context/GameListContext';
 
 import theme from './Theme';
-import './css/App.css';
 
 function App() {
 
@@ -23,15 +22,15 @@ function App() {
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <CssBaseline>
-                    <Box className="App">
+                    <Box sx={{overflow: "auto", minHeight: "100vh"}}>
                         <UserContext.Provider value={{ user, setUser }}>
                             <Nav />
                             {/* The PageContent class is setting the width of all content below the nav. */}
-                            <Box className="PageContent">
+                            <Container maxWidth="xl" className="PageContent">
                                 <GameListContext.Provider value={{ gameList, setGameList }}>
                                     <AppRoutes />
                                 </GameListContext.Provider>
-                            </Box>
+                            </Container>
                         </UserContext.Provider>
                     </Box>
                 </CssBaseline>
