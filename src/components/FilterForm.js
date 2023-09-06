@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
@@ -164,6 +164,7 @@ function FilterForm() {
         mb: 1,
         fontWeight: "bold", 
         alignSelf: "center",
+        color: "primary.main"
     };
 
     const inputStyles = {mt: 1};
@@ -186,16 +187,12 @@ function FilterForm() {
                 }}>
                     <Typography>Filters</Typography>
                 </Box>                
-                <Box sx={{
-                    display: "flex",
-                    flexDirection: {
+                <Stack direction={{
                         xs: "column",
                         sm: "row",
                         md: "row",
                         lg: "column",
-                        xl: "column"
-                    }
-                }}>
+                        xl: "column"}}>
                     {/* Individual Filters */}
                     <Box sx={filterGroupingStyles}>
                         <TextField sx={inputStyles} variant="outlined" label="Title" name="gameTitle" value={formData["gameTitle"]} onChange={handleChange} />
@@ -345,7 +342,7 @@ function FilterForm() {
                         </Box>
                         }
                     </Box>
-                </Box>
+                </Stack>
 
                 {/* Sorting Header */}
                 <Box sx={{

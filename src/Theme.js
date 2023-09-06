@@ -31,7 +31,7 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: [
-            'Trebuchet MS', 'Gill Sans', 'Gill Sans MT', 'Calibri'
+            'Chivo Mono', 'monospace'
         ].join(',')
     }        
 })
