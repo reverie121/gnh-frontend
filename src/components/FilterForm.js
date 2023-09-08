@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 
 import GameListContext from "../context/GameListContext";
 
@@ -43,14 +45,23 @@ function FilterForm() {
 
     // *** STATE & CONTEXT ***
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const [formData, setFormData] = useState(INITIAL_TEXTFIELD_STATE);
     const [checkboxes, setCheckboxes] = useState(INITIAL_CHECKBOX_STATE);
     const [selections, setSelections] = useState(INITIAL_SELECTION_STATE);
+
+    const [filtersExpanded, setFiltersExpanded] = useState(false);
 
     const { setGameList } = useContext(GameListContext);
 
     // *** USER INPUT HANDLERS ***
     // Updates state in response to user input.
+
+    // Handles filter expander to hide/show filters and sorting.
+    const handleFilterVisibilityChange = (e) => {
+        setFiltersExpanded(!filtersExpanded);
+    }
 
     // Handles value changes for TextFields.
     const handleChange = (e) => {
@@ -168,6 +179,24 @@ function FilterForm() {
     };
 
     const inputStyles = {mt: 1};
+    
+    // Hook to add a listener that updates State with the window width on window resize.
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+        window.removeEventListener('resize', handleWindowResize);
+        };
+    });
+
+    // Filters should default to visible for lg+ size screens. Otherwise, default to hidden. Triggers on window resize.
+    useEffect(() => {
+        windowWidth >= 1200 ? setFiltersExpanded(true) : setFiltersExpanded(false)
+    }, [windowWidth])
 
     return(
         <Paper elevation={5} sx={{
@@ -180,13 +209,30 @@ function FilterForm() {
         }}>
             <FormGroup>
                 {/* Filters Header */}
-                <Box sx={{
+                <Stack direction="row" sx={{
+                    justifyContent: "space-between", 
                     backgroundColor: "primary.main",
                     color: "primary.contrastText",
-                    textAlign: "center"
                 }}>
+                    <KeyboardArrowUpRoundedIcon sx={{visibility: "hidden"}} />
                     <Typography>Filters</Typography>
-                </Box>                
+                    {filtersExpanded && 
+                        <KeyboardArrowUpRoundedIcon onClick={handleFilterVisibilityChange} sx={{visibility: {
+                            xs: "visible",
+                            lg: "hidden", 
+                        }}} />}
+                    {!filtersExpanded &&
+                        <KeyboardArrowDownRoundedIcon onClick={handleFilterVisibilityChange} sx={{visbility: {
+                            xs: "visible",
+                            lg: "hidden", 
+                        }}} />}
+                </Stack>
+                <Box sx={{
+                    height: filtersExpanded ? "" : "0px",
+                    visibility: filtersExpanded ? "visible" : "hidden",
+                }}>
+
+
                 <Stack direction={{
                         xs: "column",
                         sm: "row",
@@ -440,6 +486,8 @@ function FilterForm() {
                     <ThemedButton onClick={getRandomGame} text="Randomize" />
                 </Box>
 
+
+                </Box>        
             </FormGroup>
         </Paper>
     );

@@ -26,7 +26,7 @@ function App() {
                         <UserContext.Provider value={{ user, setUser }}>
                             <Nav />
                             {/* The PageContent class is setting the width of all content below the nav. */}
-                            <Container maxWidth="xl" className="PageContent">
+                            <Container maxWidth="xl" className="PageContent" sx={{pt: "75px"}}>
                                 <GameListContext.Provider value={{ gameList, setGameList }}>
                                     <AppRoutes />
                                 </GameListContext.Provider>
