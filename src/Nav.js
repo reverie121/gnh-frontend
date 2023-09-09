@@ -44,7 +44,7 @@ function Nav() {
     };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{opacity: 0.95}}>
         <Container maxWidth="xl">
             <Toolbar disableGutters>
 
