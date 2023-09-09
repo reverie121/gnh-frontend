@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 
 import GameListContext from "../context/GameListContext";
 
@@ -11,6 +13,7 @@ import filterGames from "../helpers/filterGames";
 import sortGames from "../helpers/sortGames";
 import ThemedButton from "./themed-components/ThemedButton";
 import ThemedTooltip from "./themed-components/ThemedTooltip";
+import QuickFilters from "./QuickFilters";
 
 function FilterForm() {
 
@@ -43,14 +46,23 @@ function FilterForm() {
 
     // *** STATE & CONTEXT ***
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const [formData, setFormData] = useState(INITIAL_TEXTFIELD_STATE);
     const [checkboxes, setCheckboxes] = useState(INITIAL_CHECKBOX_STATE);
     const [selections, setSelections] = useState(INITIAL_SELECTION_STATE);
+
+    const [filtersExpanded, setFiltersExpanded] = useState(false);
 
     const { setGameList } = useContext(GameListContext);
 
     // *** USER INPUT HANDLERS ***
     // Updates state in response to user input.
+
+    // Handles filter expander to hide/show filters and sorting.
+    const handleFilterVisibilityChange = (e) => {
+        setFiltersExpanded(!filtersExpanded);
+    }
 
     // Handles value changes for TextFields.
     const handleChange = (e) => {
@@ -168,6 +180,24 @@ function FilterForm() {
     };
 
     const inputStyles = {mt: 1};
+    
+    // Hook to add a listener that updates State with the window width on window resize.
+    useEffect(() => {
+        const handleWindowResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+        window.removeEventListener('resize', handleWindowResize);
+        };
+    });
+
+    // Filters should default to visible for lg+ size screens. Otherwise, default to hidden. Triggers on window resize.
+    useEffect(() => {
+        windowWidth >= 1200 ? setFiltersExpanded(true) : setFiltersExpanded(false)
+    }, [windowWidth])
 
     return(
         <Paper elevation={5} sx={{
@@ -177,16 +207,34 @@ function FilterForm() {
             borderColor: "primary.main",
             borderRadius: "3px", 
             borderWidth: "2px",
+            minWidth: "350px"
         }}>
             <FormGroup>
                 {/* Filters Header */}
-                <Box sx={{
+                <Stack direction="row" sx={{
+                    justifyContent: "space-between", 
                     backgroundColor: "primary.main",
                     color: "primary.contrastText",
-                    textAlign: "center"
                 }}>
+                    <KeyboardArrowUpRoundedIcon sx={{visibility: "hidden"}} />
                     <Typography>Filters</Typography>
-                </Box>                
+                    {filtersExpanded && 
+                        <KeyboardArrowUpRoundedIcon onClick={handleFilterVisibilityChange} sx={{visibility: {
+                            xs: "visible",
+                            lg: "hidden", 
+                        }}} />}
+                    {!filtersExpanded &&
+                        <KeyboardArrowDownRoundedIcon onClick={handleFilterVisibilityChange} sx={{visbility: {
+                            xs: "visible",
+                            lg: "hidden", 
+                        }}} />}
+                </Stack>
+                <Box sx={{
+                    height: filtersExpanded ? "" : "0px",
+                    visibility: filtersExpanded ? "visible" : "hidden",
+                }}>
+
+
                 <Stack direction={{
                         xs: "column",
                         sm: "row",
@@ -200,246 +248,249 @@ function FilterForm() {
                         <TextField sx={inputStyles} variant="outlined" label="Play Time (Minutes)" name="playTime" value={formData["playTime"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 5, step: 5 }}} />
                     </Box>
 
-                    {/* Player Count Filter */}
-                    <Box sx={filterGroupingStyles}>
-                        {/* Player Count Header */}
-                        <Typography sx={filterHeaderStyles}>
-                            Player Count
-                            <ThemedTooltip contents="Filter by player count according to publisher specification and/or player poll results."/>
-                        </Typography>
-                        {/* Player Count Input Field */}
-                        <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1 }}} />
-                        {/* Player Count Checkboxes */}
-                        {formData.playerCount && 
-                        <Box sx={checkBoxesContainerStyles}>
-                            <FormControlLabel control={
-                                <Checkbox 
-                                    color="success" 
-                                    size="small" 
-                                    name="playerCountOfficial" value="playerCountOfficial"
-                                    checked={checkboxes['playerCountOfficial']} onChange={handleCheckbox}
+                        {/* Player Count Filter */}
+                        <Box sx={filterGroupingStyles}>
+                            {/* Player Count Header */}
+                            <Typography sx={filterHeaderStyles}>
+                                Player Count
+                                <ThemedTooltip contents="Filter by player count according to publisher specification and/or player poll results."/>
+                            </Typography>
+                            {/* Player Count Input Field */}
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1 }}} />
+                            {/* Player Count Checkboxes */}
+                            {formData.playerCount && 
+                            <Box sx={checkBoxesContainerStyles}>
+                                <FormControlLabel control={
+                                    <Checkbox 
+                                        color="success" 
+                                        size="small" 
+                                        name="playerCountOfficial" value="playerCountOfficial"
+                                        checked={checkboxes['playerCountOfficial']} onChange={handleCheckbox}
+                                    />
+                                    }
+                                    label={
+                                    <Typography fontSize="small">
+                                        Publisher
+                                    </Typography>
+                                    } 
+                                    sx={checkBoxStyles}
                                 />
-                                }
-                                label={
-                                <Typography fontSize="small">
-                                    Publisher
-                                </Typography>
-                                } 
-                                sx={checkBoxStyles}
-                            />
-                            <FormControlLabel control={
-                                <Checkbox 
-                                    color="success" 
-                                    size="small" 
-                                    name="playerCountBest" value="playerCountBest"
-                                    checked={checkboxes['playerCountBest']} onChange={handleCheckbox}
+                                <FormControlLabel control={
+                                    <Checkbox 
+                                        color="success" 
+                                        size="small" 
+                                        name="playerCountBest" value="playerCountBest"
+                                        checked={checkboxes['playerCountBest']} onChange={handleCheckbox}
+                                    />
+                                    }
+                                    label={
+                                    <Typography fontSize="small">
+                                        Best
+                                    </Typography>
+                                    }
+                                    sx={checkBoxStyles}
                                 />
-                                }
-                                label={
-                                <Typography fontSize="small">
-                                    Best
-                                </Typography>
-                                }
-                                sx={checkBoxStyles}
-                            />
-                            <FormControlLabel control={
-                                <Checkbox 
-                                    color="success" 
-                                    size="small" 
-                                    name="playerCountRecommended" value="playerCountRecommended"
-                                    checked={checkboxes['playerCountRecommended']} 
-                                    onChange={handleCheckbox}
-                                />
-                                }
-                                label={
-                                <Typography fontSize="small">
-                                    Recommended
-                                </Typography>
-                                } 
-                                sx={checkBoxStyles}
-                            />                            
-                        </Box>
-                        }
-                    </Box>
-
-                    {/* Game Weight Filter */}
-                    <Box sx={filterGroupingStyles}>
-                        {/* Gme Weight Header */}
-                        <Typography sx={filterHeaderStyles}>
-                            Game Weight
-                            <ThemedTooltip contents={
-                                <>
-                                <div>Filter by Game Weight: a measure of complexity as determined by player poll results.</div>
-                                <div>1: Light</div>
-                                <div>2: Medium Light</div>
-                                <div>3: Medium</div>
-                                <div>4: Medium Heavy</div>
-                                <div>5: Heavy</div>
-                                </>
-                            }/>                    
-                        </Typography>
-                        {/* Container for Min and Max Inputs */}
-                        <Box sx={{
-                            display: "flex", 
-                            justifyContent: "space-evenly", 
-                            flexDirection: {
-                                xs: "row",
-                                sm: "column",
-                                md: "column",
-                                lg: "row",
-                                xl: "row"
+                                <FormControlLabel control={
+                                    <Checkbox 
+                                        color="success" 
+                                        size="small" 
+                                        name="playerCountRecommended" value="playerCountRecommended"
+                                        checked={checkboxes['playerCountRecommended']} 
+                                        onChange={handleCheckbox}
+                                    />
+                                    }
+                                    label={
+                                    <Typography fontSize="small">
+                                        Recommended
+                                    </Typography>
+                                    } 
+                                    sx={checkBoxStyles}
+                                />                            
+                            </Box>
                             }
-                        }}>
-                            {/* Game Weight Min Input Field */}
-                            <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
-                            {/* Game Weight Max Input Field */}
-                            <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                        </Box>
+
+                        {/* Game Weight Filter */}
+                        <Box sx={filterGroupingStyles}>
+                            {/* Gme Weight Header */}
+                            <Typography sx={filterHeaderStyles}>
+                                Game Weight
+                                <ThemedTooltip contents={
+                                    <>
+                                    <div>Filter by Game Weight: a measure of complexity as determined by player poll results.</div>
+                                    <div>1: Light</div>
+                                    <div>2: Medium Light</div>
+                                    <div>3: Medium</div>
+                                    <div>4: Medium Heavy</div>
+                                    <div>5: Heavy</div>
+                                    </>
+                                }/>                    
+                            </Typography>
+                            {/* Container for Min and Max Inputs */}
+                            <Box sx={{
+                                display: "flex", 
+                                justifyContent: "space-evenly", 
+                                flexDirection: {
+                                    xs: "row",
+                                    sm: "column",
+                                    md: "column",
+                                    lg: "row",
+                                    xl: "row"
+                                }
+                            }}>
+                                {/* Game Weight Min Input Field */}
+                                <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                                {/* Game Weight Max Input Field */}
+                                <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                            </Box>
+                        </Box>
+
+                        {/* Age Filter */}
+                        <Box sx={filterGroupingStyles}>
+                            {/* Min. Age Header */}
+                            <Typography sx={filterHeaderStyles}>
+                                Min. Age
+                                <ThemedTooltip contents="Filter by minimum age according to publisher specification and/or player poll results."/>                                            
+                            </Typography>
+                            {/* Min. Age Input Field */}
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0 }}} />
+                            {/* Min. Age Checkboxes */}
+                            {formData.minAge && 
+                            <Box sx={checkBoxesContainerStyles}>
+                                <FormControlLabel control={
+                                    <Checkbox 
+                                        color="success" 
+                                        size="small" 
+                                        name="publisherMinAge" value="publisherMinAge"
+                                        checked={checkboxes['publisherMinAge']} onChange={handleCheckbox}
+                                    />
+                                    }
+                                    label={
+                                    <Typography fontSize="small">
+                                        Publisher
+                                    </Typography>
+                                    }
+                                    sx={checkBoxStyles}
+                                />
+                                <FormControlLabel control={
+                                    <Checkbox 
+                                        color="success" 
+                                        size="small" 
+                                        name="communityMinAge" value="communityMinAge"
+                                        checked={checkboxes['communityMinAge']} onChange={handleCheckbox}
+                                    />
+                                    }
+                                    label={
+                                    <Typography fontSize="small">
+                                        Community
+                                    </Typography>
+                                    }
+                                    sx={checkBoxStyles}
+                                />
+                            </Box>
+                            }
+                        </Box>
+                    </Stack>
+
+                    {/* Sorting Header */}
+                    <Box sx={{
+                        backgroundColor: "primary.main",
+                        color: "primary.contrastText",
+                        textAlign: "center"
+                    }}>
+                        <Typography>Sorting</Typography>
+                    </Box>        
+
+                    {/* Primary Sort ("Sort By") */}
+                    <Box sx={{mt: 1}}>
+                        <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                            {/* Primary Sort Input Field */}
+                            <FormControl fullWidth>
+                                <InputLabel id="primarySort">Sort By</InputLabel>
+                                <Select
+                                    name="primary"
+                                    labelId="primarySort"
+                                    id="primarySort"
+                                    value={selections.primary}
+                                    label="Sort By"
+                                    onChange={handleSelect}
+                                    >
+                                    {primarySelectOptions.map(o => 
+                                        <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
+                            {/* Primary Sort Arrows. */}
+                            {/* Render only the appropriate one. */}
+                            {selections.primaryDirection === "ascending" && 
+                            <IconButton color="secondary" onClick={() => handleDirectionButton("primary", "descending")}>
+                                <NorthRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }
+                            {selections.primaryDirection === "descending" && 
+                            <IconButton color="secondary" onClick={() => handleDirectionButton("primary", "ascending")}>
+                                <SouthRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }             
                         </Box>
                     </Box>
 
-                    {/* Age Filter */}
-                    <Box sx={filterGroupingStyles}>
-                        {/* Min. Age Header */}
-                        <Typography sx={filterHeaderStyles}>
-                            Min. Age
-                            <ThemedTooltip contents="Filter by minimum age according to publisher specification and/or player poll results."/>                                            
-                        </Typography>
-                        {/* Min. Age Input Field */}
-                        <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0 }}} />
-                        {/* Min. Age Checkboxes */}
-                        {formData.minAge && 
-                        <Box sx={checkBoxesContainerStyles}>
-                            <FormControlLabel control={
-                                <Checkbox 
-                                    color="success" 
-                                    size="small" 
-                                    name="publisherMinAge" value="publisherMinAge"
-                                    checked={checkboxes['publisherMinAge']} onChange={handleCheckbox}
-                                />
-                                }
-                                label={
-                                <Typography fontSize="small">
-                                    Publisher
-                                </Typography>
-                                }
-                                sx={checkBoxStyles}
-                            />
-                            <FormControlLabel control={
-                                <Checkbox 
-                                    color="success" 
-                                    size="small" 
-                                    name="communityMinAge" value="communityMinAge"
-                                    checked={checkboxes['communityMinAge']} onChange={handleCheckbox}
-                                />
-                                }
-                                label={
-                                <Typography fontSize="small">
-                                    Community
-                                </Typography>
-                                }
-                                sx={checkBoxStyles}
-                            />
+                    {/* Secondary Sort ("Then By") */}
+                    {/* Render this only when the Primary Sort has a value. */}
+                    {selections.primary && 
+                    <Box sx={{mt: 1}}>
+                        <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                            {/* Secondary Sort Input Field */}
+                            <FormControl fullWidth>
+                                <InputLabel id="secondarySort">Then By</InputLabel>
+                                <Select
+                                    name="secondary"
+                                    labelId="secondarySort"
+                                    id="secondarySort"
+                                    value={selections.secondary}
+                                    label="Then By"
+                                    onChange={handleSelect}
+                                    >
+                                    {secondarySelectOptions.map(o => 
+                                        <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
+                                    )}
+                                </Select>
+                            </FormControl>
+                            {/* Secondary Sort Arrows. */}
+                            {/* Render only the appropriate one */}                        
+                            {selections.secondaryDirection === "ascending" && 
+                            <IconButton color="secondary" onClick={() => handleDirectionButton("secondary", "descending")}>
+                                <NorthRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }
+                            {selections.secondaryDirection === "descending" && 
+                            <IconButton color="secondary" onClick={() => handleDirectionButton("secondary", "ascending")}>
+                                <SouthRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }
                         </Box>
-                        }
                     </Box>
-                </Stack>
+                    }
 
-                {/* Sorting Header */}
-                <Box sx={{
-                    backgroundColor: "primary.main",
-                    color: "primary.contrastText",
-                    textAlign: "center"
-                }}>
-                    <Typography>Sorting</Typography>
+                    {/* (Empty) Buttons Header */}
+                    <Box sx={{
+                        backgroundColor: "primary.main",
+                        color: "primary.contrastText",
+                        textAlign: "center",
+                        mt: 1
+                    }}>
+                        <Typography>&nbsp;</Typography>
+                    </Box>   
+
+                    {/* Buttons for returning either a game list or a random game using the filter and sort values. */}
+                    <Box sx={{mt: 1, display: "flex", flexDirection: "row", alignContent: "space-evenly", justifyContent: "center"}}>
+                        <ThemedButton onClick={handleFilter} text="Get&nbsp;Games" />
+                        <ThemedButton onClick={getRandomGame} text="Randomize" />
+                    </Box>
+
+                    <QuickFilters formData={formData} setFormData={setFormData} checkboxes={checkboxes} setCheckboxes={setCheckboxes} selections={selections} setSelections={setSelections} />
+
                 </Box>        
-
-                {/* Primary Sort ("Sort By") */}
-                <Box sx={{mt: 1}}>
-                    <Box sx={{ml: 1, mr: 1, display: "flex"}}>
-                        {/* Primary Sort Input Field */}
-                        <FormControl fullWidth>
-                            <InputLabel id="primarySort">Sort By</InputLabel>
-                            <Select
-                                name="primary"
-                                labelId="primarySort"
-                                id="primarySort"
-                                value={selections.primary}
-                                label="Sort By"
-                                onChange={handleSelect}
-                                >
-                                {primarySelectOptions.map(o => 
-                                    <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
-                                )}
-                            </Select>
-                        </FormControl>
-                        {/* Primary Sort Arrows. */}
-                        {/* Render only the appropriate one. */}
-                        {selections.primaryDirection === "ascending" && 
-                        <IconButton color="secondary" onClick={() => handleDirectionButton("primary", "descending")}>
-                            <NorthRoundedIcon fontSize="large" />
-                        </IconButton>
-                        }
-                        {selections.primaryDirection === "descending" && 
-                        <IconButton color="secondary" onClick={() => handleDirectionButton("primary", "ascending")}>
-                            <SouthRoundedIcon fontSize="large" />
-                        </IconButton>
-                        }             
-                    </Box>
-                </Box>
-
-                {/* Secondary Sort ("Then By") */}
-                {/* Render this only when the Primary Sort has a value. */}
-                {selections.primary && 
-                <Box sx={{mt: 1}}>
-                    <Box sx={{ml: 1, mr: 1, display: "flex"}}>
-                        {/* Secondary Sort Input Field */}
-                        <FormControl fullWidth>
-                            <InputLabel id="secondarySort">Then By</InputLabel>
-                            <Select
-                                name="secondary"
-                                labelId="secondarySort"
-                                id="secondarySort"
-                                value={selections.secondary}
-                                label="Then By"
-                                onChange={handleSelect}
-                                >
-                                {secondarySelectOptions.map(o => 
-                                    <MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>
-                                )}
-                            </Select>
-                        </FormControl>
-                        {/* Secondary Sort Arrows. */}
-                        {/* Render only the appropriate one */}                        
-                        {selections.secondaryDirection === "ascending" && 
-                        <IconButton color="secondary" onClick={() => handleDirectionButton("secondary", "descending")}>
-                            <NorthRoundedIcon fontSize="large" />
-                        </IconButton>
-                        }
-                        {selections.secondaryDirection === "descending" && 
-                        <IconButton color="secondary" onClick={() => handleDirectionButton("secondary", "ascending")}>
-                            <SouthRoundedIcon fontSize="large" />
-                        </IconButton>
-                        }
-                    </Box>
-                </Box>
-                }
-
-                {/* (Empty) Buttons Header */}
-                <Box sx={{
-                    backgroundColor: "primary.main",
-                    color: "primary.contrastText",
-                    textAlign: "center",
-                    mt: 1
-                }}>
-                    <Typography>&nbsp;</Typography>
-                </Box>   
-
-                {/* Buttons for returning either a game list or a random game using the filter and sort values. */}
-                <Box sx={{mt: 1, display: "flex", flexDirection: "row", alignContent: "space-evenly", justifyContent: "center"}}>
-                    <ThemedButton onClick={handleFilter} text="Get&nbsp;Games" />
-                    <ThemedButton onClick={getRandomGame} text="Randomize" />
-                </Box>
-
             </FormGroup>
         </Paper>
     );

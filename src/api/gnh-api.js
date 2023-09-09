@@ -40,45 +40,67 @@ class GameNightHelperAPI {
   /** Register a new user. */
 
   static async registerUser(data) {
-    let res = await this.request(`auth/register`, data, "post");
+    const res = await this.request(`auth/register`, data, "post");
     return res.token;
   }  
 
   /** Login in a user, returning a token. */
 
   static async loginUser(data) {
-    let res = await this.request(`auth/token`, data, "post");
+    const res = await this.request(`auth/token`, data, "post");
     return res.token
   }
 
   /** Get details on a user by username. */
 
   static async getUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
+    const [userRes, quickFilterRes] = await Promise.all([
+      this.request(`users/${username}`),
+      this.request(`quick-filters/user/${username}`)
+    ])
+    const userData = userRes.user;
+    userData.quickFilters = quickFilterRes.quickFilters || [];
+    return userData;
   }
 
   /** Edit user details. */
 
   static async editUser(data) {
     const {username, ...userData} = data;
-    let res = await this.request(`users/${username}`, userData, "patch");
+    const res = await this.request(`users/${username}`, userData, "patch");
     return res.user;
   }  
   
+  // Quick Filter API Routes
+
+  static async getQuickFilters(username) {
+    const res = await this.request(`quick-filters/user/${username}`);
+    return res.quickFilters;
+  }
+
+  static async removeQuickFilter(id) {
+    const res = await this.request(`quick-filters/id/${id}`, {}, "delete");
+    return res;
+  }
+
+  static async saveQuickFilter(data) {
+    const res = await this.request(`quick-filters/`, data, "post");
+    return res.quickFilter;
+  }
+
   // BGG Data API Routes
 
   /** Get a simple BGG collection by BGG username. */
 
   static async getBGGCollection(bggUsername) {
-    let res = await this.request(`bgg/collection/${bggUsername}`);
+    const res = await this.request(`bgg/collection/${bggUsername}`);
     return res.collection;
   }
 
   /** Get user data by BGG username. */
 
   static async getBGGUser(bggUsername) {
-    let res = await this.request(`bgg/user/${bggUsername}`);
+    const res = await this.request(`bgg/user/${bggUsername}`);
     return res.userData;
   }
 
