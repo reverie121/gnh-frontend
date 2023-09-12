@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
@@ -9,6 +8,7 @@ import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRound
 
 import GameListContext from "../context/GameListContext";
 
+import FilterFormHelper from "../helpers/filterFormHelper";
 import filterGames from "../helpers/filterGames";
 import sortGames from "../helpers/sortGames";
 import ThemedButton from "./themed-components/ThemedButton";
@@ -243,9 +243,12 @@ function FilterForm() {
                         xl: "column"}}>
                     {/* Individual Filters */}
                     <Box sx={filterGroupingStyles}>
+                        
                         <TextField sx={inputStyles} variant="outlined" label="Title" name="gameTitle" value={formData["gameTitle"]} onChange={handleChange} />
-                        <TextField sx={inputStyles} variant="outlined" label="Min. Rating" name="gameRating" value={formData["gameRating"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1, max: 9 }}} />
-                        <TextField sx={inputStyles} variant="outlined" label="Play Time (Minutes)" name="playTime" value={formData["playTime"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 5, step: 5 }}} />
+                        
+                        <TextField sx={inputStyles} variant="outlined" label="Min. Rating" name="gameRating" value={formData["gameRating"]} onChange={(e) => FilterFormHelper.gameRatingInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 1, max: 9 }}} />
+                        
+                        <TextField sx={inputStyles} variant="outlined" label="Play Time (Minutes)" name="playTime" value={formData["playTime"]} onChange={(e) => FilterFormHelper.playTimeInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 5, step: 5 }}} />
                     </Box>
 
                         {/* Player Count Filter */}
@@ -256,7 +259,7 @@ function FilterForm() {
                                 <ThemedTooltip contents="Filter by player count according to publisher specification and/or player poll results."/>
                             </Typography>
                             {/* Player Count Input Field */}
-                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 1 }}} />
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="# of Players" name="playerCount" value={formData["playerCount"]} onChange={(e) => FilterFormHelper.playerCountInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 1, max: 20 }}} />
                             {/* Player Count Checkboxes */}
                             {formData.playerCount && 
                             <Box sx={checkBoxesContainerStyles}>
@@ -339,9 +342,9 @@ function FilterForm() {
                                 }
                             }}>
                                 {/* Game Weight Min Input Field */}
-                                <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                                <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={(e) => FilterFormHelper.minWeightInput(e, handleChange, formData.maxWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
                                 {/* Game Weight Max Input Field */}
-                                <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                                <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={(e) => FilterFormHelper.maxWeightInput(e, handleChange, formData.minWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
                             </Box>
                         </Box>
 
@@ -353,7 +356,7 @@ function FilterForm() {
                                 <ThemedTooltip contents="Filter by minimum age according to publisher specification and/or player poll results."/>                                            
                             </Typography>
                             {/* Min. Age Input Field */}
-                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={handleChange} type="number" InputProps={{inputProps: { min: 0 }}} />
+                            <TextField sx={{mt: 1, width: "100%"}} variant="outlined" label="Min. Age" name="minAge" value={formData["minAge"]} onChange={(e) => FilterFormHelper.minAgeInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 1, max: 100 }}} />
                             {/* Min. Age Checkboxes */}
                             {formData.minAge && 
                             <Box sx={checkBoxesContainerStyles}>
