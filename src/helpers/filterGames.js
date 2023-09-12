@@ -13,14 +13,7 @@ const filterGames = (formData, checkboxes) => {
         );
     };
     // Filter by minimum rating, as required.
-    if (formData.gameRating) listToFilter = listToFilter.filter(g => Number(g.statistics.ratings.average._attributes.value).toFixed(1) >= formData.gameRating);
-    // Filter by play time, as required.
-    if (formData.playTime) listToFilter = listToFilter.filter(
-            g => 
-            Number(g.minplaytime._attributes.value) <= formData.playTime 
-            && 
-            Number(g.maxplaytime._attributes.value) >= formData.playTime
-        );          
+    if (formData.gameRating) listToFilter = listToFilter.filter(g => Number(g.statistics.ratings.average._attributes.value).toFixed(1) >= formData.gameRating);      
     // Filter by player count, as required.
     if (formData.playerCount) {
         // Filter logic for official player count.
@@ -74,6 +67,10 @@ const filterGames = (formData, checkboxes) => {
             )                
         }
     }
+    // Filter by minimum play time, as required.
+    if (formData.minPlayTime) listToFilter = listToFilter.filter(g => Number(g.minplaytime._attributes.value) >= formData.minPlayTime);  
+    // Filter by maximum play time, as required.
+    if (formData.maxPlayTime) listToFilter = listToFilter.filter(g => Number(g.maxplaytime._attributes.value) <= formData.maxPlayTime);         
     // Filter by minimum weight, as required.
     if (formData.minWeight) listToFilter = listToFilter.filter(g => g.statistics.ratings.averageweight._attributes.value >= formData.minWeight);  
     // Filter by maximum weight, as required.

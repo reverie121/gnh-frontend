@@ -80,7 +80,7 @@ function QuickFilters({ formData, setFormData, checkboxes, setCheckboxes, select
     return(
         <>
         {/* Quick Filters Header */}
-        {user && 
+        {user && user.quickFilters && 
             <Box sx={{
             backgroundColor: "primary.main",
             color: "primary.contrastText",  
@@ -90,7 +90,7 @@ function QuickFilters({ formData, setFormData, checkboxes, setCheckboxes, select
             <Typography>Quick Filters</Typography>
         </Box>}
 
-        {user && 
+        {user && user.quickFilters && 
         <Box sx={{p: 1}}>
 
             {/* If user has no Quick Filters, display a helpful ToolTip. */}

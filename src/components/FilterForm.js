@@ -22,8 +22,9 @@ function FilterForm() {
     const INITIAL_TEXTFIELD_STATE = {
         gameTitle: "",
         gameRating: "",
-        playTime: "",
         playerCount: "",
+        minPlayTime: "",
+        maxPlayTime: "",
         minWeight: "",
         maxWeight: "",
         minAge: ""
@@ -178,8 +179,6 @@ function FilterForm() {
         alignSelf: "center",
         color: "primary.main"
     };
-
-    const inputStyles = {mt: 1};
     
     // Hook to add a listener that updates State with the window width on window resize.
     useEffect(() => {
@@ -235,7 +234,7 @@ function FilterForm() {
                 }}>
 
 
-                <Stack direction={{
+                <Stack justifyContent="space-evenly" direction={{
                         xs: "column",
                         sm: "row",
                         md: "row",
@@ -244,11 +243,10 @@ function FilterForm() {
                     {/* Individual Filters */}
                     <Box sx={filterGroupingStyles}>
                         
-                        <TextField sx={inputStyles} variant="outlined" label="Title" name="gameTitle" value={formData["gameTitle"]} onChange={handleChange} />
+                        <TextField sx={{mt: 1}} variant="outlined" label="Title" name="gameTitle" value={formData["gameTitle"]} onChange={handleChange} />
                         
-                        <TextField sx={inputStyles} variant="outlined" label="Min. Rating" name="gameRating" value={formData["gameRating"]} onChange={(e) => FilterFormHelper.gameRatingInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 1, max: 9 }}} />
+                        <TextField sx={{mt: 1}} variant="outlined" label="Min. Rating" name="gameRating" value={formData["gameRating"]} onChange={(e) => FilterFormHelper.gameRatingInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 1, max: 9 }}} />
                         
-                        <TextField sx={inputStyles} variant="outlined" label="Play Time (Minutes)" name="playTime" value={formData["playTime"]} onChange={(e) => FilterFormHelper.playTimeInput(e, handleChange)} type="number" InputProps={{inputProps: { min: 5, step: 5 }}} />
                     </Box>
 
                         {/* Player Count Filter */}
@@ -313,9 +311,67 @@ function FilterForm() {
                             }
                         </Box>
 
+
+
+
+                        {/* Play Time Filter */}
+                        <Box sx={filterGroupingStyles}>
+                            {/* Play Time Header */}
+                            <Typography sx={filterHeaderStyles}>
+                                Play Time
+                                <ThemedTooltip contents="Filter by estimated play time (in minutes)." />                    
+                            </Typography>
+                            {/* Container for Min and Max Inputs */}
+                            <Box sx={{
+                                display: "flex", 
+                                justifyContent: "space-between", 
+                                alignItems: "center", 
+                                flexDirection: {
+                                    xs: "row",
+                                    sm: "column",
+                                    md: "column",
+                                    lg: "row",
+                                    xl: "row"
+                                }
+                            }}>
+                                {/* Play Time Min Input Field */}
+                                <TextField sx={{
+                                    mt: 1,
+                                    width: {
+                                        xs: "calc(50% - 4px)", 
+                                        sm: "100%", 
+                                        md: "100%", 
+                                        lg: "calc(50% - 4px)", 
+                                        xl: "calc(50% - 4px)", 
+                                    }
+                                }} 
+                                variant="outlined" label="At Least" name="minPlayTime" value={formData["minPlayTime"]} onChange={(e) => FilterFormHelper.minPlayTimeInput(e, handleChange, formData.maxPlayTime)} type="number" InputProps={{inputProps: { min: 0, max: 10000, step: 15 }}} />
+
+                                {/* Play Time Max Input Field */}
+                                <TextField sx={{
+                                    mt: 1,
+                                    width: {
+                                        xs: "calc(50% - 4px)", 
+                                        sm: "100%", 
+                                        md: "100%", 
+                                        lg: "calc(50% - 4px)", 
+                                        xl: "calc(50% - 4px)", 
+                                    }
+                                }} 
+                                variant="outlined" label="At Most" name="maxPlayTime" value={formData["maxPlayTime"]} onChange={(e) => FilterFormHelper.maxPlayTimeInput(e, handleChange, formData.minPlayTime)} type="number" InputProps={{inputProps: { 
+                                    min: 0, 
+                                    max: 10000, 
+                                    step: formData.minPlayTime > formData.maxPlayTime ? formData.minPlayTime - formData.maxPlayTime : 15 
+                                }}} />
+                            </Box>
+                        </Box>
+
+
+
+
                         {/* Game Weight Filter */}
                         <Box sx={filterGroupingStyles}>
-                            {/* Gme Weight Header */}
+                            {/* Game Weight Header */}
                             <Typography sx={filterHeaderStyles}>
                                 Game Weight
                                 <ThemedTooltip contents={
@@ -332,7 +388,7 @@ function FilterForm() {
                             {/* Container for Min and Max Inputs */}
                             <Box sx={{
                                 display: "flex", 
-                                justifyContent: "space-evenly", 
+                                justifyContent: "space-between", 
                                 flexDirection: {
                                     xs: "row",
                                     sm: "column",
@@ -342,9 +398,30 @@ function FilterForm() {
                                 }
                             }}>
                                 {/* Game Weight Min Input Field */}
-                                <TextField sx={inputStyles} variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={(e) => FilterFormHelper.minWeightInput(e, handleChange, formData.maxWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                                <TextField sx={{
+                                    mt: 1,
+                                    width: {
+                                        xs: "calc(50% - 4px)", 
+                                        sm: "100%", 
+                                        md: "100%", 
+                                        lg: "calc(50% - 4px)", 
+                                        xl: "calc(50% - 4px)", 
+                                    }
+                                }} 
+                                variant="outlined" label="Min." name="minWeight" value={formData["minWeight"]} onChange={(e) => FilterFormHelper.minWeightInput(e, handleChange, formData.maxWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
                                 {/* Game Weight Max Input Field */}
-                                <TextField sx={inputStyles} variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={(e) => FilterFormHelper.maxWeightInput(e, handleChange, formData.minWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, step: 0.25 }}} />
+                                <TextField sx={{
+                                    mt: 1,
+                                    width: {
+                                        xs: "calc(50% - 4px)", 
+                                        sm: "100%", 
+                                        md: "100%", 
+                                        lg: "calc(50% - 4px)", 
+                                        xl: "calc(50% - 4px)", 
+                                    }
+                                }} 
+                                variant="outlined" label="Max." name="maxWeight" value={formData["maxWeight"]} onChange={(e) => FilterFormHelper.maxWeightInput(e, handleChange, formData.minWeight)} type="number" InputProps={{inputProps: { min: 0, max: 5, 
+                                step: formData.minWeight > formData.maxWeight ? formData.minWeight - formData.maxWeight : 0.25 }}} />
                             </Box>
                         </Box>
 
