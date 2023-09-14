@@ -1,8 +1,6 @@
-import { gameListFromLocal } from "../helpers/localStorageHelper";
-
-const filterGames = (formData, checkboxes) => {
+const filterGames = (gamesToDisplay, formData, checkboxes) => {
     // Initialize list from local storage for filtering.
-    let listToFilter = gameListFromLocal();
+    let listToFilter = [...gamesToDisplay];
     // Filter by title, as required.
     if (formData.gameTitle) {
         listToFilter = listToFilter.filter(g => 
@@ -85,6 +83,7 @@ const filterGames = (formData, checkboxes) => {
 
     // Return filtered list.
     return listToFilter;
+
 }
 
 export default filterGames;

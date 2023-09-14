@@ -5,7 +5,6 @@ import React, { useContext } from "react";
 import { Box } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
-import { gameListClearLocal } from "../helpers/localStorageHelper";
 import GetCollectionForm from "./GetCollectionForm";
 
 import ThemedButton from "./themed-components/ThemedButton";
@@ -15,7 +14,6 @@ function CollectionRequestForm() {
 
     function clearGameList() {
         setGameList();
-        gameListClearLocal();
     }
 
     return(
@@ -26,7 +24,7 @@ function CollectionRequestForm() {
             justifyContent: "flex-start"
         }}>
             {gameList && 
-                <ThemedButton onClick={clearGameList} text="Clear Game List" />
+                <ThemedButton onClick={clearGameList} text="Clear Games" />
             }
             {!gameList &&
                 <GetCollectionForm />

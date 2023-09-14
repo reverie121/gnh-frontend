@@ -1,7 +1,8 @@
 const filterDictionary = {
         gameTitle: "Title",
         gameRating: "Min. Rating",
-        playTime: "Play Time",
+        minPlayTime: "Play Time (Minutes) At Least",
+        maxPlayTime: "Play Time (Minutes) At Most",
         playerCount: "Player Count",
         playerCountOfficial: "Publisher",
         playerCountBest: "Best",

@@ -42,7 +42,7 @@ function LoginForm() {
         // Clear form.
         setFormData(INITIAL_STATE);
         // Redirect to user profile.
-        navigate("/profile");
+        navigate("/dashboard");
     }        
 
     const inputStyles = {mt: 2};

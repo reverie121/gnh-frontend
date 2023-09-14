@@ -3,19 +3,16 @@ import { Box, Tabs, Tab } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
-import GameListContext from "../context/GameListContext";
-import { gameListToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
 
 import UserData from "./UserData";
 import GameList from "./GameList";
 import UserPlaysList from "./UserPlaysList";
 
-function UserProfile() {
+function UserDashboard() {
 
     // Access Context for user and setUser.
     const { user, setUser } = useContext(UserContext);
-    const { gameList, setGameList } = useContext(GameListContext);
     
     const [ bggUser, setBGGUser ] = useState();
     const [ currentTab, setCurrentTab ] = useState(1);
@@ -33,14 +30,6 @@ function UserProfile() {
         }
         getBGGData();
     }, [user]);
-
-    useEffect(() => {
-        if (bggUser && bggUser.userGames) {
-            const collectionGameList = bggUser.userGames.filter(g => bggUser.userCollectionIDs.includes(g._attributes.id))
-            gameListToLocal(collectionGameList);
-            setGameList(collectionGameList);
-        }
-    }, [bggUser, setGameList]);
 
     // Call the bouncer.
     let b = bouncer(user, setUser);
@@ -87,8 +76,8 @@ function UserProfile() {
                 {/* GAME COLLECTION TAB */}
                 { currentTab === 1 && 
                 <div className="section">
-                    {gameList && bggUser && bggUser.userCollectionIDs && 
-                    <GameList />
+                    {bggUser && bggUser.userCollectionIDs && 
+                    <GameList games={bggUser.userGames.filter(g => bggUser.userCollectionIDs.has(g._attributes.id))} />
                     }
                 </div>
                 }
@@ -107,4 +96,4 @@ function UserProfile() {
     )
 };
 
-export default UserProfile;
+export default UserDashboard;

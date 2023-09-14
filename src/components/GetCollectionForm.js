@@ -3,7 +3,6 @@ import { FormControl } from "@mui/material";
 
 import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
-import { gameListToLocal } from "../helpers/localStorageHelper";
 import ProcessResponseMessage from "./ProcessResponseMessage";
 import GameNightHelperAPI from "../api/gnh-api";
 import ThemedButton from "./themed-components/ThemedButton";
@@ -30,7 +29,6 @@ function GetCollectionForm() {
             const gameData = await GameNightHelperAPI.getBGGCollection(formData.username1);
             // Update state.
             setGameList(Object.values(gameData));
-            gameListToLocal(Object.values(gameData));
             setEditProcess('success');
         } catch (err) {
             console.error(err);
