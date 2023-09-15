@@ -110,6 +110,12 @@ class GameNightHelperAPI {
     return res.userData;
   }
 
+  /** Get the Top 100 Ranked games from BGG. */
+  static async getTop100Games() {
+    const res = await this.request(`bgg/top100`);
+    return res;
+  }
+
 }
 
 export default GameNightHelperAPI;

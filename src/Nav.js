@@ -13,7 +13,7 @@ function Nav() {
 
     const { user, setUser } = useContext(UserContext)
 
-    const pages = [ {path: '../', text: 'Collection Browser'} ];
+    const pages = [ {path: '../', text: 'Collection Browser'}, {path: '../top100', text: 'Top 100 Games'} ];
     const noUser = [ {path: '../login', text: 'Log In'}, {path: '../signup', text: 'Sign Up'} ];
     const settings = [{path: '../edituser', text: 'Account'}, {path: '../', text: 'Logout'}];
 
