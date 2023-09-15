@@ -25,7 +25,6 @@ function Home() {
         <Box sx={{
             marginTop: ".5rem",
             minHeight: "calc(100vh - 20rem)",
-            minWidth: "550px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -55,7 +54,6 @@ function Home() {
         <Box sx={{
             marginTop: ".5rem",
             minHeight: "calc(100vh - 20rem)",
-            minWidth: "550px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",

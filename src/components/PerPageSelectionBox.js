@@ -52,7 +52,7 @@ function PerPageSelectionBox({ gamesToDisplay, setPage, gamesPerPage, setGamesPe
                     <MenuItem value={25}>25</MenuItem>
                     <MenuItem value={50}>50</MenuItem>
                     <MenuItem value={100}>100</MenuItem>
-                    {/* <MenuItem value={gamesToDisplay.length}>All</MenuItem> */}
+                    <MenuItem value={gamesToDisplay.length}>All</MenuItem>
                 </Select>    
             </FormControl>      
         </Paper>

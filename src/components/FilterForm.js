@@ -202,7 +202,6 @@ function FilterForm({ games, setGamesToDisplay }) {
             borderColor: "primary.main",
             borderRadius: "3px", 
             borderWidth: "2px",
-            minWidth: "350px"
         }}>
             <FormGroup>
                 {/* Filters Header */}

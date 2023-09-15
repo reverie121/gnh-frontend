@@ -41,7 +41,7 @@ function LoginForm() {
         await handleLogin();
         // Clear form.
         setFormData(INITIAL_STATE);
-        // Redirect to user profile.
+        // Redirect to user dashboard.
         navigate("/dashboard");
     }        
 
