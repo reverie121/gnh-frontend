@@ -101,6 +101,12 @@ class GameNightHelperAPI {
 
   static async getBGGUser(bggUsername) {
     const res = await this.request(`bgg/user/${bggUsername}`);
+    // Convert game ID arrays to sets for fast filtering of userGames.
+    const idLists = ['userCollectionIDs', 'userPreviouslyOwnedIDs', 'userForTradeIDs', 'userWantIDs', 'userWantToPlayIDs', 'userWantToBuyIDs', 'userPreOrederedIDs']
+    for (const idList of idLists) {
+      if (Array.isArray(res.userData[idList])) res.userData[idList] = new Set(res.userData[idList]);
+    }
+
     return res.userData;
   }
 

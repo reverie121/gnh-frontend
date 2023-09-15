@@ -7,15 +7,17 @@ import { AccountCircleOutlined, CasinoOutlined } from '@mui/icons-material';
 import { userClearLocal } from "./helpers/localStorageHelper";
 import UserContext from "./context/UserContext";
 
-const pages = [ {path: '../', text: 'Games'} ];
-const noUser = [ {path: '../login', text: 'Log In'}, {path: '../signup', text: 'Sign Up'} ];
-const settings = [{path: '../edituser', text: 'Profile'}, {path: '../profile', text: 'My Games'}, {path: '../', text: 'Logout'}];
-
 function Nav() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     const { user, setUser } = useContext(UserContext)
+
+    const pages = [ {path: '../', text: 'Collection Browser'} ];
+    const noUser = [ {path: '../login', text: 'Log In'}, {path: '../signup', text: 'Sign Up'} ];
+    const settings = [{path: '../edituser', text: 'Account'}, {path: '../', text: 'Logout'}];
+
+    if (user) pages.push({path: '../dashboard', text: 'My Collection'})
 
     function logout() {
         userClearLocal();
@@ -50,23 +52,24 @@ function Nav() {
 
                 {/* Logo for md and larger sized screens. */}
                 <CasinoOutlined sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    // letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    }}
-                >
-                    Game Night Helper
-                </Typography>
+                <Link component={RouterLink} to={'../'} underline="none" sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                }}>
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        sx={{
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.3rem',
+                        color: 'primary.contrastText',
+                        textDecoration: 'none',
+                        }}
+                    >
+                        GNH
+                    </Typography>
+                </Link>
 
                 {/* Hamburger menu for xs and sm screens. */}
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -110,31 +113,32 @@ function Nav() {
 
                 {/* Logo for xs and sm screens. */}
                 <CasinoOutlined sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                <Typography
-                    variant="h5"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
+                <Link component={RouterLink} to={'../'} underline="none" sx={{
                     mr: 2,
-                    display: { xs: 'flex', md: 'none' },
-                    flexGrow: 1,
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    }}
-                >
-                    GNH
-                </Typography>
+                    flexGrow: 1, 
+                    display: { xs: 'flex', md: 'none' }, 
+                    }}>
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        sx={{
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.3rem',
+                        color: 'primary.contrastText',
+                        textDecoration: 'none',
+                        }}
+                    >
+                        GNH
+                    </Typography>
+                </Link>
 
                 {/* Menu items for md and larger sized screens. */}
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {pages.map((page) => (
                     <Button
                         onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        sx={{ my: 1, mx: 1.5, color: 'white', display: 'block' }}
                         key={page.text}
                     >
                         <Link fontSize="medium" underline="hover" component={RouterLink} to={page.path} color="primary.contrastText">{page.text}</Link>

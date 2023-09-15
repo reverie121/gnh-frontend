@@ -41,8 +41,8 @@ function LoginForm() {
         await handleLogin();
         // Clear form.
         setFormData(INITIAL_STATE);
-        // Redirect to user profile.
-        navigate("/profile");
+        // Redirect to user dashboard.
+        navigate("/dashboard");
     }        
 
     const inputStyles = {mt: 2};

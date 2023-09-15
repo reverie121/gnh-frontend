@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
 
-function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage }) {
+function PerPageSelectionBox({ gamesToDisplay, setPage, gamesPerPage, setGamesPerPage }) {
 
     const handleSelect = (e) => {
         setPage(1);
@@ -52,7 +52,7 @@ function PerPageSelectionBox({ gameList, setPage, gamesPerPage, setGamesPerPage 
                     <MenuItem value={25}>25</MenuItem>
                     <MenuItem value={50}>50</MenuItem>
                     <MenuItem value={100}>100</MenuItem>
-                    <MenuItem value={gameList.length}>All</MenuItem>
+                    <MenuItem value={gamesToDisplay.length}>All</MenuItem>
                 </Select>    
             </FormControl>      
         </Paper>

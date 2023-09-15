@@ -43,7 +43,7 @@ function GameCard( {gameData} ) {
                 position: "relative",
                 maxWidth: "90vw",
                 minWidth: {
-                    xs: "300px", // 0 - 559 px
+                    xs: "250px", // 0 - 559 px
                     sm: "400px", // 600 - 889 px
                     md: "500px", // 900 - 1199 px
                     lg: "700px", // 1200 - 1535 px

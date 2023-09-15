@@ -1,12 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
-
-import GameListContext from "../context/GameListContext";
 
 import FilterFormHelper from "../helpers/filterFormHelper";
 import filterGames from "../helpers/filterGames";
@@ -15,7 +13,7 @@ import ThemedButton from "./themed-components/ThemedButton";
 import ThemedTooltip from "./themed-components/ThemedTooltip";
 import QuickFilters from "./QuickFilters";
 
-function FilterForm() {
+function FilterForm({ games, setGamesToDisplay }) {
 
     // *** INITIAL VALUES FOR STATE ***
 
@@ -54,8 +52,6 @@ function FilterForm() {
     const [selections, setSelections] = useState(INITIAL_SELECTION_STATE);
 
     const [filtersExpanded, setFiltersExpanded] = useState(false);
-
-    const { setGameList } = useContext(GameListContext);
 
     // *** USER INPUT HANDLERS ***
     // Updates state in response to user input.
@@ -103,17 +99,17 @@ function FilterForm() {
     // Handles clicking the "Get Games" button.
     const handleFilter = (e) => {
         e.preventDefault();
-        let results = filterGames(formData, checkboxes);
+        let results = filterGames(games, formData, checkboxes);
         results = sortGames(results, selections);
-        setGameList(results);
+        setGamesToDisplay(results);
     }
 
     // Handles clickig the "Randomize" button.
     const getRandomGame = (e) => {
         e.preventDefault();
-        const results = filterGames(formData, checkboxes);
+        const results = filterGames(games, formData, checkboxes);
         const randomGame = results[Math.floor(Math.random() * results.length)];
-        setGameList([randomGame]);
+        setGamesToDisplay([randomGame]);
     }
 
     // *** SELECTION OPTIONS FOR SORTING ***
@@ -206,7 +202,6 @@ function FilterForm() {
             borderColor: "primary.main",
             borderRadius: "3px", 
             borderWidth: "2px",
-            minWidth: "350px"
         }}>
             <FormGroup>
                 {/* Filters Header */}

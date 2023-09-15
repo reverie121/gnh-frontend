@@ -2,15 +2,13 @@ import React from "react";
 
 import FilterForm from "./FilterForm";
 import PerPageSelectionBox from "./PerPageSelectionBox";
-import CollectionRequestContainer from "./CollectionRequestContainer"
 
-function CollectionInputsBox({ gameList, setPage, gamesPerPage, setGamesPerPage }) {
+function CollectionInputsBox({ games, gamesToDisplay, setGamesToDisplay , setPage, gamesPerPage, setGamesPerPage }) {
 
     return(
         <div>
-            <PerPageSelectionBox gameList={gameList} setPage={setPage} gamesPerPage={gamesPerPage} setGamesPerPage={setGamesPerPage} />            
-            <FilterForm />
-            <CollectionRequestContainer />
+            <PerPageSelectionBox gamesToDisplay={gamesToDisplay} setPage={setPage} gamesPerPage={gamesPerPage} setGamesPerPage={setGamesPerPage} />            
+            <FilterForm games={games} setGamesToDisplay={setGamesToDisplay} />
         </div>
     );
 };
