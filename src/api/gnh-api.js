@@ -116,6 +116,12 @@ class GameNightHelperAPI {
     return res;
   }
 
+  /** Get the Hot 50 games from BGG. */
+  static async getHot50Games() {
+    const res = await this.request(`bgg/hot50`);
+    return res;
+  }  
+
 }
 
 export default GameNightHelperAPI;
