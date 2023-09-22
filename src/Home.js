@@ -43,19 +43,26 @@ function Home() {
 
             <Typography variant="h5" color="secondary.dark" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
 
-            <Typography variant="h6" color="primary.dark" mt={2}>What is Game Night Helper?</Typography>
-            <Container sx={{
-                marginTop: 1, 
-                padding: 1.5, 
-                backgroundColor: "secondary.transparent",
-                borderRadius: "4px"
+            <Stack alignItems="center" mt={2} p={1} sx={{
+                // border: "solid", 
+                // borderColor: "primary.main",
+                // borderRadius: "3px", 
+                // borderWidth: "2px",   
             }}>
-                <Typography>
-                    Game Night Helper is a tool for users of the website <Link href="https://boardgamegeek.com/">BoardGame Geek</Link>, and their friends. It is an enhanced browsing tool with an updated user interface, ideal for viewing a user's game collection or just seeing what games are popular right now.
-                </Typography>
-            </Container>
 
-            <Typography mt={2}>To access the sites full suite of features, please log in or sign up.</Typography>
+                <Typography variant="h6" color="primary.dark">What is Game Night Helper?</Typography>
+                <Container sx={{
+                    padding: 1.5, 
+
+                }}>
+                    <Typography>
+                        Game Night Helper is a tool for users of the website <Link href="https://boardgamegeek.com/">BoardGame Geek</Link>, and their friends. It is an enhanced browsing tool with an updated user interface, ideal for viewing a user's game collection or just seeing what games are popular right now.
+                    </Typography>
+                </Container>
+
+            </Stack>
+
+            <Typography mt={1}>To access the sites full suite of features, please log in or sign up.</Typography>
             <div>
                 <Link to="/login">
                     <ThemedButton text="Log In" />
@@ -65,35 +72,44 @@ function Home() {
                 </Link>
             </div>
 
-            <Container sx={{
-                marginTop: 2, 
-                padding: 1.5, 
-                backgroundColor: "primary.transparent",
-                borderRadius: "4px"
+            <Stack alignItems="center" mt={2} p={1} sx={{
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",   
             }}>
-                <Typography sx={{textAlign: "center"}}>Or enjoy these features without an account:</Typography>
-                <Typography mt={1}>
-                    <Link to="./collectionbrowser"  underline="none" component={RouterLink} sx={{
-                    "&:hover": {
-                        color: "secondary.main",
-                    }                             
-                    }}>Collection Browser</Link> - Input a BoardGame Geek username to browse the user's collection of games.
-                </Typography>
-                <Typography mt={1}>
-                    <Link to="./top100"  underline="none" component={RouterLink} sx={{
-                    "&:hover": {
-                        color: "secondary.main",
-                    }                             
-                    }}>Top 100</Link> - View the 100 highest ranked board games on BoardGame Geek.
-                </Typography>
-                <Typography mt={1}>
-                    <Link to="./hot50"  underline="none" component={RouterLink} sx={{
-                    "&:hover": {
-                        color: "secondary.main",
-                    }                             
-                    }}>Hot 50</Link> - View the 50 most active board games on BoardGame Geek.
-                </Typography>                
-            </Container>
+
+                <Container sx={{ 
+                    padding: 1.5, 
+                    backgroundColor: "primary.transparent",
+                    borderRadius: "4px"
+                }}>
+                    <Typography sx={{textAlign: "center"}}>Or enjoy these features without an account:</Typography>
+                    <Typography mt={1}>
+                        <Link to="./collectionbrowser"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Collection Browser</Link> - Input a BoardGame Geek username to browse the user's collection of games.
+                    </Typography>
+                    <Typography mt={1}>
+                        <Link to="./top100"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Top 100</Link> - View the 100 highest ranked board games on BoardGame Geek.
+                    </Typography>
+                    <Typography mt={1}>
+                        <Link to="./hot50"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Hot 50</Link> - View the 50 most active board games on BoardGame Geek.
+                    </Typography>                
+                </Container>
+                
+            </Stack>
+
         </Box>
     )
 }
