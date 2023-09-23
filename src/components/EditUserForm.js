@@ -1,13 +1,14 @@
 import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, LinearProgress, TextField, Typography } from "@mui/material";
 
 import ThemedButton from "./themed-components/ThemedButton";
 import GameNightHelperAPI from "../api/gnh-api";
-import UpdateProcessResponseMessage from "./UpdateProcessResponseMessage";
 
 function EditUserForm( { username, bggUsername, firstName, lastName, email, setUser } ) {
     const navigate = useNavigate();
+
+    const [ loading, setLoading ] = useState(false);
 
     const INITIAL_STATE = {
         username: username,
@@ -19,7 +20,6 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
 
     // Sets State for the form data and process message.
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [editProcess, setEditProcess] = useState('idle');
 
     // Makes request to backend to edit user data.
     const editUserData = async () => {
@@ -30,13 +30,13 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
             let res = await GameNightHelperAPI.editUser(userData);
             setFormData(res);
             setUser(res)
-            setEditProcess('success');
+            setLoading(false);
         }
         // If unsuccessful, reset form and indicate failure for process message.
         catch(err) {
             console.error(err);
-            setEditProcess('failure');
             setFormData(INITIAL_STATE);
+            setLoading(false);
         }
     }
 
@@ -52,59 +52,64 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
     // Handles form submition.
     const handleSubmit = (e) => {
         e.preventDefault();
-        setEditProcess('pending')
+        setLoading(true);
         // Edits user data and updates form state. ***
         editUserData();
         // Redirect to user profile.
-        navigate("/profile");
+        navigate("/dashboard");
     }        
 
     const inputStyles = {mt: 2};
 
     return(
-        <Box component="form" 
-        sx={{
-            display: "flex", 
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center", 
-            width: {
-                xs: "80vw", 
-                sm: "70vw", 
-                md: "50vw", 
-                lg: "40vw", 
-                xl: "30vw"
-            }, 
-            maxWidth: "500px", 
-            m: 2, 
-            pt: 1,
-            pb: 1, 
-            pl: 2, 
-            pr: 2,  
-            border: "solid", 
-            borderColor: "primary.main",
-            borderRadius: "3px", 
-            borderWidth: "2px",   
-        }}>
+        <>
+            {loading === true && 
+                <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            }
 
-            <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Edit User Data</Typography>
+            {loading === false && 
+            <Box component="form" 
+            sx={{
+                display: "flex", 
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center", 
+                width: {
+                    xs: "80vw", 
+                    sm: "70vw", 
+                    md: "50vw", 
+                    lg: "40vw", 
+                    xl: "30vw"
+                }, 
+                maxWidth: "500px", 
+                m: 2, 
+                pt: 1,
+                pb: 1, 
+                pl: 2, 
+                pr: 2,  
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",   
+            }}>
 
-            <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Edit User Data</Typography>
 
-            <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
+                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
 
-            <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
+                <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
 
-            <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
+                <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
 
-            <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
+                <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
 
-            <UpdateProcessResponseMessage processIs={editProcess} />
-            <Box sx={{mt: 1}}>
-                <ThemedButton onClick={handleSubmit} text="Submit" />
-            </Box>
+                <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
 
-        </Box>
+                <Box sx={{mt: 1}}>
+                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                </Box>
+            </Box>}
+        </>
     );
 };
 

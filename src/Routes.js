@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import CollectionBrowser from "./components/CollectionBrowers";
+import CollectionBrowser from "./components/CollectionBrower";
 import Top100Games from "./components/Top100Games";
 import Hot50Games from "./components/Hot50Games";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
-import UserDashboard from "./components/userDashboard";
+import UserDashboard from "./components/UserDashboard";
 import EditUser from "./components/EditUser";
 import Home from "./Home";
 

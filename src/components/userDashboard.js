@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Tabs, Tab } from "@mui/material";
+import { Box, LinearProgress, Tabs, Tab } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
@@ -16,6 +16,7 @@ function UserDashboard() {
     
     const [ bggUser, setBGGUser ] = useState();
     const [ currentTab, setCurrentTab ] = useState(1);
+    const [ loading, setLoading ] = useState(true);
 
     const handleTabChange = (e, newValue) => {
         setCurrentTab(newValue);
@@ -26,6 +27,7 @@ function UserDashboard() {
             if (user && user.bggUsername) {
                 const bggUserData = await GameNightHelperAPI.getBGGUser(user.bggUsername);
                 setBGGUser(bggUserData);
+                setLoading(false);
             }
         }
         getBGGData();
@@ -53,6 +55,11 @@ function UserDashboard() {
     }
 
     return(
+        <>
+        { loading === true && 
+             <LinearProgress color="secondary" sx={{marginTop: 2}} />
+        }     
+        {loading === false && 
         <div>
             <Tabs TabIndicatorProps={{sx: tabIndicatorStyles}} sx={tabStyles} value={currentTab} onChange={handleTabChange}>
                 <Tab label="User Data" />
@@ -92,7 +99,8 @@ function UserDashboard() {
                 }
 
             </Box>
-        </div>
+        </div>}
+        </>
     )
 };
 

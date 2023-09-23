@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
@@ -20,6 +20,7 @@ function SignupForm() {
 
     // Sets State for the form data and process message.
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const [ loading, setLoading ] = useState(false);
 
     // Makes request to backend to regiser a new user.
     const registerNewUser = async () => {
@@ -29,9 +30,11 @@ function SignupForm() {
         try {
             let token = await GameNightHelperAPI.registerUser(userData);
             userToLocal(token, formData.username);
+            setLoading(false);
         }
         catch(err) {
             console.error(err);
+            setLoading(false);
         }
     }
 
@@ -47,6 +50,7 @@ function SignupForm() {
     // Handles form submition.
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         // Register the new user. ***
         await registerNewUser();
         // Clear form.
@@ -58,52 +62,59 @@ function SignupForm() {
     const inputStyles = {mt: 2};
 
     return(
-        <Stack sx={{alignItems: "center"}}>
-            <Box component="form"
-            sx={{
-                display: "flex", 
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center", 
-                width: {
-                    xs: "80vw", 
-                    sm: "70vw", 
-                    md: "50vw", 
-                    lg: "40vw", 
-                    xl: "30vw"
-                }, 
-                maxWidth: "500px", 
-                m: 2, 
-                pt: 1,
-                pb: 1, 
-                pl: 2, 
-                pr: 2,  
-                border: "solid", 
-                borderColor: "primary.main",
-                borderRadius: "3px", 
-                borderWidth: "2px",   
-            }}>
+        <>
+            {loading === true && 
+                <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            }
 
-                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Make A New Game Night Helper Account</Typography>
+            {loading === false && 
+            <Stack sx={{alignItems: "center"}}>
+                <Box component="form"
+                sx={{
+                    display: "flex", 
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center", 
+                    width: {
+                        xs: "80vw", 
+                        sm: "70vw", 
+                        md: "50vw", 
+                        lg: "40vw", 
+                        xl: "30vw"
+                    }, 
+                    maxWidth: "500px", 
+                    m: 2, 
+                    pt: 1,
+                    pb: 1, 
+                    pl: 2, 
+                    pr: 2,  
+                    border: "solid", 
+                    borderColor: "primary.main",
+                    borderRadius: "3px", 
+                    borderWidth: "2px",   
+                }}>
 
-                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+                    <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Make A New Game Night Helper Account</Typography>
 
-                <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} type="password" />
+                    <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
 
-                <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} type="password" />
 
-                <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="First Name" name="firstName" value={formData["firstName"]} onChange={handleChange} sx={inputStyles} />
 
-                <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="Last Name" name="lastName" value={formData["lastName"]} onChange={handleChange} sx={inputStyles} />
 
-                <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
+                    <TextField fullWidth variant="outlined" label="Email" name="email" value={formData["email"]} onChange={handleChange} sx={inputStyles} />
 
-                <Box sx={{mt: 1}}>
-                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                    <TextField fullWidth variant="outlined" label="BGG Username" name="bggUsername" value={formData["bggUsername"]} onChange={handleChange} sx={inputStyles} />
+
+                    <Box sx={{mt: 1}}>
+                        <ThemedButton onClick={handleSubmit} text="Submit" />
+                    </Box>
+
                 </Box>
-
-            </Box>
-        </Stack>
+            </Stack>}
+        </>
     );
 };
 
