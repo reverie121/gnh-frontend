@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, LinearProgress, Tabs, Tab } from "@mui/material";
+import { Box, LinearProgress, Tabs, Tab, Typography } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
@@ -15,7 +15,7 @@ function UserDashboard() {
     const { user, setUser } = useContext(UserContext);
     
     const [ bggUser, setBGGUser ] = useState();
-    const [ currentTab, setCurrentTab ] = useState(1);
+    const [ currentTab, setCurrentTab ] = useState(0);
     const [ loading, setLoading ] = useState(true);
 
     const handleTabChange = (e, newValue) => {
@@ -24,9 +24,17 @@ function UserDashboard() {
 
     useEffect(() => {
         async function getBGGData() {
-            if (user && user.bggUsername) {
-                const bggUserData = await GameNightHelperAPI.getBGGUser(user.bggUsername);
-                setBGGUser(bggUserData);
+            try {
+                if (user && user.bggUsername) {
+                    const bggUserData = await GameNightHelperAPI.getBGGUser(user.bggUsername);
+                    setBGGUser(bggUserData);
+                    if (bggUserData.userCollectionIDs.size > 0) setCurrentTab(1);
+                }
+                setLoading(false);
+            }
+            // If unsuccessful, reset form and indicate failure for process message.
+            catch(err) {
+                console.error(err);
                 setLoading(false);
             }
         }
@@ -83,7 +91,13 @@ function UserDashboard() {
                 {/* GAME COLLECTION TAB */}
                 { currentTab === 1 && 
                 <div className="section">
-                    {bggUser && bggUser.userCollectionIDs && 
+                    {!bggUser && 
+                    <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                    }
+                    {bggUser && bggUser.userCollectionIDs.size === 0 && 
+                    <Typography>Your BGG user account has no games marked "owned".</Typography>
+                    }                    
+                    {bggUser && bggUser.userCollectionIDs.size > 0 && 
                     <GameList games={bggUser.userGames.filter(g => bggUser.userCollectionIDs.has(g._attributes.id))} />
                     }
                 </div>
@@ -92,6 +106,12 @@ function UserDashboard() {
                 {/* LOGGED PLAYS TAB */}
                 { currentTab === 2 && 
                 <div className="section">
+                    {!bggUser && 
+                    <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                    }
+                    {bggUser && bggUser.userPlays._attributes.total === "0" && 
+                    <Typography>Your BGG user account has no logged plays.</Typography>
+                    }
                     {bggUser && bggUser.userPlays._attributes.total !== "0" &&  bggUser.userPlays && 
                     <UserPlaysList bggUser={bggUser}/>
                     }     
