@@ -3,11 +3,10 @@ import { FormControl } from "@mui/material";
 
 import GetCollectionInput from "./GetCollectionInput";
 import GameListContext from "../context/GameListContext";
-import ProcessResponseMessage from "./ProcessResponseMessage";
 import GameNightHelperAPI from "../api/gnh-api";
 import ThemedButton from "./themed-components/ThemedButton";
 
-function GetCollectionForm() {
+function GetCollectionForm({ setLoading }) {
 
     const { setGameList } = useContext(GameListContext);
 
@@ -18,7 +17,6 @@ function GetCollectionForm() {
 
     // Sets state for the form data and process message.
     const [formData, setFormData] = useState(INITIAL_STATE);
-    const [editProcess, setEditProcess] = useState('idle');
 
     // Set state for number of collections to be queried. Will increase as additional username inputs are added by user.
     const [collectionCount, setCollectionCount] = useState(['1'])
@@ -29,10 +27,10 @@ function GetCollectionForm() {
             const gameData = await GameNightHelperAPI.getBGGCollection(formData.username1);
             // Update state.
             setGameList(Object.values(gameData));
-            setEditProcess('success');
+            setLoading(false);
         } catch (err) {
             console.error(err);
-            setEditProcess('failure');
+            setLoading(false);
         }
     }
 
@@ -53,7 +51,7 @@ function GetCollectionForm() {
     // Handles form submition.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setEditProcess('pending')
+        setLoading(true);
         // Send GET request.
         await handleQuery();
         // Clear form.
@@ -67,7 +65,6 @@ function GetCollectionForm() {
             {collectionCount.map(n => 
             <GetCollectionInput id={n} key={n} addCollectionInput={(id) => addCollectionInput(id)} handleChange={(e) => handleChange(e)} />
             )}
-            <ProcessResponseMessage processIs={editProcess} />
             <ThemedButton onClick={handleSubmit} text="Get Games" />
         </FormControl>
     );

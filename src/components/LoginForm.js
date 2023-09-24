@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Stack, TextField, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
@@ -17,12 +17,22 @@ function LoginForm() {
 
     // Sets State for the form data.
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const [ loading, setLoading ] = useState(false);
 
     // Makes login request and stores auth token and username in local storage.
     const handleLogin = async () => {
-        const loginCredentials = {username: formData.username, password: formData.password};
-        let token = await GameNightHelperAPI.loginUser(loginCredentials);
-        userToLocal(token, formData.username);
+        try {
+            const loginCredentials = {username: formData.username, password: formData.password};
+            let token = await GameNightHelperAPI.loginUser(loginCredentials);
+            userToLocal(token, formData.username);
+            setLoading(false);
+        }
+        // If unsuccessful, reset form and indicate failure for process message.
+        catch(err) {
+            console.error(err);
+            setFormData(INITIAL_STATE);
+            setLoading(false);
+        }
     }
 
     // Handles value changes (for inputs).
@@ -37,6 +47,7 @@ function LoginForm() {
     // Handles form submition.
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         // Log in user.
         await handleLogin();
         // Clear form.
@@ -48,42 +59,49 @@ function LoginForm() {
     const inputStyles = {mt: 2};
 
     return(
-        <Stack sx={{alignItems: "center"}}>
-            <Box component="form" 
-            sx={{
-                display: "flex", 
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center", 
-                width: {
-                    xs: "80vw", 
-                    sm: "70vw", 
-                    md: "50vw", 
-                    lg: "40vw", 
-                    xl: "30vw"
-                }, 
-                maxWidth: "500px", 
-                m: 2, 
-                pt: 1,
-                pb: 1, 
-                pl: 2, 
-                pr: 2,  
-                border: "solid", 
-                borderColor: "primary.main",
-                borderRadius: "3px", 
-                borderWidth: "2px",   
-            }}>
-                <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Log In</Typography>
+        <>
+            {loading === true && 
+                <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            }
 
-                <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
+            {loading === false && 
+            <Stack sx={{alignItems: "center"}}>
+                <Box component="form" 
+                sx={{
+                    display: "flex", 
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center", 
+                    width: {
+                        xs: "80vw", 
+                        sm: "70vw", 
+                        md: "50vw", 
+                        lg: "40vw", 
+                        xl: "30vw"
+                    }, 
+                    maxWidth: "500px", 
+                    m: 2, 
+                    pt: 1,
+                    pb: 1, 
+                    pl: 2, 
+                    pr: 2,  
+                    border: "solid", 
+                    borderColor: "primary.main",
+                    borderRadius: "3px", 
+                    borderWidth: "2px",   
+                }}>
+                    <Typography sx={{mt: 2, fontWeight: "bold", color: "primary.main"}}>Log In</Typography>
 
-                <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} type="password" />
+                    <TextField fullWidth variant="outlined" label="Username" name="username" value={formData["username"]} onChange={handleChange} sx={inputStyles} />
 
-                <Box sx={{mt: 1}}>
-                    <ThemedButton onClick={handleSubmit} text="Submit" />
+                    <TextField fullWidth variant="outlined" label="Password" name="password" value={formData["password"]} onChange={handleChange} sx={inputStyles} type="password" />
+
+                    <Box sx={{mt: 1}}>
+                        <ThemedButton onClick={handleSubmit} text="Submit" />
+                    </Box>
                 </Box>
-            </Box>
-        </Stack>
+            </Stack>}
+        </>
     );
 };
 

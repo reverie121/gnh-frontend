@@ -1,7 +1,7 @@
 // Displays user data.
 
 import React from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Divider } from "@mui/material";
 
 function UserData( { user, bggUser } ) {
 
@@ -23,7 +23,7 @@ function UserData( { user, bggUser } ) {
             </Container>
         </div>
 
-        <hr />
+        {bggUser && <Divider sx={{m: 2}} />}
 
         {bggUser &&
         <Box sx={styles}>

@@ -9,7 +9,7 @@ import GetCollectionForm from "./GetCollectionForm";
 
 import ThemedButton from "./themed-components/ThemedButton";
 
-function CollectionRequestForm() {
+function CollectionRequestContainer({ setLoading }) {
     const { gameList, setGameList } = useContext(GameListContext);
 
     function clearGameList() {
@@ -27,10 +27,10 @@ function CollectionRequestForm() {
                 <ThemedButton onClick={clearGameList} text="Clear Games" />
             }
             {!gameList &&
-                <GetCollectionForm />
+                <GetCollectionForm setLoading={setLoading} />
             }
         </Box>
     );
 };
 
-export default CollectionRequestForm;
+export default CollectionRequestContainer;

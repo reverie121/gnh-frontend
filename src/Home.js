@@ -1,54 +1,10 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
-
-import UserContext from "./context/UserContext";
-import GameListContext from "./context/GameListContext";
-import GameList from "./components/GameList";
-import CollectionRequestContainer from "./components/CollectionRequestContainer"
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Container, Link, Stack, Typography } from "@mui/material";
 
 import ThemedButton from "./components/themed-components/ThemedButton";
 
 function Home() {
-    // Access Context for user and setUser.
-    const { user } = useContext(UserContext);
-    const { gameList } = useContext(GameListContext);
-
-    if (gameList) return (
-        <>
-            <CollectionRequestContainer />
-            <GameList games={gameList} />
-        </>
-    )
-
-    if (!user) return(
-        <Box sx={{
-            marginTop: ".5rem",
-            minHeight: "calc(100vh - 20rem)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <Typography variant="h1" sx={{
-                margin: "0.25rem",
-                color: "primary.main",
-                fontSize: "3rem",
-                textShadow: ".075rem .075rem darkturquoise",            
-            }}>Game Night Helper</Typography>
-            <Typography variant="h5" color="primary" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
-            <div>
-                <Link to="/login">
-                    <ThemedButton text="Log In" />
-                </Link>
-                <Link to="/signup">
-                    <ThemedButton text="Sign Up" />
-                </Link>
-            </div>
-            <Typography variant="h6" color="primary" sx={{m: 1}}>Or input a BGG username below to start your search...</Typography>
-            <CollectionRequestContainer />
-        </Box>
-    )
 
     return(
         <Box sx={{
@@ -59,8 +15,101 @@ function Home() {
             alignItems: "center",
             justifyContent: "center",
         }}>
-            <Typography variant="h6" color="primary" sx={{m: 1}}>Input a BGG username below to start your search...</Typography>
-            <CollectionRequestContainer />
+            <Stack direction="row" alignItems="baseline" sx={{color: "primary.main"}}>
+                <Typography variant="h1" sx={{
+                    fontSize: "3rem",
+                    fontFamily: "monospace"
+                }}>G</Typography>
+                <Typography variant="h1" sx={{
+                    fontSize: "2rem",
+                }}>AME</Typography>
+
+                <Typography variant="h1" ml={2} sx={{
+                    fontSize: "3rem",
+                    fontFamily: "monospace"
+                }}>N</Typography>                                                
+                <Typography variant="h1" sx={{
+                    fontSize: "2rem",
+                }}>IGHT</Typography>
+
+                <Typography variant="h1" ml={2} sx={{
+                    fontSize: "3rem",
+                    fontFamily: "monospace"
+                }}>H</Typography>                                                
+                <Typography variant="h1" sx={{
+                    fontSize: "2rem",
+                }}>ELPER</Typography>
+            </Stack>
+
+            <Typography variant="h5" color="secondary.dark" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
+
+            <Stack alignItems="center" mt={2} p={1} sx={{
+                // border: "solid", 
+                // borderColor: "primary.main",
+                // borderRadius: "3px", 
+                // borderWidth: "2px",   
+            }}>
+
+                <Typography variant="h6" color="primary.dark">What is Game Night Helper?</Typography>
+                <Container sx={{
+                    padding: 1.5, 
+
+                }}>
+                    <Typography>
+                        Game Night Helper is a tool for users of the website <Link href="https://boardgamegeek.com/">BoardGame Geek</Link>, and their friends. It is an enhanced browsing tool with an updated user interface, ideal for viewing a user's game collection or just seeing what games are popular right now.
+                    </Typography>
+                </Container>
+
+            </Stack>
+
+            <Typography mt={1}>To access the sites full suite of features, please log in or sign up.</Typography>
+            <div>
+                <Link to="/login">
+                    <ThemedButton text="Log In" />
+                </Link>
+                <Link to="/signup">
+                    <ThemedButton text="Sign Up" />
+                </Link>
+            </div>
+
+            <Stack alignItems="center" mt={2} p={1} sx={{
+                border: "solid", 
+                borderColor: "primary.main",
+                borderRadius: "3px", 
+                borderWidth: "2px",   
+            }}>
+
+                <Container sx={{ 
+                    padding: 1.5, 
+                    backgroundColor: "primary.transparent",
+                    borderRadius: "4px"
+                }}>
+                    <Typography sx={{textAlign: "center"}}>Or enjoy these features without an account:</Typography>
+                    <Typography mt={1}>
+                        <Link to="./collectionbrowser"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Collection Browser</Link> - Input a BoardGame Geek username to browse the user's collection of games.
+                    </Typography>
+                    <Typography mt={1}>
+                        <Link to="./top100"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Top 100</Link> - View the 100 highest ranked board games on BoardGame Geek.
+                    </Typography>
+                    <Typography mt={1}>
+                        <Link to="./hot50"  underline="none" component={RouterLink} sx={{
+                        "&:hover": {
+                            color: "secondary.main",
+                        }                             
+                        }}>Hot 50</Link> - View the 50 most active board games on BoardGame Geek.
+                    </Typography>                
+                </Container>
+                
+            </Stack>
+
         </Box>
     )
 }

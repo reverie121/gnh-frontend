@@ -6,13 +6,15 @@ const theme = createTheme({
             main: "#4B0082",
             light: "#663399",
             dark: "#1F0954",
-            contrastText: '#fff'
+            contrastText: '#fff',
+            transparent: "rgba(75,0,130,.1)"
         },
         secondary: {
             main: "#48D1CC",
             light: "#00FFFF",
             dark: "#00A0A0",
-            contrastText: '#1F0954'
+            contrastText: '#1F0954',
+            transparent: "rgba(72,209,204,.1)"
         }
     }, 
     components: {

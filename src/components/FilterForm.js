@@ -1,6 +1,9 @@
+/*** Component to provide the user with filtering and sorting for a list of games. ***/
+
 import React, { useState, useEffect } from "react";
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import SouthRoundedIcon from '@mui/icons-material/SouthRounded';
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
@@ -480,6 +483,12 @@ function FilterForm({ games, setGamesToDisplay }) {
                     {/* Primary Sort ("Sort By") */}
                     <Box sx={{mt: 1}}>
                         <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                            {/* Primary Sort Remove Button */}
+                            {selections.primary !== "" && 
+                            <IconButton color="error" onClick={() => {setSelections(INITIAL_SELECTION_STATE)}}>
+                                <ClearRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }
                             {/* Primary Sort Input Field */}
                             <FormControl fullWidth>
                                 <InputLabel id="primarySort">Sort By</InputLabel>
@@ -516,6 +525,12 @@ function FilterForm({ games, setGamesToDisplay }) {
                     {selections.primary && 
                     <Box sx={{mt: 1}}>
                         <Box sx={{ml: 1, mr: 1, display: "flex"}}>
+                            {/* Secondary Sort Remove Button */}
+                            {selections.secondary !== "" && 
+                            <IconButton color="error" onClick={() => handleSelect({target: {name: "secondary", value: ""}})}>
+                                <ClearRoundedIcon fontSize="large" />
+                            </IconButton>
+                            }                            
                             {/* Secondary Sort Input Field */}
                             <FormControl fullWidth>
                                 <InputLabel id="secondarySort">Then By</InputLabel>
