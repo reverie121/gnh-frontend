@@ -131,17 +131,19 @@ function GameCard( {gameData} ) {
                             <Typography>{name}</Typography>
                             <Typography sx={{fontSize: "smaller", marginLeft: 0.75}}>({gameData.yearpublished._attributes.value})</Typography>
                         </Stack>
-                        <Link 
-                            href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            color="primary" 
-                            underline="none" 
-                            sx={{
-                                fontSize: "smaller", 
-                                "&:hover": {color: "secondary.main"}}}>
-                            View@BGG
-                        </Link>
+                        <Typography>
+                            <Link 
+                                href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                color="primary" 
+                                underline="none" 
+                                sx={{
+                                    fontSize: "smaller", 
+                                    "&:hover": {color: "secondary.main"}}}>
+                                View@BGG
+                            </Link>
+                        </Typography>
                         <Box mt={1}>
                             Player Count: {playerCount}
                             {/* If game has user votes for suggested player counts, display player count boxes. */}
