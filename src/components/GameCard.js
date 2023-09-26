@@ -1,9 +1,7 @@
 // Displays BGG data for a game.
 
 import React from "react";
-import { Box, Card, CardContent, Stack, Tooltip } from "@mui/material";
-
-import '../css/GameCard.css';
+import { Box, Card, CardContent, Link, Stack, Tooltip, Typography } from "@mui/material";
 
 /* Component for displaying game summary cards in a game list. */
 
@@ -30,6 +28,68 @@ function GameCard( {gameData} ) {
         ratingClass="better";
     } else {
         ratingClass="rest";
+    }
+
+    const bgColors = {
+        "best": "green",
+        "Best": "green",
+        "Recommended": "yellowgreen",
+        "better": "darkgoldenrod",
+        "rest": "darkred",
+        "NotRecommended": "darkred"
+    }
+
+    const playerCountBoxStyles = {
+        color: "white",
+        height: "22px",
+        width: "22px",
+        marginLeft: "1px",
+        marginRight: "1px",
+        marginTop: "1px",
+        borderRadius: "2px",       
+    }
+
+    const ratingStyles = {
+        color: "white",
+        alignSelf: "flex-end",
+        display: "inline-block",
+        textAlign: "center",
+        lineHeight: "40px",
+        height: "40px",
+        width: "40px",
+        fontSize: "large",
+        borderRadius: "5px",
+        position:"absolute",
+        top: "10px",
+        right: "10px",
+        textShadow: "1px 1px black",
+        boxShadow: "2px 2px black",
+    }
+
+    const thumbnailStyles = {
+        borderRadius: "3px",
+        boxShadow: "2px 2px darkgray",
+        "&:hover": {
+                /* Start the shake animation and make the animation last for 1.5 seconds */
+                animation: "shake 1.5s",
+            
+                /* When the animation is finished, start again */
+                animationIterationCount: "infinite",
+            }, 
+            
+            "@keyframes shake": {
+                "0%": { transform: "translate(1px, 1px) rotate(0deg)" },
+                "10%": { transform: "translate(-1px, -2px) rotate(-1deg)" },
+                "20%": { transform: "translate(-3px, 0px) rotate(1deg)" },
+                "30%": { transform: "translate(3px, 2px) rotate(0deg)" },
+                "40%": { transform: "translate(1px, -1px) rotate(1deg)" },
+                "50%": { transform: "translate(-1px, 2px) rotate(-1deg)" },
+                "60%": { transform: "translate(-3px, 1px) rotate(0deg)" },
+                "70%": { transform: "translate(3px, 1px) rotate(-1deg)" },
+                "80%": { transform: "translate(-1px, -1px) rotate(1deg)" },
+                "90%": { transform: "translate(1px, 2px) rotate(0deg)" },
+                "100%": { transform: "translate(1px, -2px) rotate(-1deg)" },
+          }
     }
 
     return(
@@ -61,16 +121,27 @@ function GameCard( {gameData} ) {
                     xl: "row"
                 }}>
                     <div>
-                        {gameData.thumbnail && <img alt={name} src={gameData.thumbnail._text} className="Thumbnail" />}
-                    </div>
-                    <Stack ml={1} pr="40px">
-                        <div>
-                            {name} 
-                            <span className="YearPublished">({gameData.yearpublished._attributes.value})</span>
-                        </div>
-                        <div>
-                            <a href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} target="_blank" rel="noopener noreferrer" className="BGGLink">View@BGG</a>
-                        </div>
+                        <Box component="img" sx={thumbnailStyles} src={gameData.thumbnail._text} alt={name} />   
+                    </div>                 
+                    <Stack ml={{
+                        xs: 0,
+                        sm: 1.5
+                    }} pr="40px">
+                        <Stack direction="row" alignItems="baseline">
+                            <Typography>{name}</Typography>
+                            <Typography sx={{fontSize: "smaller", marginLeft: 0.75}}>({gameData.yearpublished._attributes.value})</Typography>
+                        </Stack>
+                        <Link 
+                            href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            color="primary" 
+                            underline="none" 
+                            sx={{
+                                fontSize: "smaller", 
+                                "&:hover": {color: "secondary.main"}}}>
+                            View@BGG
+                        </Link>
                         <Box mt={1}>
                             Player Count: {playerCount}
                             {/* If game has user votes for suggested player counts, display player count boxes. */}
@@ -86,17 +157,17 @@ function GameCard( {gameData} ) {
                                             <div>Not Recommended: {gameData.poll[0].results[indx].result[2]._attributes.numvotes} vote{gameData.poll[0].results[indx].result[2]._attributes.numvotes !== "1" && 's'}</div>                    
                                             </>
                                         }>
-                                            <div className={`playerCountBox ${r}`}>
+                                            <Stack alignItems="center" justifyContent="center" backgroundColor={bgColors[`${r}`]} sx={playerCountBoxStyles} >
                                                 {(Number(indx) + 1) === gameData.poll[0].resultSummary.length ? `${(Number(indx) + 1)}+` : (Number(indx) + 1)}
-                                            </div>
+                                            </Stack>
                                         </Tooltip> 
                                         })
                                     }
                                 </Stack>
                             }
-                            <div className="supplementaryData">
+                            <Typography sx={{fontSize: "smaller"}}>
                                 {gameData.poll[0]._attributes.totalvotes} votes
-                            </div>
+                            </Typography>
                         </Box>
                         <Box mt={1}>
                             Playing Time: {playingTime} minutes
@@ -105,25 +176,25 @@ function GameCard( {gameData} ) {
                             Age: {gameData.minage._attributes.value}+
                             {/* If game has user votes for suggested minimum age, display community suggested age */}                            
                             {Number(gameData.poll[1]._attributes.totalvotes) > 0 && 
-                                <div className="supplementaryData">
+                                <Typography sx={{fontSize: "smaller"}}>
                                     Community: {gameData.poll[1].resultSummary}+ ({gameData.poll[1]._attributes.totalvotes} votes)
-                                </div>
+                                </Typography>
                             }
                         </Box>
                         {/* If game has user votes for game weight, display game weight. */}                    
                         {Number(gameData.statistics.ratings.numweights._attributes.value) > 0 && 
                             <Box mt={1}>
                                 Weight: {Number(gameData.statistics.ratings.averageweight._attributes.value).toFixed(2)}
-                                <div className="supplementaryData">
+                                <Typography sx={{fontSize: "smaller"}}>
                                     {gameData.statistics.ratings.numweights._attributes.value} votes
-                                </div>
+                                </Typography>
                             </Box>
                         }
                     </Stack>
                 </Stack>
-                <div className={`Rating ${ratingClass}`}>
+                <Box backgroundColor={bgColors[`${ratingClass}`]} sx={ratingStyles}>
                     {rating}
-                </div>
+                </Box>
             </CardContent>
         </Card>
     );
