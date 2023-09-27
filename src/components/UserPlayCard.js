@@ -8,6 +8,9 @@ function UserPlayCard( { play, thumbnail } ) {
     const src = thumbnail === undefined || thumbnail === "no image available" ? "/img/no_thumbnail.jpg" : thumbnail;
 
     const thumbnailStyles = {
+        marginLeft: 0.5,
+        borderRadius: "3px",
+        boxShadow: "2px 2px darkgray",
         "&:hover": {
                 /* Start the shake animation and make the animation last for 1.5 seconds */
                 animation: "shake 1.5s",
@@ -64,7 +67,10 @@ function UserPlayCard( { play, thumbnail } ) {
                     }}>
                         {play._attributes.date}
                     </Typography>
-                    <Stack direction="row" mt={1}>
+                    <Stack direction={{
+                        xs: "column",
+                        sm: "row"
+                    }} mt={1}>
                         <Box mt={0.5}>
                             <Box component="img" sx={thumbnailStyles} src={src} alt={play.item._attributes.name} />
                         </Box>
@@ -83,7 +89,7 @@ function UserPlayCard( { play, thumbnail } ) {
                             {play.comments && 
                             <Box>
                                 <Typography>Comment:</Typography>
-                                {play.comments._text.split("\n").map(l => <Typography ml={1}>{l}</Typography>)}
+                                {play.comments._text.split("\n").map((l, indx) => <Typography key={indx} ml={1}>{l}</Typography>)}
                             </Box> }
                         </Box>
                     </Stack>

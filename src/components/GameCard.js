@@ -30,6 +30,7 @@ function GameCard( {gameData} ) {
         ratingClass="rest";
     }
 
+    // Background colors used for player count and rating boxes.
     const bgColors = {
         "best": "green",
         "Best": "green",
@@ -39,6 +40,7 @@ function GameCard( {gameData} ) {
         "NotRecommended": "darkred"
     }
 
+    // Styles for player count boxes.
     const playerCountBoxStyles = {
         color: "white",
         height: "22px",
@@ -49,6 +51,7 @@ function GameCard( {gameData} ) {
         borderRadius: "2px",       
     }
 
+    // Styles for rating boxes.
     const ratingStyles = {
         color: "white",
         alignSelf: "flex-end",
@@ -66,6 +69,7 @@ function GameCard( {gameData} ) {
         boxShadow: "2px 2px black",
     }
 
+    // Styles for game thumbnail images.
     const thumbnailStyles = {
         borderRadius: "3px",
         boxShadow: "2px 2px darkgray",
@@ -76,7 +80,6 @@ function GameCard( {gameData} ) {
                 /* When the animation is finished, start again */
                 animationIterationCount: "infinite",
             }, 
-            
             "@keyframes shake": {
                 "0%": { transform: "translate(1px, 1px) rotate(0deg)" },
                 "10%": { transform: "translate(-1px, -2px) rotate(-1deg)" },
@@ -127,10 +130,12 @@ function GameCard( {gameData} ) {
                         xs: 0,
                         sm: 1.5
                     }} pr="40px">
+                        {/* Title and year published */}
                         <Stack direction="row" alignItems="baseline">
                             <Typography>{name}</Typography>
                             <Typography sx={{fontSize: "smaller", marginLeft: 0.75}}>({gameData.yearpublished._attributes.value})</Typography>
                         </Stack>
+                        {/* BGG External Link */}
                         <Typography>
                             <Link 
                                 href={`https://boardgamegeek.com/boardgame/${gameData._attributes.id}`} 
@@ -144,6 +149,7 @@ function GameCard( {gameData} ) {
                                 View@BGG
                             </Link>
                         </Typography>
+                        {/* Player Count Information */}
                         <Box mt={1}>
                             Player Count: {playerCount}
                             {/* If game has user votes for suggested player counts, display player count boxes. */}
@@ -151,7 +157,7 @@ function GameCard( {gameData} ) {
                                 // Container for player count rating boxes.
                                 <Stack direction="row">
                                     {gameData.poll[0].resultSummary.slice(0,10).map((r, indx) => {
-                                        // limit player count boxes to 10
+                                        // limit player count boxes to 10 with the slice above.
                                         return <Tooltip key={indx+1} arrow title={
                                             <>
                                             <div>Best: {gameData.poll[0].results[indx].result[0]._attributes.numvotes} vote{gameData.poll[0].results[indx].result[0]._attributes.numvotes !== "1" && 's'}</div>
@@ -171,9 +177,11 @@ function GameCard( {gameData} ) {
                                 {gameData.poll[0]._attributes.totalvotes} votes
                             </Typography>
                         </Box>
+                        {/* Play Time Information */}
                         <Box mt={1}>
                             Playing Time: {playingTime} minutes
-                        </Box>                
+                        </Box>
+                        {/* Mininmum Age Information */}
                         <Box mt={1}>
                             Age: {gameData.minage._attributes.value}+
                             {/* If game has user votes for suggested minimum age, display community suggested age */}                            
@@ -183,7 +191,7 @@ function GameCard( {gameData} ) {
                                 </Typography>
                             }
                         </Box>
-                        {/* If game has user votes for game weight, display game weight. */}                    
+                        {/* Game Weight Information - If game has user votes for game weight, display game weight. */}                    
                         {Number(gameData.statistics.ratings.numweights._attributes.value) > 0 && 
                             <Box mt={1}>
                                 Weight: {Number(gameData.statistics.ratings.averageweight._attributes.value).toFixed(2)}
@@ -194,6 +202,7 @@ function GameCard( {gameData} ) {
                         }
                     </Stack>
                 </Stack>
+                {/* Game Rating Box */}
                 <Box backgroundColor={bgColors[`${ratingClass}`]} sx={ratingStyles}>
                     {rating}
                 </Box>
