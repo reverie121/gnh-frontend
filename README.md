@@ -1,3 +1,100 @@
+# Game Night Helper
+
+Game Night Helper can be found at https://gamenighthelper.outstandingcode.com.
+
+Game Night Helper has separate repositories for the [front end](https://github.com/reverie121/gnh-frontend) and [back end](https://github.com/reverie121/gnh-backend).
+
+### Summary
+
+Game Night Helper is a user interface application for the website [BoardGame Geek](https://www.boardgamegeek.com). Its purpose is to provide a modern, uncluttered, and enhanced view of user game collections as well as other lists game lists.
+
+### Features
+
+#### Modern Design
+
+- BoardGame Geek is an old site with a lot of data. Board Game Helper's clean aesthetic, achieved with React and Material UI, is designed to provide a fast and uncluttered view of a user's game collection.
+
+- Game Night Helper is streamlined to provide the user with the information they are most likely to need easily available directly in the search results.
+
+- Game Night Helper's responsive design is great for use on any device.
+
+#### Enhanced Filtering
+
+- Game Night Helper includes selected filtering options that are available already through BoardGame Geek's Advanced Search, chosen specifically for game night considerations.
+
+- Game Night Helper also includes unique filtering options not available at BoardGame Geek, such as player-voted minimum age and player count.
+
+- Game Night Helper filtering is fast and friendly.
+
+- Filters can be used to return a list of all valid games, or use Game Night Helper's randomize feature for when you're feeling lucky and don't want to choose.
+
+- Game Night Helper registered users can save a set of filters as a "Quick Filter", always easily available for swift display of a user's most impactful game lists.
+
+#### Enhanced Sorting
+
+- Sorting is built right into Game Night Helper's filter area and allow for sorting options not available at BoardGame Geek such as Game Weight.
+
+#### Logged Plays
+
+- For users that keep track of games played, logged plays are viewable with Game Night Helper's same user-friendly display style that is used for game lists.
+
+#### Not Just Collections
+
+- Game Night Helper is set up to handle any kind of game list, not just collections.
+
+- Additional game lists currently available include BoardGame Geek's Top 100 (best ranked) and Hot 50 (most active) games.
+
+### User Flow
+
+- User chooses between logging in, signing up, or using a feature that does not require a user account.
+
+- Features that do not require an account currently include the Collection Browser, Top 100, and Hot 50. The Collection Browser accepts any BoardGameGeek username and will display a game list of that user's collection. The Top 100 and Hot 50 are user-agnostic game lists obtained from BoardGame
+
+- Any game list may be filtered and sorted.
+
+- Users with accounts will have access to a User Dashboard, which includes easy access to user data, the user's game collection, and logged plays.
+
+### Tech Stack
+
+- Game Night Helper's front end is built with React.js and Material UI.
+
+- Game Night Helper's back end is built with Express.js using a PostgreSQL database. Redis is used for enhanced performance.
+
+### Data and API
+
+- Game Night Helper uses BoardGame Geek's XML API2. Information on this API is available at https://boardgamegeek.com/wiki/page/BGG_XML_API2.
+
+    - Collection Requests to the BGG XML API2 are queued, requiring multiple requests to be made at reasonable intervals. Request intervals have been set to increase after each repeated request and are capped at 6.
+
+    - Game data is obtained with a followup Game Request using game IDs from the Collection Request. Additional data from a User Collection Request is extracted and merged with data from the Game Request.
+
+### Testing
+
+- Testing has been implemented for all back end models, routes, helpers, and middleware.
+
+- For back end testing input the command 'jest' inside of terminal.
+
+### Planned Features
+
+- Dark Mode.
+
+- Show user rating, when available, nearby average rating in a game display card.
+
+- Integration of collection data into game display and filtering, such as logged plays (total plays, last play date, etc), user rating, and list inclusion (user's Want-To-Play, Wishlist, etc).
+
+- Filtering based on game categories, mechanisms, and families, with quick lists selected based on the makeup of a user's collection.
+
+- Data visualization to display the makeup of a user's game collection.
+
+- User specified custom categories to apply to games and use in filtering (e.g. "Want to Play with John").
+
+- Integration of game expansions including expansion checklists for games.
+
+- Use version specific name and image in a game's display card.
+
+- Improved title search logic.
+
+# Create React App Documentation
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
