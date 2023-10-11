@@ -91,6 +91,26 @@ function FilterForm({ games, setGamesToDisplay }) {
         }))
     }
 
+    // Handles removing the primary sort.
+    const handleRemoveSort = (e) => {
+        // If there is a secondary sort, use those values for the primary sort.
+        if (selections["secondary"] !== "") {
+            // Get secondary sort values.
+            const sortBy = selections["secondary"];
+            const sortDir = selections["secondaryDirection"];
+            // Set primary sort to secondary sort values.
+            handleSelect({target: {name: "primary", value: sortBy}});
+            handleDirectionButton("primary", sortDir);
+            // Set secondary sort values to initial state.
+            handleSelect({target: {name: "secondary", value: INITIAL_SELECTION_STATE["secondary"]}});
+            handleDirectionButton("primary", INITIAL_SELECTION_STATE["secondaryDirection"]);
+        } 
+        // Otherwise, just re-set selections to initial state.
+        else {
+            setSelections(INITIAL_SELECTION_STATE);
+        }
+    }
+
     // Handles direction button clicks for sorting.
     const handleDirectionButton = (order, direction) => {
         setSelections(selections => ({
@@ -485,7 +505,7 @@ function FilterForm({ games, setGamesToDisplay }) {
                         <Box sx={{ml: 1, mr: 1, display: "flex"}}>
                             {/* Primary Sort Remove Button */}
                             {selections.primary !== "" && 
-                            <IconButton color="error" onClick={() => {setSelections(INITIAL_SELECTION_STATE)}}>
+                            <IconButton color="error" onClick={handleRemoveSort}>
                                 <ClearRoundedIcon fontSize="large" />
                             </IconButton>
                             }
