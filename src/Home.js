@@ -64,10 +64,10 @@ function Home() {
 
             <Typography mt={1}>To access the sites full suite of features, please log in or sign up.</Typography>
             <div>
-                <Link to="/login">
+                <Link component={RouterLink} to="/login">
                     <ThemedButton text="Log In" />
                 </Link>
-                <Link to="/signup">
+                <Link component={RouterLink} to="/signup">
                     <ThemedButton text="Sign Up" />
                 </Link>
             </div>
