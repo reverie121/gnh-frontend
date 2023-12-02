@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, LinearProgress, Stack, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 
 import { userToLocal } from "../helpers/localStorageHelper";
 import GameNightHelperAPI from "../api/gnh-api";
@@ -64,9 +64,11 @@ function SignupForm() {
     return(
         <>
             {loading === true && 
-                <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            <Stack alignItems="center">
+                <CircularProgress color="secondary" sx={{marginTop: 2}} />
+                <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            </Stack>
             }
-
             {loading === false && 
             <Stack sx={{alignItems: "center"}}>
                 <Box component="form"

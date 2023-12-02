@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Box, LinearProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 
 import GameListContext from "../context/GameListContext";
 import GameList from "./GameList";
@@ -21,7 +21,10 @@ function CollectionBrowser() {
     return(
         <>
             {loading === true && 
-            <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            <Stack alignItems="center">
+                <CircularProgress color="secondary" sx={{marginTop: 2}} />
+                <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            </Stack>
             }
             {loading === false && 
             <Box sx={{
