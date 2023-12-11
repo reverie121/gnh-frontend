@@ -1,6 +1,6 @@
 import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, LinearProgress, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 
 import ThemedButton from "./themed-components/ThemedButton";
 import GameNightHelperAPI from "../api/gnh-api";
@@ -64,9 +64,14 @@ function EditUserForm( { username, bggUsername, firstName, lastName, email, setU
     return(
         <>
             {loading === true && 
-                <LinearProgress color="secondary" sx={{marginTop: 2}} />
+            <Stack alignItems="center">
+                <CircularProgress color="secondary" sx={{marginTop: 2}} />
+                <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            </Stack>
             }
-
+            {loading === true && 
+            <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            }
             {loading === false && 
             <Box component="form" 
             sx={{

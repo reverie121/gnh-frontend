@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LinearProgress } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 
 import GameNightHelperAPI from "../api/gnh-api";
 import GameList from "./GameList";
@@ -20,14 +20,17 @@ function Hot50Games() {
     }, [])
 
     return(
-        <div>
-            { loading === true && 
-                <LinearProgress color="secondary" sx={{marginTop: 2}} />
-            }            
+        <>
+            {loading === true && 
+            <Stack alignItems="center">
+                <CircularProgress color="secondary" sx={{marginTop: 2}} />
+                <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            </Stack>
+            }                  
             { loading === false && hot50Games && 
             <GameList games={hot50Games} /> 
             }
-        </div>
+        </>
     )
 
 }

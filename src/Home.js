@@ -44,25 +44,28 @@ function Home() {
             <Typography variant="h5" color="secondary.dark" sx={{m: 1}}>Time to choose a game? I can help.</Typography>
 
             <Stack alignItems="center" mt={2} p={1} sx={{
-                // border: "solid", 
-                // borderColor: "primary.main",
-                // borderRadius: "3px", 
-                // borderWidth: "2px",   
+                maxWidth: "1000px"
             }}>
 
-                <Typography variant="h6" color="primary.dark">What is Game Night Helper?</Typography>
-                <Container sx={{
+                <Container sx={{ 
                     padding: 1.5, 
-
+                    borderRadius: "4px"
                 }}>
-                    <Typography>
-                        Game Night Helper is a tool for users of the website <Link href="https://boardgamegeek.com/">BoardGame Geek</Link>, and their friends. It is an enhanced browsing tool with an updated user interface, ideal for viewing a user's game collection or just seeing what games are popular right now.
-                    </Typography>
-                </Container>
 
+                    <Typography variant="h6" color="primary.dark" textAlign="center">What is Game Night Helper?</Typography>
+
+                    <Container sx={{
+                        padding: 1.5, 
+
+                    }}>
+                        <Typography>
+                            Game Night Helper is a tool for users of the website <Link href="https://boardgamegeek.com/">BoardGame Geek</Link>, and their friends. It is an enhanced browsing tool with an updated user interface, ideal for viewing a user's game collection or just seeing what games are popular right now.
+                        </Typography>
+                    </Container>             
+                </Container>
             </Stack>
 
-            <Typography mt={1}>To access the sites full suite of features, please log in or sign up.</Typography>
+            <Typography mt={1}>To access the site's full suite of features, please log in or sign up.</Typography>
             <div>
                 <Link component={RouterLink} to="/login">
                     <ThemedButton text="Log In" />
@@ -73,15 +76,11 @@ function Home() {
             </div>
 
             <Stack alignItems="center" mt={2} p={1} sx={{
-                border: "solid", 
-                borderColor: "primary.main",
-                borderRadius: "3px", 
-                borderWidth: "2px",   
-            }}>
+                maxWidth: "1000px"
+                }}>
 
                 <Container sx={{ 
                     padding: 1.5, 
-                    backgroundColor: "primary.transparent",
                     borderRadius: "4px"
                 }}>
                     <Typography sx={{textAlign: "center"}}>Or enjoy these features without an account:</Typography>

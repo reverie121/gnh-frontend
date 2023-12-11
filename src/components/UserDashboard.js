@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, LinearProgress, Tabs, Tab, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, Tabs, Tab, Typography } from "@mui/material";
 
 import bouncer from "../helpers/bouncer";
 import UserContext from "../context/UserContext";
@@ -64,62 +64,65 @@ function UserDashboard() {
 
     return(
         <>
-        { loading === true && 
-             <LinearProgress color="secondary" sx={{marginTop: 2}} />
-        }     
-        {loading === false && 
-        <div>
-            <Tabs TabIndicatorProps={{sx: tabIndicatorStyles}} sx={tabStyles} value={currentTab} onChange={handleTabChange}>
-                <Tab label="User Data" />
-                <Tab label="Collection" />
-                <Tab label="Logged Plays" />
-            </Tabs>
+            {loading === true && 
+            <Stack alignItems="center">
+                <CircularProgress color="secondary" sx={{marginTop: 2}} />
+                <Typography variant="h6" color="primary" sx={{m: 1}}>One moment while I get that information from BoardGameGeek...</Typography>
+            </Stack>
+            }         
+            {loading === false && 
+            <>
+                <Tabs TabIndicatorProps={{sx: tabIndicatorStyles}} sx={tabStyles} value={currentTab} onChange={handleTabChange}>
+                    <Tab label="User Data" />
+                    <Tab label="Collection" />
+                    <Tab label="Logged Plays" />
+                </Tabs>
 
-            <Box sx={{
-                borderStyle: "solid", 
-                borderColor: "primary.main", 
-                borderRadius: "6px",
-                padding: 1, 
-            }}>
-                {/* USER DATA TAB */}
-                { currentTab === 0 && 
-                <div className="section">
-                    <UserData user={user} bggUser={bggUser} />
-                </div>
-                }
+                <Box sx={{
+                    borderStyle: "solid", 
+                    borderColor: "primary.main", 
+                    borderRadius: "6px",
+                    padding: 1, 
+                }}>
+                    {/* USER DATA TAB */}
+                    { currentTab === 0 && 
+                    <div className="section">
+                        <UserData user={user} bggUser={bggUser} />
+                    </div>
+                    }
 
-                {/* GAME COLLECTION TAB */}
-                { currentTab === 1 && 
-                <div className="section">
-                    {!bggUser && 
-                    <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                    {/* GAME COLLECTION TAB */}
+                    { currentTab === 1 && 
+                    <div className="section">
+                        {!bggUser && 
+                        <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                        }
+                        {bggUser && bggUser.userCollectionIDs.size === 0 && 
+                        <Typography>Your BGG user account has no games marked "owned".</Typography>
+                        }                    
+                        {bggUser && bggUser.userCollectionIDs.size > 0 && 
+                        <GameList games={bggUser.userGames.filter(g => bggUser.userCollectionIDs.has(g._attributes.id))} />
+                        }
+                    </div>
                     }
-                    {bggUser && bggUser.userCollectionIDs.size === 0 && 
-                    <Typography>Your BGG user account has no games marked "owned".</Typography>
-                    }                    
-                    {bggUser && bggUser.userCollectionIDs.size > 0 && 
-                    <GameList games={bggUser.userGames.filter(g => bggUser.userCollectionIDs.has(g._attributes.id))} />
-                    }
-                </div>
-                }
 
-                {/* LOGGED PLAYS TAB */}
-                { currentTab === 2 && 
-                <div className="section">
-                    {!bggUser && 
-                    <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                    {/* LOGGED PLAYS TAB */}
+                    { currentTab === 2 && 
+                    <div className="section">
+                        {!bggUser && 
+                        <Typography>You must add a valid BGG username to your account settings to use this feature.</Typography>
+                        }
+                        {bggUser && bggUser.userPlays._attributes.total === "0" && 
+                        <Typography>Your BGG user account has no logged plays.</Typography>
+                        }
+                        {bggUser && bggUser.userPlays._attributes.total !== "0" &&  bggUser.userPlays && 
+                        <UserPlaysList bggUser={bggUser}/>
+                        }     
+                    </div>
                     }
-                    {bggUser && bggUser.userPlays._attributes.total === "0" && 
-                    <Typography>Your BGG user account has no logged plays.</Typography>
-                    }
-                    {bggUser && bggUser.userPlays._attributes.total !== "0" &&  bggUser.userPlays && 
-                    <UserPlaysList bggUser={bggUser}/>
-                    }     
-                </div>
-                }
 
-            </Box>
-        </div>}
+                </Box>
+            </>}
         </>
     )
 };
